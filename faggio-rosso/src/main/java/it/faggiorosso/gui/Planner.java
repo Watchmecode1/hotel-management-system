@@ -133,8 +133,9 @@ public class Planner extends JFrame {
 		GridBagLayout gridLayout = new GridBagLayout();
 		planPanel.setLayout(gridLayout);
 		
-		Set<Prenotazione> prenotazioniDisegnate = new HashSet<>();
-		for(int row = 0; row <= numeroCamere; row++)
+		Set<Prenotazione> prenotazioniDisegnate;
+		for(int row = 0; row <= numeroCamere; row++) {
+			prenotazioniDisegnate = new HashSet<>();
 			for(int column = 0; column <= numeroGiorni; column++) {
 				if(row == 0) {
 					if(column > 0) {
@@ -216,7 +217,6 @@ public class Planner extends JFrame {
 								button.addActionListener(new ActionListener() {
 									@Override
 									public void actionPerformed(ActionEvent e) {
-										// TODO Auto-generated method stub
 										if(Planner.this.menuPrenotazione != null) Planner.this.menuPrenotazione.dispose();
 										Point mousePosition = MouseInfo.getPointerInfo().getLocation();
 										Planner.this.menuPrenotazione = new MenuPrenotazione((int) mousePosition.getX(), (int) mousePosition.getY() - (button.getHeight()/2), prenotazioneSuccessiva, prenotazioneService, consumazioneService, cameraService, clienteService, documentoService);
@@ -259,6 +259,7 @@ public class Planner extends JFrame {
 						}
 					}
 				}
+			}
 			container.add(planPanel);
 		}
 //		setResizable(false);
