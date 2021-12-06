@@ -134,7 +134,9 @@ public class Planner extends JFrame {
 		planPanel.setLayout(gridLayout);
 		
 		Set<Prenotazione> prenotazioniDisegnate;
+		boolean previousMonthBookingIsPossible;
 		for(int row = 0; row <= numeroCamere; row++) {
+			previousMonthBookingIsPossible = true;
 			prenotazioniDisegnate = new HashSet<>();
 			for(int column = 0; column <= numeroGiorni; column++) {
 				if(row == 0) {
@@ -183,7 +185,14 @@ public class Planner extends JFrame {
 						planPanel.add(label, constraints);
 					} else {
 						//TODO JButton per camere
-						Prenotazione prenotazione = prenotazioneService.findByCameraAndDataInizio(camere.get(row - 1), LocalDate.of(data.getYear(), data.getMonthValue(), column));
+						Camera room = camere.get(row - 1);
+						LocalDate cellLocalDate = data.withDayOfMonth(column);
+						Prenotazione prenotazione = prenotazioneService.findByCameraAndDataInizio(room, cellLocalDate);
+						
+						//month before bookings
+						if(prenotazione != null) previousMonthBookingIsPossible = false;
+						if(previousMonthBookingIsPossible)
+							prenotazione = prenotazioneService.findByCameraAndDataFineAndDataInizioInPreviousMonth(room, cellLocalDate);
 						
 						if(prenotazione != null && !prenotazioniDisegnate.contains(prenotazione)) {
 							List<Prenotazione> prenotazioniSuccessive = new ArrayList<>();
@@ -193,25 +202,26 @@ public class Planner extends JFrame {
 							JPanel jpanel = new JPanel();
 							jpanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 							GridBagConstraints constraintsPanel = new GridBagConstraints();
-							constraintsPanel.gridx = column;
+							constraintsPanel.gridx = previousMonthBookingIsPossible ? 1 : column;
 							constraintsPanel.gridy = row;
 							constraintsPanel.fill = GridBagConstraints.BOTH;
 							constraintsPanel.weightx = 0.5;
 							constraintsPanel.weighty = 0.5;
+							constraintsPanel.gridwidth = previousMonthBookingIsPossible ? prenotazioniSuccessive.get(prenotazioniSuccessive.size() - 1).getDataFine().getDayOfMonth() : (int) prenotazioniSuccessive.get(0).getDataInizio().until(prenotazioniSuccessive.get(prenotazioniSuccessive.size() - 1).getDataFine(), ChronoUnit.DAYS) + 1;
 							///////////////
 							JPanel JPanelButtons = new JPanel(new GridLayout(1, 0, 0, 0));
 							GridBagConstraints constraints = new GridBagConstraints();
-							constraints.gridx = column;
+							constraints.gridx = previousMonthBookingIsPossible ? 1 : column;
 							constraints.gridy = row;
 							constraints.weightx = 0.5;
 							constraints.weighty = 0.5;
 							constraints.fill = GridBagConstraints.HORIZONTAL;
 							//max giorniMese - primo giorno?
-							constraints.gridwidth = (int) prenotazioniSuccessive.get(0).getDataInizio().until(prenotazioniSuccessive.get(prenotazioniSuccessive.size() - 1).getDataFine(), ChronoUnit.DAYS) + 1;
+							constraints.gridwidth = previousMonthBookingIsPossible ? prenotazioniSuccessive.get(prenotazioniSuccessive.size() - 1).getDataFine().getDayOfMonth() : (int) prenotazioniSuccessive.get(0).getDataInizio().until(prenotazioniSuccessive.get(prenotazioniSuccessive.size() - 1).getDataFine(), ChronoUnit.DAYS) + 1;
 							for(Prenotazione prenotazioneSuccessiva : prenotazioniSuccessive) {
 								JButton button = new JButton(prenotazioneSuccessiva.getCognome());
 								button.setFont(new Font("Tahoma", Font.BOLD, 20));
-								setButtonBackground(button, prenotazione);
+								setButtonBackground(button, prenotazioneSuccessiva);
 								button.setMaximumSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / (numeroGiorni + 1), 30));
 								button.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / (numeroGiorni + 1), 30));
 								button.addActionListener(new ActionListener() {
@@ -241,6 +251,7 @@ public class Planner extends JFrame {
 							planPanel.add(JPanelButtons, constraints);
 							planPanel.add(jpanel, constraintsPanel);
 							prenotazioniDisegnate.addAll(prenotazioniSuccessive);
+							previousMonthBookingIsPossible = false;
 						} else {
 							JLabel label = new JLabel();
 							label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -306,6 +317,7 @@ public class Planner extends JFrame {
 	}
 	
 	private List<Prenotazione> getPrenotazioniSuccessive(Prenotazione prenotazione, Camera camera, List<Prenotazione> prenotazioniSuccessive) {
+		if(prenotazione.getDataInizio().getMonth() != prenotazione.getDataFine().getMonth()) return prenotazioniSuccessive;
 		Prenotazione prenotazioneSuccessiva = prenotazioneService.findByCameraAndDataInizio(camera, prenotazione.getDataFine());
 		if(prenotazioneSuccessiva == null) return prenotazioniSuccessive;
 		prenotazioniSuccessive.add(prenotazioneSuccessiva);
