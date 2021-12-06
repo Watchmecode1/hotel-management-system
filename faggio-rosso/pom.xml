@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>it.faggio-rosso</groupId>
+  <artifactId>faggio-rosso</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  <build>
+  <finalName>faggio-rosso</finalName>
+  <plugins>
+    <plugin>
+      <artifactId>maven-assembly-plugin</artifactId>
+      <executions>
+    <execution>
+      <phase>package</phase>
+      <goals>
+        <goal>single</goal>
+      </goals>
+      <configuration>
+        <archive>
+          <manifest>
+            <mainClass>it.faggiorosso.gui.HomePage</mainClass>
+          </manifest>
+        </archive>
+        <descriptorRefs>
+          <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+        <appendAssemblyId>false</appendAssemblyId>
+      </configuration>
+    </execution>
+  </executions>
+    </plugin>
+  </plugins>
+</build>
+  
+  <properties>
+  	<maven.compiler.source>16</maven.compiler.source>
+  	<maven.compiler.target>16</maven.compiler.target>
+  </properties>
+  
+  <dependencies>
+		<!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
+		<dependency>
+		    <groupId>org.hibernate.orm</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>6.0.0.Alpha8</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+			<version>8.0.26</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.toedter</groupId>
+		    <artifactId>jcalendar</artifactId>
+		    <version>1.4</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.itextpdf/kernel -->
+		<dependency>
+		    <groupId>com.itextpdf</groupId>
+		    <artifactId>kernel</artifactId>
+		    <version>7.1.16</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.itextpdf/layout -->
+		<dependency>
+		    <groupId>com.itextpdf</groupId>
+		    <artifactId>layout</artifactId>
+		    <version>7.1.16</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.jidesoft/jide-oss -->
+		<dependency>
+		    <groupId>com.jidesoft</groupId>
+		    <artifactId>jide-oss</artifactId>
+		    <version>3.6.18</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.jtattoo/JTattoo -->
+		<dependency>
+		    <groupId>com.jtattoo</groupId>
+		    <artifactId>JTattoo</artifactId>
+		    <version>1.6.13</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+		<dependency>
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter-api</artifactId>
+		    <version>5.8.1</version>
+		    <scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
