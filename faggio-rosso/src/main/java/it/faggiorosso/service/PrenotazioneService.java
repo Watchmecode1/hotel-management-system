@@ -68,4 +68,8 @@ public class PrenotazioneService {
 	public Prenotazione findByCameraAndDataFineAndDataInizioInPreviousMonth(Camera camera, LocalDate data) {
 		return prenotazioneDao.findByCameraAndDataFineAndDataInizioInPreviousMonth(camera, data);
 	}
+	
+	public Prenotazione findByCameraAndDataInizioInPreviousMonth(Camera camera, LocalDate data) {
+		return prenotazioneDao.findByCameraAndDataInizioInPreviousMonth(camera, data);
+	}
 }

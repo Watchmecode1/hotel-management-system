@@ -217,4 +217,32 @@ public class PrenotazioneDao {
 		session.getTransaction().commit();
 		return prenotazione;
 	}
+	
+	public Prenotazione findByCameraAndDataInizioInPreviousMonth(Camera camera, LocalDate data) {
+		Prenotazione prenotazione = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		String queryString = """
+				SELECT p.id
+				FROM Prenotazione p, Prenotazione_camera c
+				WHERE
+							p.id = c.prenotazione_id
+						AND c.camere_numero = :cameraNumero
+						AND p.dataInizio >= :previousMonthStart
+						AND p.dataInizio <= :previousMonthEnd
+				""";
+		
+		Query<Long> query = session.createNativeQuery(queryString, Long.class);
+		LocalDate previousMonth = data.minusMonths(1);
+		query.setParameter("cameraNumero", camera.getNumero());
+		query.setParameter("previousMonthStart", previousMonth.withDayOfMonth(1));
+		query.setParameter("previousMonthEnd", previousMonth.withDayOfMonth(previousMonth.lengthOfMonth()));
+		
+		Long id = query.getResultStream().findFirst().orElse(null);
+		if(id != null)
+			prenotazione = session.get(Prenotazione.class, id);
+		session.getTransaction().commit();
+		return prenotazione;
+	}
 }

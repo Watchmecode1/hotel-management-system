@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.io.Serial;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -43,7 +40,6 @@ import javax.swing.ImageIcon;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -53,21 +49,13 @@ public class Planner extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = -3819752603187204888L;
-	private PrenotazioneService prenotazioneService;
-	private LocalDate data;
 	private MenuPrenotazione menuPrenotazione;
 
 	public Planner(LocalDate data, PrenotazioneService prenotazioneService, CameraService cameraService, ConsumazioneService consumazioneService, ClienteService clienteService, DocumentoService documentoService) {
-		//setResizable(false);
 		SwingComponentUtil.addHotelIcons(this);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		
-		//this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.prenotazioneService = prenotazioneService;
-		this.data = data;
-		//this.currentMonth = month;
-		//this.currentYear = year;
+		
 		List<Camera> camere = cameraService.getAll().stream()
 								.sorted((o1, o2) -> Integer.compare(o1.getNumero(), o2.getNumero()))
 								.toList();
@@ -133,37 +121,48 @@ public class Planner extends JFrame {
 		GridBagLayout gridLayout = new GridBagLayout();
 		planPanel.setLayout(gridLayout);
 		
-		Set<Prenotazione> prenotazioniDisegnate;
 		boolean previousMonthBookingIsPossible;
 		for(int row = 0; row <= numeroCamere; row++) {
 			previousMonthBookingIsPossible = true;
-			prenotazioniDisegnate = new HashSet<>();
 			for(int column = 0; column <= numeroGiorni; column++) {
+				/////////////////////////
+				JLabel halfLabel = new JLabel();
+				GridBagConstraints halfLabelConstraints = new GridBagConstraints();
+				halfLabelConstraints.gridx = column * 2;
+				halfLabelConstraints.gridy = row;
+				halfLabelConstraints.fill = GridBagConstraints.BOTH;
+				halfLabelConstraints.weightx = 0.5;
+				halfLabelConstraints.weighty = 0.5;
+				JLabel halfLabel2 = new JLabel();
+				GridBagConstraints halfLabelConstraints2 = new GridBagConstraints();
+				halfLabelConstraints2.gridx = column * 2 + 1;
+				halfLabelConstraints2.gridy = row;
+				halfLabelConstraints2.fill = GridBagConstraints.BOTH;
+				halfLabelConstraints2.weightx = 0.5;
+				halfLabelConstraints2.weighty = 0.5;
+				planPanel.add(halfLabel, halfLabelConstraints);
+				planPanel.add(halfLabel2, halfLabelConstraints2);
+				//////////////////
 				if(row == 0) {
 					if(column > 0) {
 						JLabel label = new JLabel(String.valueOf(column));
 						label.setHorizontalAlignment(SwingConstants.CENTER);
 						label.setVerticalAlignment(SwingConstants.BOTTOM);
 						GridBagConstraints constraints = new GridBagConstraints();
-						constraints.gridx = column;
+						constraints.gridx = column * 2;
 						constraints.gridy = row;
 						constraints.anchor = GridBagConstraints.PAGE_END;
-						//constraints.fill = GridBagConstraints.HORIZONTAL;
+						constraints.gridwidth = 2;
 						constraints.weightx = 0.5;
 						constraints.weighty = 0.5;
-						//label.setMinimumSize(new Dimension(this.getWidth() / (numeroGiorni + 1), this.getHeight() / (numeroCamere + 1)));
-						//label.setMaximumSize(new Dimension(this.getWidth() / (numeroGiorni + 1), this.getHeight() / (numeroCamere + 1)));
-						//label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+						
 						planPanel.add(label, constraints);
 					} else {
 						JLabel label = new JLabel();
-						//label.setMinimumSize(new Dimension(this.getWidth() / (numeroGiorni + 1), this.getHeight() / (numeroCamere + 1)));
-						//label.setMaximumSize(new Dimension(this.getWidth() / (numeroGiorni + 1), this.getHeight() / (numeroCamere + 1)));
-						//label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 						GridBagConstraints constraints = new GridBagConstraints();
-						constraints.gridx = column;
+						constraints.gridx = column * 2;
 						constraints.gridy = row;
-						//constraints.fill = GridBagConstraints.HORIZONTAL;
+						constraints.gridwidth = 2;
 						constraints.weightx = 0.5;
 						constraints.weighty = 0.5;
 						planPanel.add(label, constraints);
@@ -174,17 +173,13 @@ public class Planner extends JFrame {
 						label.setHorizontalAlignment(SwingConstants.CENTER);
 						label.setVerticalAlignment(SwingConstants.CENTER);
 						GridBagConstraints constraints = new GridBagConstraints();
-						constraints.gridx = column;
+						constraints.gridx = column * 2;
 						constraints.gridy = row;
-						//constraints.fill = GridBagConstraints.HORIZONTAL;
+						constraints.gridwidth = 2;
 						constraints.weightx = 0.5;
 						constraints.weighty = 0.5;
-						//label.setMinimumSize(new Dimension(this.getWidth() / (numeroGiorni + 1), this.getHeight() / (numeroCamere + 1)));
-						//label.setMaximumSize(new Dimension(this.getWidth() / (numeroGiorni + 1), this.getHeight() / (numeroCamere + 1)));
-						//label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 						planPanel.add(label, constraints);
 					} else {
-						//TODO JButton per camere
 						Camera room = camere.get(row - 1);
 						LocalDate cellLocalDate = data.withDayOfMonth(column);
 						Prenotazione prenotazione = prenotazioneService.findByCameraAndDataInizio(room, cellLocalDate);
@@ -192,80 +187,54 @@ public class Planner extends JFrame {
 						//month before bookings
 						if(prenotazione != null) previousMonthBookingIsPossible = false;
 						if(previousMonthBookingIsPossible)
-							prenotazione = prenotazioneService.findByCameraAndDataFineAndDataInizioInPreviousMonth(room, cellLocalDate);
+							prenotazione = prenotazioneService.findByCameraAndDataInizioInPreviousMonth(room, cellLocalDate);
 						
-						if(prenotazione != null && !prenotazioniDisegnate.contains(prenotazione)) {
-							List<Prenotazione> prenotazioniSuccessive = new ArrayList<>();
-							prenotazioniSuccessive.add(prenotazione);
-							prenotazioniSuccessive = getPrenotazioniSuccessive(prenotazione, camere.get(row - 1), prenotazioniSuccessive);
-							///////////////////////
-							JPanel jpanel = new JPanel();
-							jpanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-							GridBagConstraints constraintsPanel = new GridBagConstraints();
-							constraintsPanel.gridx = previousMonthBookingIsPossible ? 1 : column;
-							constraintsPanel.gridy = row;
-							constraintsPanel.fill = GridBagConstraints.BOTH;
-							constraintsPanel.weightx = 0.5;
-							constraintsPanel.weighty = 0.5;
-							constraintsPanel.gridwidth = previousMonthBookingIsPossible ? prenotazioniSuccessive.get(prenotazioniSuccessive.size() - 1).getDataFine().getDayOfMonth() : (int) prenotazioniSuccessive.get(0).getDataInizio().until(prenotazioniSuccessive.get(prenotazioniSuccessive.size() - 1).getDataFine(), ChronoUnit.DAYS) + 1;
-							///////////////
-							JPanel JPanelButtons = new JPanel(new GridLayout(1, 0, 0, 0));
+						if(prenotazione != null) {
+							JLabel label = new JLabel();
+							label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 							GridBagConstraints constraints = new GridBagConstraints();
-							constraints.gridx = previousMonthBookingIsPossible ? 1 : column;
+							constraints.gridx = column * 2;
 							constraints.gridy = row;
+							constraints.gridwidth = 2;
+							constraints.fill = GridBagConstraints.BOTH;
 							constraints.weightx = 0.5;
 							constraints.weighty = 0.5;
-							constraints.fill = GridBagConstraints.HORIZONTAL;
-							//max giorniMese - primo giorno?
-							constraints.gridwidth = previousMonthBookingIsPossible ? prenotazioniSuccessive.get(prenotazioniSuccessive.size() - 1).getDataFine().getDayOfMonth() : (int) prenotazioniSuccessive.get(0).getDataInizio().until(prenotazioniSuccessive.get(prenotazioniSuccessive.size() - 1).getDataFine(), ChronoUnit.DAYS) + 1;
-							for(Prenotazione prenotazioneSuccessiva : prenotazioniSuccessive) {
-								JButton button = new JButton(prenotazioneSuccessiva.getCognome());
-								button.setFont(new Font("Tahoma", Font.BOLD, 20));
-								setButtonBackground(button, prenotazioneSuccessiva);
-								button.setMaximumSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / (numeroGiorni + 1), 30));
-								button.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / (numeroGiorni + 1), 30));
-								button.addActionListener(new ActionListener() {
-									@Override
-									public void actionPerformed(ActionEvent e) {
-										if(Planner.this.menuPrenotazione != null) Planner.this.menuPrenotazione.dispose();
-										Point mousePosition = MouseInfo.getPointerInfo().getLocation();
-										Planner.this.menuPrenotazione = new MenuPrenotazione((int) mousePosition.getX(), (int) mousePosition.getY() - (button.getHeight()/2), prenotazioneSuccessiva, prenotazioneService, consumazioneService, cameraService, clienteService, documentoService);
-									}
-								});
-								JPanelButtons.add(button);
-								//System.err.println((int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 70) / (numeroCamere + 1));
-							}
-							////////////////
-//							JButton button = new JButton(" ");
-//							button.setFont(new Font("Tahoma", Font.BOLD, 20));
-//							button.setBackground(new Color(51, 204, 51));
-//							GridBagConstraints constraints = new GridBagConstraints();
-//							constraints.gridx = column;
-//							constraints.gridy = row;
-//							//constraints.fill = GridBagConstraints.HORIZONTAL;
-//							constraints.weightx = 0.5;
-//							constraints.weighty = 0.5;
-							//constraints.gridwidth = (int) prenotazione.getDataInizio().until(prenotazione.getDataFine(), ChronoUnit.DAYS) + 1;
-							//constraints.insets = new Insets(0, 50, 0, 50);
-							//planPanel.add(button, constraints);
-							planPanel.add(JPanelButtons, constraints);
-							planPanel.add(jpanel, constraintsPanel);
-							prenotazioniDisegnate.addAll(prenotazioniSuccessive);
+							
+							GridBagConstraints constraintsButton = new GridBagConstraints();
+							constraintsButton.gridx = previousMonthBookingIsPossible ? 2 : column * 2 + 1;
+							constraintsButton.gridy = row;
+							constraintsButton.fill = GridBagConstraints.BOTH;
+							constraintsButton.weightx = 0.5;
+							constraintsButton.weighty = 0.5;
+							constraintsButton.gridwidth = previousMonthBookingIsPossible ? prenotazione.getDataFine().getDayOfMonth() * 2 - 1 : (int) prenotazione.getDataInizio().until(prenotazione.getDataFine(), ChronoUnit.DAYS) * 2;
+
+							JButton button = new JButton(prenotazione.getCognome());
+							button.setFont(new Font("Tahoma", Font.BOLD, 20));
+							setButtonBackground(button, prenotazione);
+							button.setMaximumSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / (numeroGiorni + 1), 15));
+							button.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / (numeroGiorni + 1), 15));
+							final Prenotazione prenotazioneFinal = prenotazione;
+							button.addActionListener(new ActionListener() {
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									if(Planner.this.menuPrenotazione != null) Planner.this.menuPrenotazione.dispose();
+									Point mousePosition = MouseInfo.getPointerInfo().getLocation();
+									Planner.this.menuPrenotazione = new MenuPrenotazione((int) mousePosition.getX(), (int) mousePosition.getY() - (button.getHeight()/2), prenotazioneFinal, prenotazioneService, consumazioneService, cameraService, clienteService, documentoService);
+								}
+							});
+							planPanel.add(button, constraintsButton);
+							planPanel.add(label, constraints);
 							previousMonthBookingIsPossible = false;
 						} else {
 							JLabel label = new JLabel();
 							label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 							GridBagConstraints constraints = new GridBagConstraints();
-							constraints.gridx = column;
+							constraints.gridx = column * 2;
 							constraints.gridy = row;
-							//constraints.fill = GridBagConstraints.HORIZONTAL;
+							constraints.gridwidth = 2;
 							constraints.fill = GridBagConstraints.BOTH;
 							constraints.weightx = 0.5;
 							constraints.weighty = 0.5;
-//							label.setMinimumSize(new Dimension(this.getWidth() / (numeroGiorni + 1), 0));
-//							label.setMaximumSize(new Dimension(this.getWidth() / (numeroGiorni + 1), 1000000000));
-//							label.setPreferredSize(new Dimension(this.getWidth() / (numeroGiorni + 1), this.getHeight() / (numeroCamere + 1)));
-							//label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 							planPanel.add(label, constraints);
 						}
 					}
@@ -273,17 +242,7 @@ public class Planner extends JFrame {
 			}
 			container.add(planPanel);
 		}
-//		setResizable(false);
-//		setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
-//		setIconImage(Toolkit.getDefaultToolkit().getImage("/imgs/wallpaper.jpg"));
-//		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//		setBounds(0, 0, 1537, 820);
-//		
-//		generateRooms();
-//		generateDays();
-//		
-//		getMonth(currentMonth);
-//		generateBookings(currentMonth, prenotazioneService);
+
 		this.pack();
 		this.setVisible(true);
 	}
@@ -314,15 +273,6 @@ public class Planner extends JFrame {
 			case 12 -> "DICEMBRE";
 			default -> throw new AssertionError("Invalid month");
 		};
-	}
-	
-	private List<Prenotazione> getPrenotazioniSuccessive(Prenotazione prenotazione, Camera camera, List<Prenotazione> prenotazioniSuccessive) {
-		if(prenotazione.getDataInizio().getMonth() != prenotazione.getDataFine().getMonth()) return prenotazioniSuccessive;
-		Prenotazione prenotazioneSuccessiva = prenotazioneService.findByCameraAndDataInizio(camera, prenotazione.getDataFine());
-		if(prenotazioneSuccessiva == null) return prenotazioniSuccessive;
-		prenotazioniSuccessive.add(prenotazioneSuccessiva);
-		if(prenotazioneSuccessiva.getDataFine().getMonth() != data.getMonth()) return prenotazioniSuccessive;
-		return getPrenotazioniSuccessive(prenotazioneSuccessiva, camera, prenotazioniSuccessive);
 	}
 
 	@Override
