@@ -29,6 +29,7 @@ public class PrenotazioneDao {
 	public void deletePrenotazione(Prenotazione prenotazione) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
+		prenotazione.getConsumazioni().forEach(session::delete);
 		session.delete(prenotazione);
 		session.getTransaction().commit();
 	}

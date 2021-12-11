@@ -119,17 +119,17 @@ public class RegistroProdotti extends JFrame {
 		btnModificaProduct.setBounds(58, 496, 319, 57);
 		panel.add(btnModificaProduct);
 		
-		JButton btnEliminaProdotto = new JButton("Elimina Prodotto");
-		btnEliminaProdotto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				deleteProduct(prodottoService);
-			}
-		});
-		btnEliminaProdotto.setForeground(new Color(0, 128, 128));
-		btnEliminaProdotto.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
-		btnEliminaProdotto.setBackground(new Color(224, 255, 255));
-		btnEliminaProdotto.setBounds(58, 570, 319, 57);
-		panel.add(btnEliminaProdotto);
+//		JButton btnEliminaProdotto = new JButton("Elimina Prodotto");
+//		btnEliminaProdotto.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				deleteProduct(prodottoService);
+//			}
+//		});
+//		btnEliminaProdotto.setForeground(new Color(0, 128, 128));
+//		btnEliminaProdotto.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
+//		btnEliminaProdotto.setBackground(new Color(224, 255, 255));
+//		btnEliminaProdotto.setBounds(58, 570, 319, 57);
+//		panel.add(btnEliminaProdotto);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(224, 255, 255));
@@ -188,21 +188,21 @@ public class RegistroProdotti extends JFrame {
 		else JOptionPane.showMessageDialog(null, "COMPILA TUTTI GLI ATTRIBUTI PER AGGIUNGERE UN ORDINE");
 	}
 	
-	private void deleteProduct(ProdottoService prodottoService) {
-		Prodotto prodotto = productsJList.getSelectedValue();
-		if (prodotto != null) {
-			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "VUOI ELIMINARE IL PRODOTTO SELEZIONATO?", "ELIMINA PRODOTTO", JOptionPane.YES_OPTION);
-			if (yn == JOptionPane.YES_OPTION) {
-					prodottoService.deleteProdotto(prodotto);
-					products.removeElement(prodotto);
-					refreshProductsList();
-					
-					JOptionPane.showMessageDialog(null, "ORDINE CANCELLATO");
-			}
-		}
-		else JOptionPane.showMessageDialog(null, "SELEZIONA IL PRODOTTO CHE VUOI ELIMINARE");
-	}
+//	private void deleteProduct(ProdottoService prodottoService) {
+//		Prodotto prodotto = productsJList.getSelectedValue();
+//		if (prodotto != null) {
+//			int yn;
+//			yn = JOptionPane.showConfirmDialog(null, "VUOI ELIMINARE IL PRODOTTO SELEZIONATO?", "ELIMINA PRODOTTO", JOptionPane.YES_OPTION);
+//			if (yn == JOptionPane.YES_OPTION) {
+//					prodottoService.deleteProdotto(prodotto);
+//					products.removeElement(prodotto);
+//					refreshProductsList();
+//					
+//					JOptionPane.showMessageDialog(null, "ORDINE CANCELLATO");
+//			}
+//		}
+//		else JOptionPane.showMessageDialog(null, "SELEZIONA IL PRODOTTO CHE VUOI ELIMINARE");
+//	}
 	
 	private void modifyProduct() {
 		if (productsJList.getSelectedValue() != null) {

@@ -22,12 +22,13 @@ public class ProdottoDao {
 		session.getTransaction().commit();
 	}
 	
-	public void deleteProdotto(Prodotto prodotto) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		session.delete(prodotto);
-		session.getTransaction().commit();
-	}
+//	public void deleteProdotto(Prodotto prodotto) {
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//		session.beginTransaction();
+//		session.get(Prodotto.class, prodotto.getNome()).getConsumazioni().forEach(session::delete);
+//		session.delete(prodotto);
+//		session.getTransaction().commit();
+//	}
 	
 	public List<Prodotto> getAll() {
 		List<Prodotto> prodotti = new ArrayList<>();
