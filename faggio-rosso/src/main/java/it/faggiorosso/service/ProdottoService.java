@@ -18,9 +18,9 @@ public class ProdottoService {
 		prodottoDao.saveProdotto(prodotto);
 	}
 	
-	public void deleteProdotto(Prodotto prodotto) {
-		prodottoDao.deleteProdotto(prodotto);
-	}
+//	public void deleteProdotto(Prodotto prodotto) {
+//		prodottoDao.deleteProdotto(prodotto);
+//	}
 	
 	public Prodotto getByNome(String nome) {
 		return prodottoDao.getByNome(nome);
