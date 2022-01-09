@@ -7,10 +7,12 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.hotel.util.DateUtils;
 
 @Entity
+@Table(name = "hotel_order")
 public class Order {
 
 	@Id

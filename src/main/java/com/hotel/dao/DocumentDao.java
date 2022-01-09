@@ -21,7 +21,7 @@ public class DocumentDao {
 		session.getTransaction().commit();
 	}
 	
-	public Document getById(String id) {
+	public Document getById(Long id) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		Document document = session.get(Document.class, id);

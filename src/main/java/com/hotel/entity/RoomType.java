@@ -22,8 +22,8 @@ public class RoomType {
 
         private final int people;
 
-        Type(int persone) {
-            this.people = persone;
+        Type(int people) {
+            this.people = people;
         }
 
         public int getPeople() { return people; }

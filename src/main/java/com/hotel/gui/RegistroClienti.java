@@ -355,7 +355,7 @@ public class RegistroClienti extends JFrame {
 				idNumber.setText(customer.getDocument().getNumber());
 				releaseIdDate.setText(customer.getDocument().getReleaseDate().toString());
 				expireIdDate.setText(customer.getDocument().getExpirationDate().toString());
-				idReleaseSource.setText(customer.getDocument().getRelease().name());
+				idReleaseSource.setText(customer.getDocument().getReleasedBy().name());
 				idReleasePlace.setText(customer.getDocument().getPlaceOfIssue());
 				
 				JOptionPane.showMessageDialog(null, "DATI CARICATI");

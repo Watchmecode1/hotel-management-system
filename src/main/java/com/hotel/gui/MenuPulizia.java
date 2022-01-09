@@ -44,11 +44,11 @@ public class MenuPulizia extends JFrame {
 		
 		JButton cambiaStatoButton = new JButton("CAMBIA STATO");
 		cambiaStatoButton.addActionListener(e -> {
-			if (room.getCondition().equals(Room.Condition.TO_CLEAN)) {
+			if (room.getStatus().equals(Room.Status.TO_CLEAN)) {
 				int yn;
 				yn = JOptionPane.showConfirmDialog(null, "VUOI ASSEGNARE ALLA CAMERA LA CONDIZIONE \"PULITA\"?", "", JOptionPane.YES_NO_OPTION);
 				if (yn == JOptionPane.YES_OPTION) {
-					room.setCondition(Room.Condition.CLEAN);
+					room.setStatus(Room.Status.CLEAN);
 					roomService.saveRoom(room);
 					JOptionPane.showMessageDialog(null, "CONDIZIONE CAMERA AGGIORNATA CORRETTAMENTE");
 					button.setBackground(new Color(51, 204, 51));
@@ -57,7 +57,7 @@ public class MenuPulizia extends JFrame {
 				int yn;
 				yn = JOptionPane.showConfirmDialog(null, "VUOI ASSEGNARE ALLA CAMERA LA CONDIZIONE \"DA PULIRE\"?", "", JOptionPane.YES_NO_OPTION);
 				if (yn == JOptionPane.YES_OPTION) {
-					room.setCondition(Room.Condition.TO_CLEAN);
+					room.setStatus(Room.Status.TO_CLEAN);
 					roomService.saveRoom(room);
 					JOptionPane.showMessageDialog(null, "CONDIZIONE CAMERA AGGIORNATA CORRETTAMENTE");
 					button.setBackground(new Color(204, 0, 0));

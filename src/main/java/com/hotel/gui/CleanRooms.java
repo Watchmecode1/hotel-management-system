@@ -15,7 +15,7 @@ import java.awt.Rectangle;
 import javax.swing.border.TitledBorder;
 
 import com.hotel.entity.Room;
-import com.hotel.entity.Room.Condition;
+import com.hotel.entity.Room.Status;
 import com.hotel.entity.Room.Floor;
 import com.hotel.service.RoomService;
 import com.hotel.util.SwingComponentUtil;
@@ -96,7 +96,7 @@ public class CleanRooms extends JFrame {
 	}
 	
 	private void setButtonColours(JButton button, Room room) {
-		if(room.getCondition() == Condition.TO_CLEAN)
+		if(room.getStatus() == Status.TO_CLEAN)
 			button.setBackground(new Color(204, 0, 0));
 		else 
 			button.setBackground(new Color(51, 204, 51));

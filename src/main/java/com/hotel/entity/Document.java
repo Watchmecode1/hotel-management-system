@@ -28,7 +28,7 @@ public class Document {
 	
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private Release release;
+	private Release releasedBy;
 	
 	@Column(nullable = false)
 	private LocalDate releaseDate;
@@ -60,11 +60,11 @@ public class Document {
 	
 	public enum Release { QUESTURA, PREFETTURA, MIT_UCO }
 
-	public Document(Customer customer, String number, DocumentType documentType, Release release, LocalDate releaseDate, LocalDate expirationDate, String placeOfIssue, String provinceOfIssue) {
+	public Document(Customer customer, String number, DocumentType documentType, Release releasedBy, LocalDate releaseDate, LocalDate expirationDate, String placeOfIssue, String provinceOfIssue) {
 		this.customer = Objects.requireNonNull(customer);
 		this.number = Objects.requireNonNull(number);
 		this.documentType = Objects.requireNonNull(documentType);
-		this.release = Objects.requireNonNull(release);
+		this.releasedBy = Objects.requireNonNull(releasedBy);
 		this.releaseDate = Objects.requireNonNull(releaseDate);
 		this.expirationDate = Objects.requireNonNull(expirationDate);
 		this.placeOfIssue = Objects.requireNonNull(placeOfIssue);
@@ -85,9 +85,9 @@ public class Document {
 
 	public void setNumber(String number) { this.number = number; }
 
-	public Release getRelease() { return release; }
+	public Release getReleasedBy() { return releasedBy; }
 
-	public void setRelease(Release release) { this.release = Objects.requireNonNull(release); }
+	public void setReleasedBy(Release releasedBy) { this.releasedBy = Objects.requireNonNull(releasedBy); }
 
 	public DocumentType getDocumentType() { return documentType; }
 
@@ -111,6 +111,6 @@ public class Document {
 	
 	@Override
 	public String toString() {
-		return documentType + " " + number + " " + release;
+		return documentType + " " + number + " " + releasedBy;
 	}
 }

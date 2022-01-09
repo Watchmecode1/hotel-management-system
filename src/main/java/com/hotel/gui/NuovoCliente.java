@@ -559,7 +559,7 @@ public class NuovoCliente extends JFrame {
 				idTypeComboBox.setSelectedItem(documentCliente.getDocumentType());
 				idNumberTextField.setText(documentCliente.getNumber());
 				idReleasePlaceBox.setSelectedItem(documentCliente.getPlaceOfIssue());
-				idSourceBox.setSelectedItem(documentCliente.getRelease());
+				idSourceBox.setSelectedItem(documentCliente.getReleasedBy());
 				String provinciaDiRilascio = documentCliente.getProvinceOfIssue();
 				if(provinciaDiRilascio == null)
 					idProvinciaDiRilascioComboBox.setSelectedIndex(-1);

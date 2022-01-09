@@ -15,7 +15,7 @@ public class DocumentService {
 		documentDao.deleteDocument(document);
 	}
 	
-	public Document getDocumentById(String id) {
+	public Document getDocumentById(Long id) {
 		return documentDao.getById(id);
 	}
 }

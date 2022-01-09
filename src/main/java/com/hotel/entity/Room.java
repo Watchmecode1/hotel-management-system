@@ -28,7 +28,7 @@ public class Room {
 	
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private Condition condition = Condition.CLEAN;
+	private Status status = Status.CLEAN;
 	
 	private String note = "";
 	
@@ -52,7 +52,7 @@ public class Room {
 	
 	public enum State { AVAILABLE, RESERVED }
 	
-	public enum Condition { CLEAN, TO_CLEAN }
+	public enum Status { CLEAN, TO_CLEAN }
 
 	public Room(int number, RoomType roomType, Floor floor, Balcony balcony) {
 		this.number = number;
@@ -75,9 +75,9 @@ public class Room {
 
 	public void getState(State state) { this.state = Objects.requireNonNull(state); }
 
-	public Condition getCondition() { return condition; }
+	public Status getStatus() { return status; }
 
-	public void setCondition(Condition condition) { this.condition = Objects.requireNonNull(condition); }
+	public void setStatus(Status status) { this.status = Objects.requireNonNull(status); }
 
 	public Set<Reservation> getReservations() { return reservations; }
 
