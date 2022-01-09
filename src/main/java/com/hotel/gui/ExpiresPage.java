@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.hotel.service.OrdineService;
+import com.hotel.service.OrderService;
 import com.hotel.util.SwingComponentUtil;
 
 import java.awt.Color;
@@ -23,7 +23,7 @@ public class ExpiresPage extends JFrame {
 	@Serial
 	private static final long serialVersionUID = 6129205272549677652L;
 
-	public ExpiresPage(OrdineService ordineService) {
+	public ExpiresPage(OrderService orderService) {
 		SwingComponentUtil.addHotelIcons(this);
 		setResizable(false);
 		setBackground(new Color(224, 255, 255));
@@ -40,7 +40,7 @@ public class ExpiresPage extends JFrame {
 		contentPane.add(scrollPane);
 		
 		DefaultListModel<String> scaduti = new DefaultListModel<>();
-		scaduti.addAll(ordineService.getOrdiniInScadenza().stream().map(ordine -> ordine.getNomeProdotto() + " scandenza: " + ordine.getDataScadenza()).toList());
+		scaduti.addAll(orderService.getExpiringOrders().stream().map(ordine -> ordine.getProductName() + " scandenza: " + ordine.getExpirationDate()).toList());
 		JList<String> list = new JList<>(scaduti);
 		list.setForeground(new Color(0, 128, 128));
 		list.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));

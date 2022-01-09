@@ -5,10 +5,10 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
-import com.hotel.entity.Camera;
-import com.hotel.entity.Prenotazione;
-import com.hotel.entity.Prenotazione.Pensione;
-import com.hotel.service.PrenotazioneService;
+import com.hotel.entity.Reservation;
+import com.hotel.entity.Room;
+import com.hotel.entity.Reservation.Board;
+import com.hotel.service.ReservationService;
 import com.hotel.util.SwingComponentUtil;
 
 import javax.swing.JLabel;
@@ -37,10 +37,10 @@ public class ElenchiRistorazione extends JFrame {
 	private JLabel ospitiPranzo;
 	private JLabel ospitiCena;
 
-	public ElenchiRistorazione(PrenotazioneService prenotazioneService) {
+	public ElenchiRistorazione(ReservationService reservationService) {
 		SwingComponentUtil.addHotelIcons(this);
-		//TODO Implementa in maniera più efficiente
-		List<Prenotazione> prenotazioni = prenotazioneService.getAll();
+		//TODO Implementa in maniera piï¿½ efficiente
+		List<Reservation> prenotazioni = reservationService.getAll();
 		int A_bnb = 0;
 		int b_bnb = 0;
 		int A_mp = 0;
@@ -48,29 +48,29 @@ public class ElenchiRistorazione extends JFrame {
 		int A_pc = 0;
 		int b_pc = 0;
 		
-		for(Prenotazione p : prenotazioni) {
-			if (p.getDataInizio().isBefore(LocalDate.now()) || p.getDataInizio().isEqual(LocalDate.now())) {
-				if (p.getDataFine().isAfter(LocalDate.now())) {
+		for(Reservation p : prenotazioni) {
+			if (p.getStartDate().isBefore(LocalDate.now()) || p.getStartDate().isEqual(LocalDate.now())) {
+				if (p.getEndDate().isAfter(LocalDate.now())) {
 					String s = "";
-					Camera c = p.getCamere().toArray(new Camera[p.getCamere().size()])[0];
-					int numeroAdulti = p.getNumeroDiAdulti();
-					int numeroMinori = p.getNumeroDiMinori();
-					int numeroBambini = p.getNumeroDiBambini();
+					Room c = p.getRooms().toArray(new Room[p.getRooms().size()])[0];
+					int numeroAdulti = p.getNumberOfAdults();
+					int numeroMinori = p.getNumberOfMinors();
+					int numeroBambini = p.getNumberOfChilds();
 					
-					s += "CAMERA " + c.getNumero() + "   |   ADULTI:  "+ numeroAdulti;
+					s += "CAMERA " + c.getNumber() + "   |   ADULTI:  "+ numeroAdulti;
 					
 					if (numeroMinori > 0)
 						s += ",  MINORI:  " + numeroMinori;
 					if (numeroBambini > 0)
 						s += ",  BAMBINI:  " + numeroBambini;
-					if(p.getPensione() == Pensione.BNB)
+					if(p.getBoard() == Board.BNB)
 					{
 						bnb.addElement(s);
 						A_bnb += numeroAdulti;
 						b_bnb += numeroMinori;
 						b_bnb += numeroBambini;
 					}
-					else if(p.getPensione() == Pensione.MEZZA_PENSIONE)
+					else if(p.getBoard() == Board.HALF_BOARD)
 					{
 						mezzePensioni.addElement(s);
 						A_mp += numeroAdulti;

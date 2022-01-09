@@ -1,36 +1,34 @@
 package com.hotel.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
-import com.hotel.entity.Documento;
+import com.hotel.entity.Consumption;
 import com.hotel.util.HibernateUtil;
 
-/**
- *
- *
- * @author Matthew Mazzotta
- */
-public class DocumentoDao {
+public class ConsumptionDao {
 
-	public void saveDocumento(Documento documento) {
+	public void saveConsumption(Consumption consumption) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		session.saveOrUpdate(documento);
+		session.saveOrUpdate(consumption);
 		session.getTransaction().commit();
 	}
 	
-	public void deleteDocumento(Documento documento) {
+	public void deleteConsumption(Consumption consumption) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		session.delete(documento);
+		session.delete(consumption);
 		session.getTransaction().commit();
 	}
 	
-	public Documento getById(String id) {
+	public List<Consumption> getAll() {
+		List<Consumption> consumptions;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		Documento documento = session.get(Documento.class, id);
+		consumptions = session.createQuery("from Consumption", Consumption.class).getResultList();
 		session.getTransaction().commit();
-		return documento;
+		return consumptions;
 	}
 }

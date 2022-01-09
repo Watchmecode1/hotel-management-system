@@ -7,16 +7,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.hotel.entity.Cliente;
-import com.hotel.entity.Documento;
-import com.hotel.entity.Prenotazione;
-import com.hotel.entity.Cliente.Alloggiato;
-import com.hotel.entity.Cliente.Sesso;
-import com.hotel.entity.Documento.Rilascio;
-import com.hotel.entity.Documento.TipoDocumento;
-import com.hotel.service.ClienteService;
-import com.hotel.service.DocumentoService;
-import com.hotel.service.PrenotazioneService;
+import com.hotel.entity.Customer;
+import com.hotel.entity.Document;
+import com.hotel.entity.Reservation;
+import com.hotel.entity.Customer.Housed;
+import com.hotel.entity.Customer.Gender;
+import com.hotel.entity.Document.Release;
+import com.hotel.entity.Document.DocumentType;
+import com.hotel.service.CustomerService;
+import com.hotel.service.DocumentService;
+import com.hotel.service.ReservationService;
 import com.hotel.util.DateUtils;
 import com.hotel.util.FileUtils;
 import com.hotel.util.SwingComponentUtil;
@@ -35,8 +35,6 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
 
 public class NuovoCliente extends JFrame {
@@ -48,10 +46,10 @@ public class NuovoCliente extends JFrame {
 	private JTextField nameTextField;
 	private JTextField idNumberTextField;
 	private JDateChooser dateOfBirthChooser;
-	private JComboBox<Sesso> genderComboBox;
-	private JComboBox<TipoDocumento> idTypeComboBox;
-	private JComboBox<Rilascio> idSourceBox;
-	private JComboBox<Alloggiato> gerarchyComboBox;
+	private JComboBox<Gender> genderComboBox;
+	private JComboBox<DocumentType> idTypeComboBox;
+	private JComboBox<Release> idSourceBox;
+	private JComboBox<Housed> gerarchyComboBox;
 	private JComboBox<String> citizenshipComboBox;
 	private JComboBox<String> birthplaceBox;
 	private JComboBox<String> provinciaDiNascitaBox;
@@ -60,14 +58,14 @@ public class NuovoCliente extends JFrame {
 	private JComboBox<String> idProvinciaDiRilascioComboBox;
 	private JDateChooser idReleaseDateChooser;
 	private JDateChooser idExpirationDateChooser;
-	private Cliente cliente;
+	private Customer customer;
 	
-	public NuovoCliente(Cliente cliente, Prenotazione prenotazione, PrenotazioneService prenotazioneService, ClienteService clienteService, DocumentoService documentoService, DefaultListModel<Cliente> customerList) {
+	public NuovoCliente(Customer customer, Reservation reservation, ReservationService reservationService, CustomerService customerService, DocumentService documentService, DefaultListModel<Customer> customerList) {
 		setResizable(false);
 		setFont(new Font("Harlow Solid Italic", Font.BOLD, 20));
 		SwingComponentUtil.addHotelIcons(this);
 		
-		this.cliente = cliente;
+		this.customer = customer;
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 1537, 820);
@@ -103,7 +101,7 @@ public class NuovoCliente extends JFrame {
 		newCustomerPanel.add(nameTextField);
 		
 		genderComboBox = new JComboBox<>();
-		genderComboBox.setModel(new DefaultComboBoxModel<Sesso>(new Sesso[] {Sesso.MASCHIO, Sesso.FEMMINA}));
+		genderComboBox.setModel(new DefaultComboBoxModel<>(new Gender[]{Gender.MALE, Gender.FEMALE}));
 		genderComboBox.setSelectedIndex(-1);
 		genderComboBox.setForeground(new Color(0, 128, 128));
 		genderComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -120,7 +118,7 @@ public class NuovoCliente extends JFrame {
 		newCustomerPanel.add(dateOfBirthChooser);
 		
 		gerarchyComboBox = new JComboBox<>();
-		gerarchyComboBox.setModel(new DefaultComboBoxModel<Alloggiato>(new Alloggiato[] {Alloggiato.OSPITE_SINGOLO, Alloggiato.CAPO_FAMIGLIA, Alloggiato.CAPO_GRUPPO, Alloggiato.FAMILIARE, Alloggiato.MEMBRO_GRUPPO}));
+		gerarchyComboBox.setModel(new DefaultComboBoxModel<>(new Housed[]{Housed.SINGLE_GUEST, Housed.HOUSEHOLDER, Housed.GROUP_LEADER, Housed.RELATIVE, Housed.GROUP_MEMBER}));
 		gerarchyComboBox.setSelectedIndex(-1);
 		gerarchyComboBox.setForeground(new Color(0, 128, 128));
 		gerarchyComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -193,7 +191,7 @@ public class NuovoCliente extends JFrame {
 		idSourceBox = new JComboBox<>();
 		idSourceBox.setEditable(false);
 		idSourceBox.setEnabled(false);
-		idSourceBox.setModel(new DefaultComboBoxModel<Rilascio>(new Rilascio[] {Rilascio.QUESTURA, Rilascio.PREFETTURA, Rilascio.MIT_UCO}));
+		idSourceBox.setModel(new DefaultComboBoxModel<>(new Release[]{Release.QUESTURA, Release.PREFETTURA, Release.MIT_UCO}));
 		idSourceBox.setSelectedIndex(-1);
 		idSourceBox.setForeground(new Color(0, 128, 128));
 		idSourceBox.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -226,38 +224,29 @@ public class NuovoCliente extends JFrame {
 		@SuppressWarnings("unused")
 		ComboBoxSearchable searchRelease = new ComboBoxSearchable(idReleasePlaceBox);
 		newCustomerPanel.add(idReleasePlaceBox);
-		idReleasePlaceBox.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String releasePlace = (String) idReleasePlaceBox.getSelectedItem();
-				if(releasePlace != null && !FileUtils.CODICI_STATI.containsKey(releasePlace))
-					idProvinciaDiRilascioComboBox.setEnabled(true);
-				else
-					idProvinciaDiRilascioComboBox.setEnabled(false);
-			}
+		idReleasePlaceBox.addActionListener(e -> {
+			String releasePlace = (String) idReleasePlaceBox.getSelectedItem();
+			idProvinciaDiRilascioComboBox.setEnabled(releasePlace != null && !FileUtils.CODICI_STATI.containsKey(releasePlace));
 		});
 		
 		idTypeComboBox = new JComboBox<>();
-		idTypeComboBox.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(idTypeComboBox.getSelectedIndex() != -1) {
-					idNumberTextField.setEditable(true);
-					idSourceBox.setEnabled(true);
-					idReleasePlaceBox.setEnabled(true);
-					idReleaseDateChooser.setEnabled(true);
-					idExpirationDateChooser.setEnabled(true);
-				} else {
-					idNumberTextField.setEditable(false);
-					idSourceBox.setEnabled(false);
-					idReleasePlaceBox.setEnabled(false);
-					idProvinciaDiRilascioComboBox.setEnabled(false);
-					idReleaseDateChooser.setEnabled(false);
-					idExpirationDateChooser.setEnabled(false);
-				}
+		idTypeComboBox.addActionListener(e -> {
+			if(idTypeComboBox.getSelectedIndex() != -1) {
+				idNumberTextField.setEditable(true);
+				idSourceBox.setEnabled(true);
+				idReleasePlaceBox.setEnabled(true);
+				idReleaseDateChooser.setEnabled(true);
+				idExpirationDateChooser.setEnabled(true);
+			} else {
+				idNumberTextField.setEditable(false);
+				idSourceBox.setEnabled(false);
+				idReleasePlaceBox.setEnabled(false);
+				idProvinciaDiRilascioComboBox.setEnabled(false);
+				idReleaseDateChooser.setEnabled(false);
+				idExpirationDateChooser.setEnabled(false);
 			}
 		});
-		idTypeComboBox.setModel(new DefaultComboBoxModel<TipoDocumento>(new TipoDocumento[] {TipoDocumento.CARTA_IDENTITA, TipoDocumento.CARTA_IDENTITA_ELETTRONICA, TipoDocumento.PATENTE_DI_GUIDA, TipoDocumento.PASSAPORTO}));
+		idTypeComboBox.setModel(new DefaultComboBoxModel<>(new DocumentType[]{DocumentType.CARTA_IDENTITA, DocumentType.CARTA_IDENTITA_ELETTRONICA, DocumentType.PATENTE_DI_GUIDA, DocumentType.PASSAPORTO}));
 		idTypeComboBox.setSelectedIndex(-1);
 		idTypeComboBox.setForeground(new Color(0, 128, 128));
 		idTypeComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -272,90 +261,85 @@ public class NuovoCliente extends JFrame {
 		statoDiNascitaComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
 		statoDiNascitaComboBox.setBackground(new Color(224, 255, 255));
 		statoDiNascitaComboBox.setBounds(314, 280, 416, 36);
-		statoDiNascitaComboBox.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String state = (String) statoDiNascitaComboBox.getSelectedItem();
-				if(state != null && state.equals("ITALIA")) {
-					birthplaceBox.setEnabled(true);
-					provinciaDiNascitaBox.setEnabled(true);
-				}
-				else {
-					birthplaceBox.setEnabled(false);
-					provinciaDiNascitaBox.setEnabled(false);
-				}
+		statoDiNascitaComboBox.addActionListener(e -> {
+			String state = (String) statoDiNascitaComboBox.getSelectedItem();
+			if(state != null && state.equals("ITALIA")) {
+				birthplaceBox.setEnabled(true);
+				provinciaDiNascitaBox.setEnabled(true);
+			}
+			else {
+				birthplaceBox.setEnabled(false);
+				provinciaDiNascitaBox.setEnabled(false);
 			}
 		});
 		newCustomerPanel.add(statoDiNascitaComboBox);
 		
 		JButton addNewCustomerButton = new JButton("Aggiungi");
-		addNewCustomerButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int yn;
-				yn = JOptionPane.showConfirmDialog(null, "VUOI AGGIUNGERE IL NUOVO CLIENTE?", "AGGIUNGI CLIENTE", JOptionPane.YES_NO_OPTION);
-				if (yn == JOptionPane.YES_OPTION) {
-					if(checkClientFields()) {
-						Cliente cliente = null;
-						Documento document = null;
-						boolean correctFields = true;
-						if(((String) statoDiNascitaComboBox.getSelectedItem()).equals("ITALIA")) {
-							if(checkClientItalianFields()) {
-								cliente = new Cliente(nameTextField.getText(), 
-										surnameTextField.getText(), 
-										(Sesso) genderComboBox.getSelectedItem(), 
-										DateUtils.convertDateToLocalDate(dateOfBirthChooser.getDate()),
-										(String) statoDiNascitaComboBox.getSelectedItem(),
-										(String) birthplaceBox.getSelectedItem(),
-										(String) provinciaDiNascitaBox.getSelectedItem(),
-										(String) citizenshipComboBox.getSelectedItem(),
-										(Alloggiato) gerarchyComboBox.getSelectedItem());
-							}
-						} else {
-							cliente = new Cliente(nameTextField.getText(), 
-									surnameTextField.getText(), 
-									(Sesso) genderComboBox.getSelectedItem(), 
+		addNewCustomerButton.addActionListener(e -> {
+			int yn;
+			yn = JOptionPane.showConfirmDialog(null, "VUOI AGGIUNGERE IL NUOVO CLIENTE?", "AGGIUNGI CLIENTE", JOptionPane.YES_NO_OPTION);
+			if (yn == JOptionPane.YES_OPTION) {
+				if(checkClientFields()) {
+					Customer customer1 = null;
+					Document document = null;
+					boolean correctFields = true;
+					if(statoDiNascitaComboBox.getSelectedItem().equals("ITALIA")) {
+						if(checkClientItalianFields()) {
+							customer1 = new Customer(nameTextField.getText(),
+									surnameTextField.getText(),
+									(Gender) genderComboBox.getSelectedItem(),
 									DateUtils.convertDateToLocalDate(dateOfBirthChooser.getDate()),
 									(String) statoDiNascitaComboBox.getSelectedItem(),
-									null,
-									null,
+									(String) birthplaceBox.getSelectedItem(),
+									(String) provinciaDiNascitaBox.getSelectedItem(),
 									(String) citizenshipComboBox.getSelectedItem(),
-									(Alloggiato) gerarchyComboBox.getSelectedItem());
+									(Housed) gerarchyComboBox.getSelectedItem());
 						}
-						if(checkIdType()) {
-							if(checkDocumentFields()) {
-								if(checkIfItalianDocument()) {
-									if(checkIdProvincia()) {
-										document = new Documento(cliente,
-												idNumberTextField.getText(),
-												(TipoDocumento) idTypeComboBox.getSelectedItem(),
-												(Rilascio) idSourceBox.getSelectedItem(),
-												DateUtils.convertDateToLocalDate(idReleaseDateChooser.getDate()),
-												DateUtils.convertDateToLocalDate(idExpirationDateChooser.getDate()),
-												(String) idReleasePlaceBox.getSelectedItem(),
-												(String) idProvinciaDiRilascioComboBox.getSelectedItem());
-									} else
-										correctFields = false;
-								} else
-									document = new Documento(cliente,
+					} else {
+						customer1 = new Customer(nameTextField.getText(),
+								surnameTextField.getText(),
+								(Gender) genderComboBox.getSelectedItem(),
+								DateUtils.convertDateToLocalDate(dateOfBirthChooser.getDate()),
+								(String) statoDiNascitaComboBox.getSelectedItem(),
+								null,
+								null,
+								(String) citizenshipComboBox.getSelectedItem(),
+								(Housed) gerarchyComboBox.getSelectedItem());
+					}
+					if(checkIdType()) {
+						if(checkDocumentFields()) {
+							if(checkIfItalianDocument()) {
+								if(checkIdProvincia()) {
+									document = new Document(customer1,
 											idNumberTextField.getText(),
-											(TipoDocumento) idTypeComboBox.getSelectedItem(),
-											(Rilascio) idSourceBox.getSelectedItem(),
+											(DocumentType) idTypeComboBox.getSelectedItem(),
+											(Release) idSourceBox.getSelectedItem(),
 											DateUtils.convertDateToLocalDate(idReleaseDateChooser.getDate()),
 											DateUtils.convertDateToLocalDate(idExpirationDateChooser.getDate()),
 											(String) idReleasePlaceBox.getSelectedItem(),
-											null);
+											(String) idProvinciaDiRilascioComboBox.getSelectedItem());
+								} else
+									correctFields = false;
 							} else
-								correctFields = false;
-						}
-						if(correctFields) {
-							clienteService.saveCliente(cliente);
-							if(document != null) documentoService.saveDocumento(document);
-							customerList.addElement(cliente);
-							dispose();
-						}
+								document = new Document(customer1,
+										idNumberTextField.getText(),
+										(DocumentType) idTypeComboBox.getSelectedItem(),
+										(Release) idSourceBox.getSelectedItem(),
+										DateUtils.convertDateToLocalDate(idReleaseDateChooser.getDate()),
+										DateUtils.convertDateToLocalDate(idExpirationDateChooser.getDate()),
+										(String) idReleasePlaceBox.getSelectedItem(),
+										null);
+						} else
+							correctFields = false;
 					}
-				} else JOptionPane.showMessageDialog(null, "OPERAZIONE ANNULLATA");
-			}
+					if(correctFields) {
+						customerService.saveCustomer(customer1);
+						if(document != null) documentService.saveDocument(document);
+						customerList.addElement(customer1);
+						dispose();
+					}
+				}
+			} else JOptionPane.showMessageDialog(null, "OPERAZIONE ANNULLATA");
 		});
 		addNewCustomerButton.setBounds(878, 600, 303, 51);
 		newCustomerPanel.add(addNewCustomerButton);
@@ -377,11 +361,7 @@ public class NuovoCliente extends JFrame {
 		addCustomerLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 40));
 		
 		JButton refreshButton = new JButton("Reimposta");
-		refreshButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				refreshAttributes();
-			}
-		});
+		refreshButton.addActionListener(e -> refreshAttributes());
 		refreshButton.setForeground(new Color(0, 128, 128));
 		refreshButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		refreshButton.setBackground(new Color(224, 255, 255));
@@ -408,8 +388,8 @@ public class NuovoCliente extends JFrame {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public NuovoCliente(Prenotazione prenotazione, PrenotazioneService prenotazioneService, ClienteService clienteService, DocumentoService documentoService, DefaultListModel<Cliente> customerList) {
-		this(null, prenotazione, prenotazioneService, clienteService, documentoService, customerList);
+	public NuovoCliente(Reservation reservation, ReservationService reservationService, CustomerService customerService, DocumentService documentService, DefaultListModel<Customer> customerList) {
+		this(null, reservation, reservationService, customerService, documentService, customerList);
 	}
 	
 	private void setLabels() {
@@ -538,7 +518,7 @@ public class NuovoCliente extends JFrame {
 	}
 	
 	private void refreshFields() {
-		if(cliente == null) {
+		if(customer == null) {
 			nameTextField.setText("");
 			surnameTextField.setText("");
 			citizenshipComboBox.setSelectedIndex(-1);
@@ -557,18 +537,18 @@ public class NuovoCliente extends JFrame {
 			idExpirationDateChooser.setDate(null);
 			idReleaseDateChooser.setDate(null);
 		} else {
-			nameTextField.setText(cliente.getNome());
-			surnameTextField.setText(cliente.getCognome());
-			citizenshipComboBox.setSelectedItem(cliente.getCittadinanza());
-			statoDiNascitaComboBox.setSelectedItem(cliente.getStatoDiNascita());
-			gerarchyComboBox.setSelectedItem(cliente.getAlloggiato());
-			birthplaceBox.setSelectedItem(cliente.getComuneDiNascita());
-			provinciaDiNascitaBox.setSelectedItem(cliente.getProvinciaDiNascita());
-			genderComboBox.setSelectedItem(cliente.getSesso());
-			dateOfBirthChooser.setDate(DateUtils.convertLocalDateToDate(cliente.getDataDiNascita()));
+			nameTextField.setText(customer.getName());
+			surnameTextField.setText(customer.getSurname());
+			citizenshipComboBox.setSelectedItem(customer.getCitizenship());
+			statoDiNascitaComboBox.setSelectedItem(customer.getStateOfBirth());
+			gerarchyComboBox.setSelectedItem(customer.getHoused());
+			birthplaceBox.setSelectedItem(customer.getBirthplace());
+			provinciaDiNascitaBox.setSelectedItem(customer.getCountyOfBirth());
+			genderComboBox.setSelectedItem(customer.getGender());
+			dateOfBirthChooser.setDate(DateUtils.convertLocalDateToDate(customer.getDateOfBirth()));
 			
-			Documento documentoCliente = cliente.getDocumento();
-			if(documentoCliente == null) {
+			Document documentCliente = customer.getDocument();
+			if(documentCliente == null) {
 				idTypeComboBox.setSelectedIndex(-1);
 				idNumberTextField.setText("");
 				idReleasePlaceBox.setSelectedIndex(-1);
@@ -576,11 +556,11 @@ public class NuovoCliente extends JFrame {
 				idExpirationDateChooser.setDate(null);
 				idReleaseDateChooser.setDate(null);
 			} else {
-				idTypeComboBox.setSelectedItem(documentoCliente.getTipoDocumento());
-				idNumberTextField.setText(documentoCliente.getNumero());
-				idReleasePlaceBox.setSelectedItem(documentoCliente.getLuogoDiRilascio());
-				idSourceBox.setSelectedItem(documentoCliente.getRilascio());
-				String provinciaDiRilascio = documentoCliente.getProvinciaDiRilascio();
+				idTypeComboBox.setSelectedItem(documentCliente.getDocumentType());
+				idNumberTextField.setText(documentCliente.getNumber());
+				idReleasePlaceBox.setSelectedItem(documentCliente.getPlaceOfIssue());
+				idSourceBox.setSelectedItem(documentCliente.getRelease());
+				String provinciaDiRilascio = documentCliente.getProvinceOfIssue();
 				if(provinciaDiRilascio == null)
 					idProvinciaDiRilascioComboBox.setSelectedIndex(-1);
 				else
@@ -629,8 +609,8 @@ public class NuovoCliente extends JFrame {
 	
 	private boolean checkGerarchy() {
 		if(gerarchyComboBox.getSelectedIndex() != -1) {
-			Alloggiato tipologiaAlloggiato = (Alloggiato) gerarchyComboBox.getSelectedItem();
-			if(tipologiaAlloggiato == Alloggiato.FAMILIARE || tipologiaAlloggiato == Alloggiato.MEMBRO_GRUPPO)
+			Housed tipologiaHoused = (Housed) gerarchyComboBox.getSelectedItem();
+			if(tipologiaHoused == Housed.RELATIVE || tipologiaHoused == Housed.GROUP_MEMBER)
 				return true;
 			if(idTypeComboBox.getSelectedIndex() != -1)
 				return true;

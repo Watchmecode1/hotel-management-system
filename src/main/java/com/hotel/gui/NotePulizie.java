@@ -4,8 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.hotel.entity.Camera;
-import com.hotel.service.CameraService;
+import com.hotel.entity.Room;
+import com.hotel.service.RoomService;
 import com.hotel.util.SwingComponentUtil;
 
 import java.awt.Font;
@@ -17,19 +17,17 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.io.Serial;
-import java.awt.event.ActionEvent;
 
 public class NotePulizie extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = -8135019696595591043L;
 
-	public NotePulizie(JButton roomButton, Camera camera, CameraService cameraService, int x, int y) {
+	public NotePulizie(JButton roomButton, Room room, RoomService roomService, int x, int y) {
 		SwingComponentUtil.addHotelIcons(this);
 		setMainFrame(x, y);
-		setContentPane(roomButton, camera, cameraService);
+		setContentPane(roomButton, room, roomService);
 		
 		this.setVisible(true);
 	}
@@ -40,7 +38,7 @@ public class NotePulizie extends JFrame {
 		setBounds(x, y, 317, 231);
 	}
 	
-	private void setContentPane(JButton roomButton, Camera camera, CameraService cameraService) {
+	private void setContentPane(JButton roomButton, Room room, RoomService roomService) {
 		JPanel contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -52,7 +50,7 @@ public class NotePulizie extends JFrame {
 		contentPane.add(scrollPane);
 		
 		JTextPane textPane = new JTextPane();
-		textPane.setText(camera.getNote());
+		textPane.setText(room.getNote());
 		textPane.setFont(new Font("Tahoma", Font.BOLD, 15));
 		scrollPane.setViewportView(textPane);
 		
@@ -63,18 +61,16 @@ public class NotePulizie extends JFrame {
 		noteJLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		JButton saveNoteButton = new JButton("Salva Note");
-		saveNoteButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String noteText = textPane.getText().trim();
-				camera.setNote(noteText);
-				cameraService.saveCamera(camera);
-				JOptionPane.showMessageDialog(null, "NOTE SALVATE");
-				if(noteText.isBlank())
-					roomButton.setForeground(Color.BLACK);
-				else
-					roomButton.setForeground(Color.YELLOW);
-				NotePulizie.this.dispose();
-			}
+		saveNoteButton.addActionListener(e -> {
+			String noteText = textPane.getText().trim();
+			room.setNote(noteText);
+			roomService.saveRoom(room);
+			JOptionPane.showMessageDialog(null, "NOTE SALVATE");
+			if(noteText.isBlank())
+				roomButton.setForeground(Color.BLACK);
+			else
+				roomButton.setForeground(Color.YELLOW);
+			NotePulizie.this.dispose();
 		});
 		saveNoteButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
 		saveNoteButton.setForeground(Color.DARK_GRAY);

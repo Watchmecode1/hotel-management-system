@@ -14,10 +14,10 @@ import java.awt.Rectangle;
 
 import javax.swing.border.TitledBorder;
 
-import com.hotel.entity.Camera;
-import com.hotel.entity.Camera.Condizione;
-import com.hotel.entity.Camera.Piano;
-import com.hotel.service.CameraService;
+import com.hotel.entity.Room;
+import com.hotel.entity.Room.Condition;
+import com.hotel.entity.Room.Floor;
+import com.hotel.service.RoomService;
 import com.hotel.util.SwingComponentUtil;
 
 import javax.swing.border.EtchedBorder;
@@ -30,14 +30,12 @@ import java.awt.GraphicsConfiguration;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.io.Serial;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.awt.event.ActionEvent;
 
 public class CleanRooms extends JFrame {
 
@@ -45,14 +43,14 @@ public class CleanRooms extends JFrame {
 	private static final long serialVersionUID = -3755273086723639091L;
 	private MenuPulizia menuPulizia;
 
-	public CleanRooms(CameraService cameraService) {
+	public CleanRooms(RoomService roomService) {
 		SwingComponentUtil.addHotelIcons(this);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-		Map<Piano, JPanel> floorPanels = Arrays.stream(Piano.values())
+		Map<Floor, JPanel> floorPanels = Arrays.stream(Floor.values())
 										.collect(Collectors.toMap(Function.identity(), this::floorPanel));
-		addRooms(cameraService.getAll(), floorPanels, cameraService);
+		addRooms(roomService.getAll(), floorPanels, roomService);
 		
 		JPanel titlePanel = new JPanel(new GridBagLayout());
 		titlePanel.setBackground(new Color(224, 255, 255));
@@ -71,8 +69,8 @@ public class CleanRooms extends JFrame {
 		
 		container.add(titlePanel);
 		floorPanels.entrySet().stream()
-				.sorted((o1, o2) -> Integer.compare(o2.getKey().getPiano(), o1.getKey().getPiano()))
-				.map(x -> x.getValue())
+				.sorted((o1, o2) -> Integer.compare(o2.getKey().getFloor(), o1.getKey().getFloor()))
+				.map(Map.Entry::getValue)
 				.forEach(container::add);
 		
 		this.getContentPane().add(container);
@@ -80,39 +78,36 @@ public class CleanRooms extends JFrame {
 		this.setVisible(true);
 	}
 	
-	private void addRooms(List<Camera> camere, Map<Piano, JPanel> floorPanels, CameraService cameraService) {		
-		for(Camera camera : camere) {
-			String number = camera.getNumero() + "";
+	private void addRooms(List<Room> camere, Map<Floor, JPanel> floorPanels, RoomService roomService) {
+		for(Room room : camere) {
+			String number = room.getNumber() + "";
 			JButton button = new JButton(number);
 			button.setFont(new Font("Tahoma", Font.BOLD, 20));
-			button.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if(CleanRooms.this.menuPulizia != null) CleanRooms.this.menuPulizia.dispose();
-					Point mousePosition = MouseInfo.getPointerInfo().getLocation();
-					CleanRooms.this.menuPulizia = new MenuPulizia(button, cameraService, camera, (int) mousePosition.getX(), (int) mousePosition.getY() - (button.getHeight()/2));
-				}
+			button.addActionListener(e -> {
+				if(CleanRooms.this.menuPulizia != null) CleanRooms.this.menuPulizia.dispose();
+				Point mousePosition = MouseInfo.getPointerInfo().getLocation();
+				CleanRooms.this.menuPulizia = new MenuPulizia(button, roomService, room, (int) mousePosition.getX(), (int) mousePosition.getY() - (button.getHeight()/2));
 			});
 
-			setButtonColours(button, camera);
+			setButtonColours(button, room);
 			
-			floorPanels.get(camera.getPiano()).add(button);
+			floorPanels.get(room.getFloor()).add(button);
 		}
 	}
 	
-	private void setButtonColours(JButton button, Camera camera) {
-		if(camera.getCondizione() == Condizione.DA_PULIRE)
+	private void setButtonColours(JButton button, Room room) {
+		if(room.getCondition() == Condition.TO_CLEAN)
 			button.setBackground(new Color(204, 0, 0));
 		else 
 			button.setBackground(new Color(51, 204, 51));
 		
-		if(!camera.getNote().isBlank())
+		if(!room.getNote().isBlank())
 			button.setForeground(Color.YELLOW);
 	}
 
-	private JPanel floorPanel(Piano piano) {
+	private JPanel floorPanel(Floor floor) {
 		JPanel floorPanel = new JPanel(new GridLayout(1, 0, 10, 0));
-		floorPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(224, 255, 255), new Color(224, 255, 255)), "Piano " + piano.getPiano(), TitledBorder.CENTER, TitledBorder.TOP, null, new Color(224, 255, 255)));
+		floorPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(224, 255, 255), new Color(224, 255, 255)), "Piano " + floor.getFloor(), TitledBorder.CENTER, TitledBorder.TOP, null, new Color(224, 255, 255)));
 		floorPanel.setBackground(new Color(0, 128, 128));
 		return floorPanel;
 	}
@@ -133,8 +128,8 @@ public class CleanRooms extends JFrame {
 	      final GraphicsConfiguration cfg = getGraphicsConfiguration();
 	      final Insets screenInsets = getToolkit().getScreenInsets(cfg);
 	      final Rectangle screenBounds = cfg.getBounds();
-	      final int x = screenInsets.left + screenBounds.x * 0;
-	      final int y = screenInsets.top + screenBounds.y * 0;
+	      final int x = screenInsets.left;
+	      final int y = screenInsets.top;
 	      final int w = screenBounds.width - screenInsets.right - screenInsets.left;
 	      final int h = screenBounds.height - screenInsets.bottom - screenInsets.top;
 	      final Rectangle maximizedBounds = new Rectangle(x, y, w, h);

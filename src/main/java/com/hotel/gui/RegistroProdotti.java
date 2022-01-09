@@ -6,8 +6,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
-import com.hotel.entity.Prodotto;
-import com.hotel.service.ProdottoService;
+import com.hotel.entity.Product;
+import com.hotel.service.ProductService;
 import com.hotel.util.Checks;
 import com.hotel.util.SwingComponentUtil;
 
@@ -21,10 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import java.awt.event.ActionListener;
 import java.io.Serial;
 import java.math.BigDecimal;
-import java.awt.event.ActionEvent;
 
 public class RegistroProdotti extends JFrame {
 
@@ -34,10 +32,10 @@ public class RegistroProdotti extends JFrame {
 	private JTextField price;
 	private JScrollPane scrollPane = new JScrollPane();
 	
-	private DefaultListModel<Prodotto> products = new DefaultListModel<>();
-	private JList<Prodotto> productsJList;
+	private DefaultListModel<Product> products = new DefaultListModel<>();
+	private JList<Product> productsJList;
 
-	public RegistroProdotti( ProdottoService prodottoService) {
+	public RegistroProdotti( ProductService productService) {
 		SwingComponentUtil.addHotelIcons(this);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -96,11 +94,7 @@ public class RegistroProdotti extends JFrame {
 		panel.add(price);
 		
 		JButton addProductsButton = new JButton("Aggiungi Prodotto");
-		addProductsButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addProduct(prodottoService);
-			}
-		});
+		addProductsButton.addActionListener(e -> addProduct(productService));
 		addProductsButton.setBackground(new Color(224, 255, 255));
 		addProductsButton.setForeground(new Color(0, 128, 128));
 		addProductsButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
@@ -108,11 +102,7 @@ public class RegistroProdotti extends JFrame {
 		panel.add(addProductsButton);
 		
 		JButton btnModificaProduct = new JButton("Modifica Prodotto");
-		btnModificaProduct.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				modifyProduct();
-			}
-		});
+		btnModificaProduct.addActionListener(e -> modifyProduct());
 		btnModificaProduct.setForeground(new Color(0, 128, 128));
 		btnModificaProduct.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnModificaProduct.setBackground(new Color(224, 255, 255));
@@ -153,7 +143,7 @@ public class RegistroProdotti extends JFrame {
 		scrollPane.setBounds(477, 104, 1036, 585);
 		contentPane.add(scrollPane);
 		
-		products.addAll(prodottoService.getAll());
+		products.addAll(productService.getAll());
 		productsJList = new JList<>(products);
 		productsJList.setSelectionForeground(new Color(0, 139, 139));
 		productsJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -171,15 +161,15 @@ public class RegistroProdotti extends JFrame {
 		setVisible(true);
 	}
 	
-	private void addProduct(ProdottoService prodottoService) {
+	private void addProduct(ProductService productService) {
 		if(checkInputFields()) {
 			int yn;
 			yn = JOptionPane.showConfirmDialog(null, "VUOI AGGIUNGERE L'ORDINE IN INVENTARIO?", "AGGIUNGI ORDINE", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION) {
-				Prodotto prodotto = new Prodotto(productName.getText(), BigDecimal.valueOf(Double.valueOf(price.getText())));
+				Product product = new Product(productName.getText(), BigDecimal.valueOf(Double.parseDouble(price.getText())));
 					
-					prodottoService.saveProdotto(prodotto);
-					products.addElement(prodotto);
+					productService.saveProduct(product);
+					products.addElement(product);
 					refreshProductsList();
 						
 					JOptionPane.showMessageDialog(null, "ORDINE CORRETTAMENTE AGGIUNTO ALL'INVENTARIO");
@@ -209,10 +199,10 @@ public class RegistroProdotti extends JFrame {
 			int yn;
 			yn = JOptionPane.showConfirmDialog(null, "VUOI MODIFICARE IL PRODOTTO SELEZIONATO?", "MODIFICA PRODOTTO", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION) {
-				Prodotto prodotto = productsJList.getSelectedValue();
+				Product product = productsJList.getSelectedValue();
 				
-				productName.setText(prodotto.getNome());
-				price.setText(Double.toString(prodotto.getPrezzo().doubleValue()));
+				productName.setText(product.getName());
+				price.setText(Double.toString(product.getPrice().doubleValue()));
 				
 				JOptionPane.showMessageDialog(null, "MODIFICA ABILITATA");
 			}

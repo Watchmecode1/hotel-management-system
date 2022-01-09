@@ -5,9 +5,8 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
-import com.hotel.entity.TipoCamera;
-import com.hotel.entity.TipoCamera.Tipo;
-import com.hotel.service.TipoCameraService;
+import com.hotel.entity.RoomType;
+import com.hotel.service.RoomTypeService;
 import com.hotel.util.Checks;
 import com.hotel.util.SwingComponentUtil;
 
@@ -20,9 +19,7 @@ import java.math.BigDecimal;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.io.Serial;
-import java.awt.event.ActionEvent;
 
 public class PrezziCamere extends JFrame {
 
@@ -33,7 +30,7 @@ public class PrezziCamere extends JFrame {
 	private JTextField tripleTextField;
 	private JTextField quadrupleTextField;
 	private JTextField quintupleTextField;
-	private TipoCameraService tipoCameraService = new TipoCameraService();
+	private RoomTypeService roomTypeService = new RoomTypeService();
 
 	public PrezziCamere() {
 		SwingComponentUtil.addHotelIcons(this);
@@ -93,21 +90,21 @@ public class PrezziCamere extends JFrame {
 		
 		doubleTextField = new JTextField();
 		doubleTextField.setDocument(SwingComponentUtil.financesPlainDocument());
-		doubleTextField.setText(tipoCameraService.getById(Tipo.DOPPIA).getPrezzo().toString());
+		doubleTextField.setText(roomTypeService.getById(RoomType.Type.DOUBLE).getPrice().toString());
 		doubleTextField.setColumns(10);
 		doubleTextField.setBounds(351, 126, 186, 19);
 		mainPanel.add(doubleTextField);
 		
 		tripleTextField = new JTextField();
 		tripleTextField.setDocument(SwingComponentUtil.financesPlainDocument());
-		tripleTextField.setText(tipoCameraService.getById(Tipo.TRIPLA).getPrezzo().toString());
+		tripleTextField.setText(roomTypeService.getById(RoomType.Type.TRIPLE).getPrice().toString());
 		tripleTextField.setColumns(10);
 		tripleTextField.setBounds(351, 166, 186, 19);
 		mainPanel.add(tripleTextField);
 		
 		quadrupleTextField = new JTextField();
 		quadrupleTextField.setDocument(SwingComponentUtil.financesPlainDocument());
-		quadrupleTextField.setText(tipoCameraService.getById(Tipo.QUADRUPLA).getPrezzo().toString());
+		quadrupleTextField.setText(roomTypeService.getById(RoomType.Type.QUADRUPLE).getPrice().toString());
 		quadrupleTextField.setColumns(10);
 		quadrupleTextField.setBounds(351, 206, 186, 19);
 		mainPanel.add(quadrupleTextField);
@@ -152,20 +149,18 @@ public class PrezziCamere extends JFrame {
 		euroPanel_3.add(lblNewLabel_1_1_3);
 		
 		JButton btnNewButton = new JButton("Reimposta");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int yn;
-				yn  =JOptionPane.showConfirmDialog(null, "VUOI REIMPOSTARE I DATI INSERITI FIN'ORA?", "REIMPOSTA DATI", JOptionPane.YES_NO_OPTION);
-				if (yn == JOptionPane.YES_OPTION) {
-					doubleTextField.setText(tipoCameraService.getById(Tipo.DOPPIA).getPrezzo().toString());
-					tripleTextField.setText(tipoCameraService.getById(Tipo.TRIPLA).getPrezzo().toString());
-					quadrupleTextField.setText(tipoCameraService.getById(Tipo.QUADRUPLA).getPrezzo().toString());
-					quintupleTextField.setText(tipoCameraService.getById(Tipo.QUINTUPLA).getPrezzo().toString());
-					
-					JOptionPane.showMessageDialog(null, "DATI REIMPOSTATI");
-				} else
-					JOptionPane.showMessageDialog(null, "OPERAZIONE ANNULLATA");
-			}
+		btnNewButton.addActionListener(e -> {
+			int yn;
+			yn  =JOptionPane.showConfirmDialog(null, "VUOI REIMPOSTARE I DATI INSERITI FIN'ORA?", "REIMPOSTA DATI", JOptionPane.YES_NO_OPTION);
+			if (yn == JOptionPane.YES_OPTION) {
+				doubleTextField.setText(roomTypeService.getById(RoomType.Type.DOUBLE).getPrice().toString());
+				tripleTextField.setText(roomTypeService.getById(RoomType.Type.TRIPLE).getPrice().toString());
+				quadrupleTextField.setText(roomTypeService.getById(RoomType.Type.QUADRUPLE).getPrice().toString());
+				quintupleTextField.setText(roomTypeService.getById(RoomType.Type.QUINTUPLE).getPrice().toString());
+
+				JOptionPane.showMessageDialog(null, "DATI REIMPOSTATI");
+			} else
+				JOptionPane.showMessageDialog(null, "OPERAZIONE ANNULLATA");
 		});
 		btnNewButton.setForeground(new Color(0, 128, 128));
 		btnNewButton.setBackground(new Color(224, 255, 255));
@@ -174,25 +169,23 @@ public class PrezziCamere extends JFrame {
 		mainPanel.add(btnNewButton);
 		
 		JButton btnConferma = new JButton("Conferma");
-		btnConferma.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!singleTextField.getText().isBlank() 
-						&& !doubleTextField.getText().isBlank()
-						&& !tripleTextField.getText().isBlank() 
-						&& !quadrupleTextField.getText().isBlank() 
-						&& !quintupleTextField.getText().isBlank()) {
-					if (Checks.isDigit(singleTextField.getText()) 
-							&& Checks.isDigit(doubleTextField.getText()) 
-							&& Checks.isDigit(tripleTextField.getText()) 
-							&& Checks.isDigit(quadrupleTextField.getText())
-							&& Checks.isDigit(quintupleTextField.getText())) {
-						setPrices();
-					} else {
-						JOptionPane.showMessageDialog(null, "INSERISCI PREZZI VALIDI PER LE CAMERE");
-					}
-				} else
-					JOptionPane.showMessageDialog(null, "INSERISCI I PREZZI DI TUTTE LE TIPOLOGIE DI CAMERE NEL PERIODO SCELTO");
-			}
+		btnConferma.addActionListener(e -> {
+			if (!singleTextField.getText().isBlank()
+					&& !doubleTextField.getText().isBlank()
+					&& !tripleTextField.getText().isBlank()
+					&& !quadrupleTextField.getText().isBlank()
+					&& !quintupleTextField.getText().isBlank()) {
+				if (Checks.isDigit(singleTextField.getText())
+						&& Checks.isDigit(doubleTextField.getText())
+						&& Checks.isDigit(tripleTextField.getText())
+						&& Checks.isDigit(quadrupleTextField.getText())
+						&& Checks.isDigit(quintupleTextField.getText())) {
+					setPrices();
+				} else {
+					JOptionPane.showMessageDialog(null, "INSERISCI PREZZI VALIDI PER LE CAMERE");
+				}
+			} else
+				JOptionPane.showMessageDialog(null, "INSERISCI I PREZZI DI TUTTE LE TIPOLOGIE DI CAMERE NEL PERIODO SCELTO");
 		});
 		btnConferma.setForeground(new Color(0, 128, 128));
 		btnConferma.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
@@ -208,7 +201,7 @@ public class PrezziCamere extends JFrame {
 		
 		quintupleTextField = new JTextField();
 		quintupleTextField.setDocument(SwingComponentUtil.financesPlainDocument());
-		quintupleTextField.setText(tipoCameraService.getById(Tipo.QUINTUPLA).getPrezzo().toString());
+		quintupleTextField.setText(roomTypeService.getById(RoomType.Type.QUINTUPLE).getPrice().toString());
 		quintupleTextField.setColumns(10);
 		quintupleTextField.setBounds(352, 248, 186, 19);
 		mainPanel.add(quintupleTextField);
@@ -233,10 +226,10 @@ public class PrezziCamere extends JFrame {
 		int yn;
 		yn = JOptionPane.showConfirmDialog(null, "VUOI CONFERMARE I NUOVI PREZZI PER LE CAMERE?", "AGGIORNA PREZZI", JOptionPane.YES_NO_OPTION);
 		if (yn == JOptionPane.YES_OPTION) {
-			tipoCameraService.saveTipoCamera(new TipoCamera(Tipo.DOPPIA, BigDecimal.valueOf(Double.parseDouble(doubleTextField.getText()))));
-			tipoCameraService.saveTipoCamera(new TipoCamera(Tipo.TRIPLA, BigDecimal.valueOf(Double.parseDouble(tripleTextField.getText()))));
-			tipoCameraService.saveTipoCamera(new TipoCamera(Tipo.QUADRUPLA, BigDecimal.valueOf(Double.parseDouble(quadrupleTextField.getText()))));
-			tipoCameraService.saveTipoCamera(new TipoCamera(Tipo.QUINTUPLA, BigDecimal.valueOf(Double.parseDouble(quintupleTextField.getText()))));
+			roomTypeService.saveRoomType(new RoomType(RoomType.Type.DOUBLE, BigDecimal.valueOf(Double.parseDouble(doubleTextField.getText()))));
+			roomTypeService.saveRoomType(new RoomType(RoomType.Type.TRIPLE, BigDecimal.valueOf(Double.parseDouble(tripleTextField.getText()))));
+			roomTypeService.saveRoomType(new RoomType(RoomType.Type.QUADRUPLE, BigDecimal.valueOf(Double.parseDouble(quadrupleTextField.getText()))));
+			roomTypeService.saveRoomType(new RoomType(RoomType.Type.QUINTUPLE, BigDecimal.valueOf(Double.parseDouble(quintupleTextField.getText()))));
 		
 			JOptionPane.showMessageDialog(null, "PREZZI CAMERE AGGIORNATI CORRETTAMENTE");	
 		}

@@ -8,9 +8,9 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
-import com.hotel.entity.Camera;
-import com.hotel.entity.Prenotazione;
-import com.hotel.service.PrenotazioneService;
+import com.hotel.entity.Reservation;
+import com.hotel.entity.Room;
+import com.hotel.service.ReservationService;
 import com.hotel.util.SwingComponentUtil;
 
 import javax.swing.JLabel;
@@ -21,16 +21,16 @@ import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.io.Serial;
 
 public class RegistroPrenotazioni extends JFrame {
 
+	@Serial
 	private static final long serialVersionUID = -4144532333900919080L;
 	private JPanel contentPane;
 	private JTextField research;
-	private DefaultListModel<Prenotazione> prenotazioni = new DefaultListModel<>();
-	private JList<Prenotazione> prenotazioniJList;
+	private DefaultListModel<Reservation> prenotazioni = new DefaultListModel<>();
+	private JList<Reservation> prenotazioniJList;
 	private JScrollPane scrollPane = new JScrollPane();
 	
 	private JLabel id;
@@ -50,9 +50,9 @@ public class RegistroPrenotazioni extends JFrame {
 	private JLabel depositPaidResult;
 	private JLabel totalResult;
 	
-	public RegistroPrenotazioni(PrenotazioneService prenotazioneService) {
+	public RegistroPrenotazioni(ReservationService reservationService) {
 		SwingComponentUtil.addHotelIcons(this);
-		prenotazioni.addAll(prenotazioneService.getAll());
+		prenotazioni.addAll(reservationService.getAll());
 		prenotazioniJList = new JList<>(prenotazioni);
 		scrollPane.setViewportView(prenotazioniJList);
 		
@@ -95,11 +95,7 @@ public class RegistroPrenotazioni extends JFrame {
 		research.setColumns(10);
 		
 		JButton btnNewButton = new JButton("ricerca");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				searchResults(research.getText());
-			}
-		});
+		btnNewButton.addActionListener(e -> searchResults(research.getText()));
 		btnNewButton.setForeground(new Color(0, 128, 128));
 		btnNewButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnNewButton.setBackground(new Color(176, 224, 230));
@@ -186,7 +182,7 @@ public class RegistroPrenotazioni extends JFrame {
 		phoneNumberLabel_1.setBounds(1012, 299, 205, 28);
 		resultPanel.add(phoneNumberLabel_1);
 		
-		JLabel sourceSpinner_1 = new JLabel("fonte prenotazione");
+		JLabel sourceSpinner_1 = new JLabel("SOURCE prenotazione");
 		sourceSpinner_1.setForeground(new Color(224, 255, 255));
 		sourceSpinner_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		sourceSpinner_1.setBounds(1014, 413, 205, 28);
@@ -321,12 +317,7 @@ public class RegistroPrenotazioni extends JFrame {
 		scrollPane.setColumnHeaderView(titleJListLabel);
 		
 		JButton btnNewButton_1_1 = new JButton("mostra dati");
-		btnNewButton_1_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showSelectedBookingData();
-				
-			}
-		});
+		btnNewButton_1_1.addActionListener(e -> showSelectedBookingData());
 		btnNewButton_1_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnNewButton_1_1.setBackground(new Color(224, 255, 255));
 		btnNewButton_1_1.setForeground(new Color(0, 128, 128));
@@ -357,7 +348,7 @@ public class RegistroPrenotazioni extends JFrame {
 		
 		JOptionPane.showMessageDialog(null, "AVVIO RICERCA");
 		
-		DefaultListModel<Prenotazione> prenotazioniFiltrate = new DefaultListModel<>();
+		DefaultListModel<Reservation> prenotazioniFiltrate = new DefaultListModel<>();
 		
 		for (int i = 0; i < prenotazioni.size(); i++)
 		{
@@ -398,26 +389,26 @@ public class RegistroPrenotazioni extends JFrame {
 			yn = JOptionPane.showConfirmDialog(null, "VUOI VISUALIZZARE LE INFORMAZIONI DELLA PRENOTAZIONE SELEZIONATA?","MOSTRA INFO PRENOTAZIONE",JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION)
 			{
-				Prenotazione prenotazione = prenotazioniJList.getSelectedValue();
-				id.setText(Long.toString(prenotazione.getId()));
-				reference.setText(prenotazione.getCognome());
-				checkIn.setText(prenotazione.getDataInizio().toString());
-				checkout.setText(prenotazione.getDataFine().toString());
-				adultNumberResult.setText(Integer.toString(prenotazione.getNumeroDiAdulti()));
-				teenagersNumberResult.setText(Integer.toString(prenotazione.getNumeroDiMinori()));
-				childrenNumberResult.setText(Integer.toString(prenotazione.getNumeroDiBambini()));
-				animalNumberResult.setText(Integer.toString(prenotazione.getNumeroAnimali()));
-				phoneNumberResult.setText(prenotazione.getNumeroDiTelefono());
-				emailResult.setText(prenotazione.getEmail());
-				typeBoardResult.setText(prenotazione.getPensione().name());
-				sourceResult.setText(prenotazione.getFonte().name());
-				paymentTypeResult.setText(prenotazione.getPagato().name());
-				depositPaidResult.setText(prenotazione.getDeposito().toString());
-				totalResult.setText(prenotazione.getCostoTotale().toString());
+				Reservation reservation = prenotazioniJList.getSelectedValue();
+				id.setText(Long.toString(reservation.getId()));
+				reference.setText(reservation.getSurname());
+				checkIn.setText(reservation.getStartDate().toString());
+				checkout.setText(reservation.getEndDate().toString());
+				adultNumberResult.setText(Integer.toString(reservation.getNumberOfAdults()));
+				teenagersNumberResult.setText(Integer.toString(reservation.getNumberOfMinors()));
+				childrenNumberResult.setText(Integer.toString(reservation.getNumberOfChilds()));
+				animalNumberResult.setText(Integer.toString(reservation.getNumberOfPets()));
+				phoneNumberResult.setText(reservation.getPhoneNumber());
+				emailResult.setText(reservation.getEmail());
+				typeBoardResult.setText(reservation.getBoard().name());
+				sourceResult.setText(reservation.getSource().name());
+				paymentTypeResult.setText(reservation.getPaid().name());
+				depositPaidResult.setText(reservation.getDeposit().toString());
+				totalResult.setText(reservation.getTotalCost().toString());
 				
 				String s = "";
-				for (Camera camera : prenotazione.getCamere())
-					s += camera.getNumero() + " ";
+				for (Room room : reservation.getRooms())
+					s += room.getNumber() + " ";
 				
 				rooms.setText(s);
 				
@@ -427,26 +418,26 @@ public class RegistroPrenotazioni extends JFrame {
 		else JOptionPane.showMessageDialog(null, "SELEZIONA LA PRENOTAZIONE DI CUI SI VOGLIONO VEDERE LE INFORMAZIONI");
 	}
 	
-	public void showRequiredData(Prenotazione prenotazione) {
-		id.setText(Long.toString(prenotazione.getId()));
-		reference.setText(prenotazione.getCognome());
-		checkIn.setText(prenotazione.getDataInizio().toString());
-		checkout.setText(prenotazione.getDataFine().toString());
-		adultNumberResult.setText(Integer.toString(prenotazione.getNumeroDiAdulti()));
-		teenagersNumberResult.setText(Integer.toString(prenotazione.getNumeroDiMinori()));
-		childrenNumberResult.setText(Integer.toString(prenotazione.getNumeroDiBambini()));
-		animalNumberResult.setText(Integer.toString(prenotazione.getNumeroAnimali()));
-		phoneNumberResult.setText(prenotazione.getNumeroDiTelefono());
-		emailResult.setText(prenotazione.getEmail());
-		typeBoardResult.setText(prenotazione.getPensione().name());
-		sourceResult.setText(prenotazione.getFonte().name());
-		paymentTypeResult.setText(prenotazione.getPagato().name());
-		depositPaidResult.setText(prenotazione.getDeposito().toString());
-		totalResult.setText(prenotazione.getCostoTotale().toString());
+	public void showRequiredData(Reservation reservation) {
+		id.setText(Long.toString(reservation.getId()));
+		reference.setText(reservation.getSurname());
+		checkIn.setText(reservation.getStartDate().toString());
+		checkout.setText(reservation.getEndDate().toString());
+		adultNumberResult.setText(Integer.toString(reservation.getNumberOfAdults()));
+		teenagersNumberResult.setText(Integer.toString(reservation.getNumberOfMinors()));
+		childrenNumberResult.setText(Integer.toString(reservation.getNumberOfChilds()));
+		animalNumberResult.setText(Integer.toString(reservation.getNumberOfPets()));
+		phoneNumberResult.setText(reservation.getPhoneNumber());
+		emailResult.setText(reservation.getEmail());
+		typeBoardResult.setText(reservation.getBoard().name());
+		sourceResult.setText(reservation.getSource().name());
+		paymentTypeResult.setText(reservation.getPaid().name());
+		depositPaidResult.setText(reservation.getDeposit().toString());
+		totalResult.setText(reservation.getTotalCost().toString());
 		
 		String s = "";
-		for (Camera camera : prenotazione.getCamere())
-			s += camera.getNumero() + " ";
+		for (Room room : reservation.getRooms())
+			s += room.getNumber() + " ";
 		
 		rooms.setText(s);
 	}

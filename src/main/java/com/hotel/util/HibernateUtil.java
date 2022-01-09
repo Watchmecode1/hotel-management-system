@@ -10,11 +10,6 @@ import org.hibernate.service.ServiceRegistry;
 
 import com.hotel.entity.*;
 
-/**
- * Classe per i settings del framework Hibernate.
- *
- * @author Matthew Mazzotta
- */
 public class HibernateUtil {
 
 	private static SessionFactory sessionFactory;
@@ -27,7 +22,7 @@ public class HibernateUtil {
 				Properties settings = new Properties();
 				settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
 				settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
-				settings.put(Environment.URL, "jdbc:mysql://localhost:3306/faggio_rosso?useSSL=false&amp");
+				settings.put(Environment.URL, "jdbc:mysql://localhost:3306/hotel?useSSL=false&amp");
 				settings.put(Environment.USER, "root");
 				settings.put(Environment.PASS, "");
 				settings.put(Environment.SHOW_SQL, "true");
@@ -38,15 +33,15 @@ public class HibernateUtil {
 				
 				configuration.setProperties(settings);
 				
-				configuration.addAnnotatedClass(Cliente.class);
-				configuration.addAnnotatedClass(Documento.class);
-				configuration.addAnnotatedClass(Prodotto.class);
-				configuration.addAnnotatedClass(Camera.class);
-				configuration.addAnnotatedClass(Prenotazione.class);
-				configuration.addAnnotatedClass(Consumazione.class);
-				configuration.addAnnotatedClass(Magazzino.class);
-				configuration.addAnnotatedClass(Ordine.class);
-				configuration.addAnnotatedClass(TipoCamera.class);
+				configuration.addAnnotatedClass(Customer.class);
+				configuration.addAnnotatedClass(Document.class);
+				configuration.addAnnotatedClass(Product.class);
+				configuration.addAnnotatedClass(Room.class);
+				configuration.addAnnotatedClass(Reservation.class);
+				configuration.addAnnotatedClass(Consumption.class);
+				configuration.addAnnotatedClass(Warehouse.class);
+				configuration.addAnnotatedClass(Order.class);
+				configuration.addAnnotatedClass(RoomType.class);
 				
 				ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 						.applySettings(configuration.getProperties()).build();

@@ -8,8 +8,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
-import com.hotel.entity.Cliente;
-import com.hotel.service.ClienteService;
+import com.hotel.entity.Customer;
+import com.hotel.service.CustomerService;
 import com.hotel.util.SwingComponentUtil;
 
 import javax.swing.JLabel;
@@ -20,9 +20,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import java.awt.event.ActionListener;
 import java.io.Serial;
-import java.awt.event.ActionEvent;
 
 public class RegistroClienti extends JFrame {
 
@@ -31,8 +29,8 @@ public class RegistroClienti extends JFrame {
 	private JPanel contentPane;
 	private JTextField research;
 	
-	private DefaultListModel<Cliente> customers = new DefaultListModel<>();
-	private JList<Cliente> customersJList;
+	private DefaultListModel<Customer> customers = new DefaultListModel<>();
+	private JList<Customer> customersJList;
 	private JScrollPane scrollPane = new JScrollPane();
 	
 	private JLabel bookingResult;
@@ -51,9 +49,9 @@ public class RegistroClienti extends JFrame {
 	private JLabel idReleaseSource;
 	private JLabel idReleasePlace;
 
-	public RegistroClienti(ClienteService clienteService) {
+	public RegistroClienti(CustomerService customerService) {
 		SwingComponentUtil.addHotelIcons(this);
-		customers.addAll(clienteService.getAll());
+		customers.addAll(customerService.getAll());
 		customersJList = new JList<>(customers);
 		scrollPane.setViewportView(customersJList);
 		
@@ -96,11 +94,7 @@ public class RegistroClienti extends JFrame {
 		research.setColumns(10);
 		
 		JButton btnNewButton = new JButton("ricerca");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				searchResults(research.getText());
-			}
-		});
+		btnNewButton.addActionListener(e -> searchResults(research.getText()));
 		btnNewButton.setForeground(new Color(0, 128, 128));
 		btnNewButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnNewButton.setBackground(new Color(176, 224, 230));
@@ -326,11 +320,7 @@ public class RegistroClienti extends JFrame {
 		scrollPane.setColumnHeaderView(titleJListLabel);
 		
 		JButton btnNewButton_1_1 = new JButton("mostra dati");
-		btnNewButton_1_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showCustomerSelectedData();
-			}
-		});
+		btnNewButton_1_1.addActionListener(e -> showCustomerSelectedData());
 		btnNewButton_1_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnNewButton_1_1.setBackground(new Color(224, 255, 255));
 		btnNewButton_1_1.setForeground(new Color(0, 128, 128));
@@ -352,21 +342,21 @@ public class RegistroClienti extends JFrame {
 			yn = JOptionPane.showConfirmDialog(null, "VUOI VEDERE LE INFORMAZIONI RELATIVI AL CLIENTE SELEZIONATO?","MOSTRA INFO CLIENTE", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION)
 			{
-				Cliente cliente = customersJList.getSelectedValue();
-				surname.setText(cliente.getCognome());
-				name.setText(cliente.getNome());
-				dateOfBirth.setText(cliente.getDataDiNascita().toString());
-				stateOfBirth.setText(cliente.getStatoDiNascita());
-				placeOfBirth.setText(cliente.getComuneDiNascita());
-				citizenship.setText(cliente.getCittadinanza());
-				ageType.setText(cliente.getEta().name());
-				gender.setText(cliente.getSesso().name());
-				idType.setText(cliente.getDocumento().getTipoDocumento().name());
-				idNumber.setText(cliente.getDocumento().getNumero());
-				releaseIdDate.setText(cliente.getDocumento().getDataDiRilascio().toString());
-				expireIdDate.setText(cliente.getDocumento().getDataDiScadenza().toString());
-				idReleaseSource.setText(cliente.getDocumento().getRilascio().name());
-				idReleasePlace.setText(cliente.getDocumento().getLuogoDiRilascio());
+				Customer customer = customersJList.getSelectedValue();
+				surname.setText(customer.getSurname());
+				name.setText(customer.getName());
+				dateOfBirth.setText(customer.getDateOfBirth().toString());
+				stateOfBirth.setText(customer.getStateOfBirth());
+				placeOfBirth.setText(customer.getBirthplace());
+				citizenship.setText(customer.getCitizenship());
+				ageType.setText(customer.getAge().name());
+				gender.setText(customer.getGender().name());
+				idType.setText(customer.getDocument().getDocumentType().name());
+				idNumber.setText(customer.getDocument().getNumber());
+				releaseIdDate.setText(customer.getDocument().getReleaseDate().toString());
+				expireIdDate.setText(customer.getDocument().getExpirationDate().toString());
+				idReleaseSource.setText(customer.getDocument().getRelease().name());
+				idReleasePlace.setText(customer.getDocument().getPlaceOfIssue());
 				
 				JOptionPane.showMessageDialog(null, "DATI CARICATI");
 			}
@@ -379,7 +369,7 @@ private void searchResults(String charSeq) {
 		
 		JOptionPane.showMessageDialog(null, "AVVIO RICERCA");
 		
-		DefaultListModel<Cliente> clientiFiltrati = new DefaultListModel<>();
+		DefaultListModel<Customer> clientiFiltrati = new DefaultListModel<>();
 		
 		for (int i = 0; i < customers.size(); i++)
 		{

@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class NoScalingIcon implements Icon {
 	
-    private Icon icon;
+    private final Icon icon;
 
     public NoScalingIcon(Icon icon)
     {
@@ -38,8 +38,6 @@ public class NoScalingIcon implements Icon {
 
         int locationX = scaleX + offsetX;
         int locationY = scaleY + offsetY;
-
-        //  Reset scaling to 1.0 by concatenating an inverse scale transfom
 
         AffineTransform scaled = AffineTransform.getScaleInstance(1.0 / at.getScaleX(), 1.0 / at.getScaleY());
         at.concatenate( scaled );

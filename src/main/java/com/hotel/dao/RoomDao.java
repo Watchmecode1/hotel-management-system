@@ -1,76 +1,69 @@
 package com.hotel.dao;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.hotel.entity.Room;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-import com.hotel.entity.Camera;
 import com.hotel.util.HibernateUtil;
 
-/**
- *
- *
- * @author Matthew Mazzotta
- */
-public class CameraDao {
+public class RoomDao {
 
-	public void saveCamera(Camera camera) {
+	public void saveRoom(Room room) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		session.saveOrUpdate(camera);
+		session.saveOrUpdate(room);
 		session.getTransaction().commit();
 	}
 	
-	public void deleteCamera(Camera camera) {
+	public void deleteRoom(Room room) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		session.delete(camera);
+		session.delete(room);
 		session.getTransaction().commit();
 	}
 	
-	public List<Camera> getAll() {
-		List<Camera> camere = new ArrayList<>();
+	public List<Room> getAll() {
+		List<Room> camere;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		camere = session.createQuery("from Camera", Camera.class).getResultList();
+		camere = session.createQuery("from Room", Room.class).getResultList();
 		session.getTransaction().commit();
 		return camere;
 	}
 	
-	public Camera getByNumero(int numero) {
+	public Room getByNumber(int number) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		Camera camera = session.get(Camera.class, numero);
+		Room room = session.get(Room.class, number);
 		session.getTransaction().commit();
-		return camera;
+		return room;
 	}
 	
-	private Camera getByNumero(Integer numero) {
-		return getByNumero((int) numero);
+	private Room getByNumber(Integer number) {
+		return getByNumber((int) number);
 	}
 	
-	public Set<Camera> findAvailableRooms(LocalDate startDate, LocalDate endDate) {
-		Set<Camera> availableRooms = new HashSet<>();
+	public Set<Room> findAvailableRooms(LocalDate startDate, LocalDate endDate) {
+		Set<Room> availableRooms;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		
 		String queryString = """
-				SELECT c.numero
-				FROM Camera c
+				SELECT c.number
+				FROM Room c
 				WHERE
-					c.numero NOT IN (SELECT c.numero
-									FROM Prenotazione p, Prenotazione_camera pc, Camera c
+					c.number NOT IN (SELECT c.number
+									FROM Reservation p, Reservation_room pc, Room c
 									WHERE
-											p.id = pc.prenotazione_id
-										AND c.numero = pc.camere_numero
-										AND :startDate < p.dataFine
-										AND :endDate > p.dataInizio)
+											p.id = pc.reservation_id
+										AND c.number = pc.rooms_number
+										AND :startDate < p.endDate
+										AND :endDate > p.startDate)
 				""";
 		Query<Integer> query = session.createNativeQuery(queryString, Integer.class);
 		query.setParameter("startDate", startDate);
@@ -80,7 +73,7 @@ public class CameraDao {
 		
 		session.getTransaction().commit();
 		
-		availableRooms = availableRoomsNumbers.stream().map(this::getByNumero).collect(Collectors.toSet());
+		availableRooms = availableRoomsNumbers.stream().map(this::getByNumber).collect(Collectors.toSet());
 		
 		return availableRooms;
 	}

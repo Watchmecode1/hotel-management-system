@@ -1,35 +1,34 @@
 package com.hotel.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
 
-import com.hotel.entity.TipoCamera;
-import com.hotel.entity.TipoCamera.Tipo;
+import com.hotel.entity.RoomType;
+import com.hotel.entity.RoomType.Type;
 import com.hotel.util.HibernateUtil;
 
-public class TipoCameraDao {
-	public void saveTipoCamera(TipoCamera tipoCamera) {
+public class RoomTypeDao {
+	public void saveRoomType(RoomType roomType) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		session.saveOrUpdate(tipoCamera);
+		session.saveOrUpdate(roomType);
 		session.getTransaction().commit();
 	}
 	
-	public TipoCamera getById(Tipo tipo) {
+	public RoomType getById(Type type) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		TipoCamera tipoCamera = session.get(TipoCamera.class, tipo);
+		RoomType roomType = session.get(RoomType.class, type);
 		session.getTransaction().commit();
-		return tipoCamera;
+		return roomType;
 	}
 	
-	public List<TipoCamera> getAll() {
-		List<TipoCamera> tipiCamere = new ArrayList<>();
+	public List<RoomType> getAll() {
+		List<RoomType> tipiCamere;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		tipiCamere = session.createQuery("from TipoCamera", TipoCamera.class).getResultList();
+		tipiCamere = session.createQuery("from RoomType", RoomType.class).getResultList();
 		session.getTransaction().commit();
 		return tipiCamere;
 	}

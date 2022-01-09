@@ -10,9 +10,9 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
-import com.hotel.entity.Ordine;
-import com.hotel.service.OrdineService;
-import com.hotel.service.ProdottoService;
+import com.hotel.entity.Order;
+import com.hotel.service.OrderService;
+import com.hotel.service.ProductService;
 import com.hotel.util.Checks;
 import com.hotel.util.DateUtils;
 import com.hotel.util.SwingComponentUtil;
@@ -25,10 +25,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import java.awt.event.ActionListener;
 import java.io.Serial;
 import java.math.BigDecimal;
-import java.awt.event.ActionEvent;
 
 public class Storage extends JFrame {
 
@@ -45,10 +43,10 @@ public class Storage extends JFrame {
 	
 	private ExpiresPage expiresPage;
 	
-	private DefaultListModel<Ordine> orders = new DefaultListModel<>();
-	private JList<Ordine> ordersJList;
+	private DefaultListModel<Order> orders = new DefaultListModel<>();
+	private JList<Order> ordersJList;
 
-	public Storage(OrdineService ordineService, ProdottoService prodottoService) {
+	public Storage(OrderService orderService, ProductService productService) {
 		SwingComponentUtil.addHotelIcons(this);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -173,11 +171,7 @@ public class Storage extends JFrame {
 		panel.add(price);
 		
 		JButton addOrdersButton = new JButton("Aggiungi Ordine");
-		addOrdersButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addOrder(ordineService, prodottoService);
-			}
-		});
+		addOrdersButton.addActionListener(e -> addOrder(orderService, productService));
 		addOrdersButton.setBackground(new Color(224, 255, 255));
 		addOrdersButton.setForeground(new Color(0, 128, 128));
 		addOrdersButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
@@ -185,11 +179,7 @@ public class Storage extends JFrame {
 		panel.add(addOrdersButton);
 		
 		JButton btnModificaOrdine = new JButton("Modifica Ordine");
-		btnModificaOrdine.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				modifyOrder();
-			}
-		});
+		btnModificaOrdine.addActionListener(e -> modifyOrder());
 		btnModificaOrdine.setForeground(new Color(0, 128, 128));
 		btnModificaOrdine.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnModificaOrdine.setBackground(new Color(224, 255, 255));
@@ -197,11 +187,7 @@ public class Storage extends JFrame {
 		panel.add(btnModificaOrdine);
 		
 		JButton btnEliminaOrdine = new JButton("Elimina Ordine");
-		btnEliminaOrdine.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				deleteOrder(ordineService);
-			}
-		});
+		btnEliminaOrdine.addActionListener(e -> deleteOrder(orderService));
 		btnEliminaOrdine.setForeground(new Color(0, 128, 128));
 		btnEliminaOrdine.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnEliminaOrdine.setBackground(new Color(224, 255, 255));
@@ -230,7 +216,7 @@ public class Storage extends JFrame {
 		scrollPane.setBounds(477, 104, 1036, 585);
 		contentPane.add(scrollPane);
 		
-		orders.addAll(ordineService.getAll());
+		orders.addAll(orderService.getAll());
 		ordersJList = new JList<>(orders);
 		ordersJList.setSelectionForeground(new Color(0, 139, 139));
 		ordersJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -246,11 +232,7 @@ public class Storage extends JFrame {
 		scrollPane.setColumnHeaderView(lblListaOrdini);
 		
 		JButton btnMostraProdottiIn = new JButton("Mostra Prodotti in Scadenza");
-		btnMostraProdottiIn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				expiresPage = new ExpiresPage(ordineService);
-			}
-		});
+		btnMostraProdottiIn.addActionListener(e -> expiresPage = new ExpiresPage(orderService));
 		btnMostraProdottiIn.setForeground(new Color(0, 128, 128));
 		btnMostraProdottiIn.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnMostraProdottiIn.setBackground(new Color(224, 255, 255));
@@ -260,16 +242,16 @@ public class Storage extends JFrame {
 		setVisible(true);
 	}
 	
-	private void addOrder(OrdineService ordineService, ProdottoService prodottoService) {
+	private void addOrder(OrderService orderService, ProductService productService) {
 		if(checkInputFields()) {
 			int yn;
 			yn = JOptionPane.showConfirmDialog(null, "VUOI AGGIUNGERE L'ORDINE IN INVENTARIO?", "AGGIUNGI ORDINE", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION) {
-				Ordine order = new Ordine(batchId.getText(), supplier.getText(), DateUtils.convertDateToLocalDate(deliveryDate.getDate()),
+				Order order = new Order(batchId.getText(), supplier.getText(), DateUtils.convertDateToLocalDate(deliveryDate.getDate()),
 						DateUtils.convertDateToLocalDate(expireDate.getDate()), productName.getText(),
-						Integer.valueOf(amount.getText()), BigDecimal.valueOf(Double.valueOf(price.getText())));
+						Integer.parseInt(amount.getText()), BigDecimal.valueOf(Double.parseDouble(price.getText())));
 					
-					ordineService.saveOrdine(order);
+					orderService.saveOrder(order);
 					orders.addElement(order);
 					refreshOrdersList();
 						
@@ -280,14 +262,14 @@ public class Storage extends JFrame {
 		else JOptionPane.showMessageDialog(null, "COMPILA TUTTI GLI ATTRIBUTI PER AGGIUNGERE UN ORDINE");
 	}
 	
-	private void deleteOrder(OrdineService ordineService) {
-		Ordine ordine = ordersJList.getSelectedValue();
-		if (ordine != null) {
+	private void deleteOrder(OrderService orderService) {
+		Order order = ordersJList.getSelectedValue();
+		if (order != null) {
 			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "VUOI ELIMINARE L'ORDINE SELEZIONATO?", "ELIMINA ORDINE", JOptionPane.YES_OPTION);
+			yn = JOptionPane.showConfirmDialog(null, "VUOI ELIMINARE L'ORDINE SELEZIONATO?", "ELIMINA ORDINE", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION) {
-					ordineService.deleteOrdine(ordine);
-					orders.removeElement(ordine);
+					orderService.deleteOrder(order);
+					orders.removeElement(order);
 					refreshOrdersList();
 					
 					JOptionPane.showMessageDialog(null, "ORDINE CANCELLATO");
@@ -302,15 +284,15 @@ public class Storage extends JFrame {
 			int yn;
 			yn = JOptionPane.showConfirmDialog(null, "VUOI MODIFICARE l'ORDINE SELEZIONATO?", "MODIFICA ORDINE", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION) {
-				Ordine ordine = ordersJList.getSelectedValue();
+				Order order = ordersJList.getSelectedValue();
 				
-				batchId.setText(ordine.getNumeroLotto());
-				supplier.setText(ordine.getFornitore());
-				deliveryDate.setDate(DateUtils.convertLocalDateToDate(ordine.getDataConsegna()));
-				productName.setText(ordine.getNomeProdotto());
-				amount.setText(ordine.getQuantita() + "");
-				expireDate.setDate(DateUtils.convertLocalDateToDate(ordine.getDataScadenza()));
-				price.setText(Double.toString(ordine.getPrezzo().doubleValue()));
+				batchId.setText(order.getBatchNumber());
+				supplier.setText(order.getSupplier());
+				deliveryDate.setDate(DateUtils.convertLocalDateToDate(order.getDeliveryDate()));
+				productName.setText(order.getProductName());
+				amount.setText(order.getQuantity() + "");
+				expireDate.setDate(DateUtils.convertLocalDateToDate(order.getExpirationDate()));
+				price.setText(Double.toString(order.getPrice().doubleValue()));
 				
 				JOptionPane.showMessageDialog(null, "MODIFICA ABILITATA");
 			}

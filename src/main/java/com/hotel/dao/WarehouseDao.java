@@ -2,27 +2,22 @@ package com.hotel.dao;
 
 import org.hibernate.Session;
 
-import com.hotel.entity.Magazzino;
+import com.hotel.entity.Warehouse;
 import com.hotel.util.HibernateUtil;
 
-/**
- *
- *
- * @author Matthew Mazzotta
- */
-public class MagazzinoDao {
+public class WarehouseDao {
 
-	public void saveMagazzino(Magazzino magazzino) {
+	public void saveWarehouse(Warehouse warehouse) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		session.saveOrUpdate(magazzino);
+		session.saveOrUpdate(warehouse);
 		session.getTransaction().commit();
 	}
 	
-	public void deleteMagazzino(Magazzino magazzino) {
+	public void deleteWarehouse(Warehouse warehouse) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		session.delete(magazzino);
+		session.delete(warehouse);
 		session.getTransaction().commit();
 	}
 }

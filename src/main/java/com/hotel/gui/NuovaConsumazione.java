@@ -8,11 +8,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import com.hotel.entity.Consumazione;
-import com.hotel.entity.Prenotazione;
-import com.hotel.entity.Prodotto;
-import com.hotel.service.ConsumazioneService;
-import com.hotel.service.ProdottoService;
+import com.hotel.entity.Consumption;
+import com.hotel.entity.Reservation;
+import com.hotel.entity.Product;
+import com.hotel.service.ConsumptionService;
+import com.hotel.service.ProductService;
 import com.hotel.util.SwingComponentUtil;
 
 import javax.swing.JScrollPane;
@@ -24,22 +24,20 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JSpinner;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.io.Serial;
-import java.awt.event.ActionEvent;
 
 public class NuovaConsumazione extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = -2732123696809924171L;
 	private JSpinner productAmountSpinner;
-	private DefaultListModel<Prodotto> products = new DefaultListModel<>();
-	private JList<Prodotto> productsJList;
+	private DefaultListModel<Product> products = new DefaultListModel<>();
+	private JList<Product> productsJList;
 	private JScrollPane productsScrollPane = new JScrollPane();
 
-	public NuovaConsumazione(int x, int y, Prenotazione prenotazione, ConsumazioneService consumazioneService, ProdottoService prodottoService) {
+	public NuovaConsumazione(int x, int y, Reservation reservation, ConsumptionService consumptionService, ProductService productService) {
 		SwingComponentUtil.addHotelIcons(this);
-		products.addAll(prodottoService.getAll());
+		products.addAll(productService.getAll());
 		productsJList  = new JList<>(products);
 		productsScrollPane.setViewportView(productsJList);
 		
@@ -88,11 +86,7 @@ public class NuovaConsumazione extends JFrame {
 		consummationPanel.add(productAmountSpinner);
 		
 		JButton addConsummationButton = new JButton("Aggiungi consumazione");
-		addConsummationButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addConsumazioneToPrenotazione(prenotazione, consumazioneService);
-			}
-		});
+		addConsummationButton.addActionListener(e -> addConsumazioneToPrenotazione(reservation, consumptionService));
 		addConsummationButton.setBackground(new Color(224, 255, 255));
 		addConsummationButton.setForeground(new Color(0, 128, 128));
 		addConsummationButton.setFont(new Font("Harlow Solid Italic", Font.BOLD, 25));
@@ -102,19 +96,19 @@ public class NuovaConsumazione extends JFrame {
 		setVisible(true);
 	}
 	
-	private void addConsumazioneToPrenotazione(Prenotazione prenotazione, ConsumazioneService consumazioneService) {
-		Prodotto selectedProduct = productsJList.getSelectedValue();
+	private void addConsumazioneToPrenotazione(Reservation reservation, ConsumptionService consumptionService) {
+		Product selectedProduct = productsJList.getSelectedValue();
 		int selectedAmount = (int) productAmountSpinner.getValue();
 		if(selectedProduct != null) {
 			if(selectedAmount <= 0) JOptionPane.showMessageDialog(null, "INSERISCI UNA QUANTITA' VALIDA");
 			else {
 				//TODO aggiusta
-				Consumazione consumazione = new Consumazione(prenotazione, selectedProduct, selectedAmount);
+				Consumption consumption = new Consumption(reservation, selectedProduct, selectedAmount);
 				
 				int yn;
-				yn = JOptionPane.showConfirmDialog(null, "VUOI AGGIUNGERE " + selectedAmount + " " + consumazione.getNomeProdotto().toUpperCase() + " ALLA PRENOTAZIONE?", "AGGIUNGI CONSUMAZIONE", JOptionPane.YES_NO_OPTION);
+				yn = JOptionPane.showConfirmDialog(null, "VUOI AGGIUNGERE " + selectedAmount + " " + consumption.getProductName().toUpperCase() + " ALLA PRENOTAZIONE?", "AGGIUNGI CONSUMAZIONE", JOptionPane.YES_NO_OPTION);
 				if (yn == JOptionPane.YES_OPTION) {
-					consumazioneService.saveConsumazione(consumazione);
+					consumptionService.saveConsumption(consumption);
 					JOptionPane.showMessageDialog(null, "LA CONSUMAZIONE E'STATA AGGIUNTA CORRETTAMENTE");
 				}
 				else

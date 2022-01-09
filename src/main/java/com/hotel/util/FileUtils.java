@@ -20,15 +20,14 @@ import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
 
-import com.hotel.entity.Cliente;
-import com.hotel.entity.Documento;
-import com.hotel.entity.Prenotazione;
-import com.hotel.entity.Cliente.Alloggiato;
+import com.hotel.entity.Customer;
+import com.hotel.entity.Document;
+import com.hotel.entity.Reservation;
+import com.hotel.entity.Customer.Housed;
 import com.hotel.exception.GuiInputFieldValueException;
-import com.hotel.service.PrenotazioneService;
+import com.hotel.service.ReservationService;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 
 
@@ -86,8 +85,8 @@ public class FileUtils {
 		return statiAndComuniModel;
 	}
 	
-	public static void writePDFAndOpen(Prenotazione prenotazione) throws IOException {
-		Path pdfFilePath = Paths.get(PDF_DIRECTORY_PATH.toString() + File.separatorChar + prenotazione.getCognome().toUpperCase() + prenotazione.getDataInizio().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + PDF_FILE_EXTENSION);
+	public static void writePDFAndOpen(Reservation reservation) throws IOException {
+		Path pdfFilePath = Paths.get(PDF_DIRECTORY_PATH.toString() + File.separatorChar + reservation.getSurname().toUpperCase() + reservation.getStartDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + PDF_FILE_EXTENSION);
 		
 		if(!Files.exists(PDF_DIRECTORY_PATH))
         	Files.createDirectory(PDF_DIRECTORY_PATH);
@@ -95,9 +94,9 @@ public class FileUtils {
 				Files.createFile(pdfFilePath);
 		
 		try(PdfWriter pdfWriter = new PdfWriter(pdfFilePath.toFile());
-				PdfDocument pdfDocument = new PdfDocument(pdfWriter);
-				Document document = new Document(pdfDocument)) {
-            document.add(new Paragraph(prenotazione.getPdf()));
+			PdfDocument pdfDocument = new PdfDocument(pdfWriter);
+			com.itextpdf.layout.Document document = new com.itextpdf.layout.Document(pdfDocument)) {
+            document.add(new Paragraph(reservation.getPdf()));
 
             Desktop.getDesktop().open(pdfFilePath.toFile());
 		} catch(IOException e1) {
@@ -106,10 +105,10 @@ public class FileUtils {
 	}
 	
 	public static void writeSitraAndOpen(LocalDate localDate) {
-		PrenotazioneService prenotazioneService = new PrenotazioneService();
-		List<Prenotazione> prenotazioni = prenotazioneService.getPrenotazioneByDataInizio(localDate);
+		ReservationService reservationService = new ReservationService();
+		List<Reservation> prenotazioni = reservationService.getReservationByStartDate(localDate);
 		String sitra = prenotazioni.stream()
-										.map(prenotazione -> sortClienti(prenotazione.getClienti()).stream()
+										.map(prenotazione -> sortClienti(prenotazione.getCustomers()).stream()
 																					.map(cliente -> getSitraLine(cliente, prenotazione))
 																					.collect(Collectors.joining("")))
 										.collect(Collectors.joining(""));
@@ -128,14 +127,14 @@ public class FileUtils {
 		}
 	}
 	
-	private static List<Cliente> sortClienti(Set<Cliente> clienti) {
+	private static List<Customer> sortClienti(Set<Customer> clienti) {
 		if(clienti.size() == 1) return new ArrayList<>(clienti);
 		
-		List<Cliente> sortedClienti = new ArrayList<>();
-		for(Cliente cliente : clienti) {
-			if(cliente.getAlloggiato() == Alloggiato.CAPO_FAMIGLIA || cliente.getAlloggiato() == Alloggiato.CAPO_GRUPPO) {
-				sortedClienti.add(cliente);
-				clienti.remove(cliente);
+		List<Customer> sortedClienti = new ArrayList<>();
+		for(Customer customer : clienti) {
+			if(customer.getHoused() == Housed.HOUSEHOLDER || customer.getHoused() == Housed.GROUP_LEADER) {
+				sortedClienti.add(customer);
+				clienti.remove(customer);
 				break;
 			}
 		}
@@ -144,23 +143,23 @@ public class FileUtils {
 		return sortedClienti;
 	}
 	
-	private static String getSitraLine(Cliente cliente, Prenotazione prenotazione) {
+	private static String getSitraLine(Customer customer, Reservation reservation) {
 		StringBuilder sb = new StringBuilder();
-		String nomeCliente = cliente.getNome().toUpperCase();
-		String cognomeCliente = cliente.getCognome().toUpperCase();
-		String dataInizioPrenotazione = prenotazione.getDataInizio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		String dataDiNascitaCliente = cliente.getDataDiNascita().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		sb.append(cliente.getAlloggiato().getNumero())
+		String nomeCliente = customer.getName().toUpperCase();
+		String cognomeCliente = customer.getSurname().toUpperCase();
+		String dataInizioPrenotazione = reservation.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		String dataDiNascitaCliente = customer.getDateOfBirth().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		sb.append(customer.getHoused().getNumber())
 			.append(dataInizioPrenotazione)
-			.append(getDaysOfBooking(prenotazione))
+			.append(getDaysOfBooking(reservation))
 			.append(padRightSpaces(cognomeCliente, 50))
 			.append(padRightSpaces(nomeCliente, 30))
-			.append(cliente.getSesso().getNumber())
+			.append(customer.getGender().getNumber())
 			.append(dataDiNascitaCliente);
 		
-		if(cliente.getStatoDiNascita().equalsIgnoreCase("ITALIA")) {
-			String siglaProvincia = SIGLE_PROVINCE.get(cliente.getProvinciaDiNascita().toUpperCase());
-			Long codiceComune = CODICI_COMUNI.get(cliente.getComuneDiNascita().toUpperCase() + siglaProvincia);
+		if(customer.getStateOfBirth().equalsIgnoreCase("ITALIA")) {
+			String siglaProvincia = SIGLE_PROVINCE.get(customer.getCountyOfBirth().toUpperCase());
+			Long codiceComune = CODICI_COMUNI.get(customer.getBirthplace().toUpperCase() + siglaProvincia);
 			if(codiceComune == null) throw new GuiInputFieldValueException("IL COMUNE DEL CLIENTE: " + nomeCliente + " " + cognomeCliente + " NON APPARTIENE AD UNA PROVINCIA VALIDA");
 			sb.append(codiceComune)
 				.append(siglaProvincia);
@@ -168,20 +167,20 @@ public class FileUtils {
 		else
 			sb.append(" ".repeat(11));
 		
-		sb.append(CODICI_STATI.get(cliente.getStatoDiNascita().toUpperCase()))
-			.append(CODICI_STATI.get(cliente.getCittadinanza().toUpperCase()));
+		sb.append(CODICI_STATI.get(customer.getStateOfBirth().toUpperCase()))
+			.append(CODICI_STATI.get(customer.getCitizenship().toUpperCase()));
 		
-		Alloggiato alloggiato = cliente.getAlloggiato();
-		if(alloggiato == Alloggiato.CAPO_FAMIGLIA || alloggiato == Alloggiato.CAPO_GRUPPO || alloggiato == Alloggiato.OSPITE_SINGOLO) {
-			Documento documento = cliente.getDocumento();
-			sb.append(documento.getTipoDocumento().getCodice())
-				.append(padRightSpaces(documento.getNumero(), 20));
+		Housed housed = customer.getHoused();
+		if(housed == Housed.HOUSEHOLDER || housed == Housed.GROUP_LEADER || housed == Housed.SINGLE_GUEST) {
+			Document document = customer.getDocument();
+			sb.append(document.getDocumentType().getCode())
+				.append(padRightSpaces(document.getNumber(), 20));
 
-			String luogoDiRilascioDocumento = documento.getLuogoDiRilascio().toUpperCase();
+			String luogoDiRilascioDocumento = document.getPlaceOfIssue().toUpperCase();
 			if(CODICI_STATI.containsKey(luogoDiRilascioDocumento))
 				sb.append(CODICI_STATI.get(luogoDiRilascioDocumento));
 			else
-				sb.append(CODICI_COMUNI.get(luogoDiRilascioDocumento + SIGLE_PROVINCE.get(documento.getProvinciaDiRilascio())));
+				sb.append(CODICI_COMUNI.get(luogoDiRilascioDocumento + SIGLE_PROVINCE.get(document.getProvinceOfIssue())));
 		} else
 			sb.append(" ".repeat(34));
 		sb.append("\r\n");
@@ -197,8 +196,8 @@ public class FileUtils {
 		return sb.toString();
 	}
 	
-	private static String getDaysOfBooking(Prenotazione prenotazione) {
-		String days = String.valueOf(ChronoUnit.DAYS.between(prenotazione.getDataInizio(), prenotazione.getDataFine()));
+	private static String getDaysOfBooking(Reservation reservation) {
+		String days = String.valueOf(ChronoUnit.DAYS.between(reservation.getStartDate(), reservation.getEndDate()));
 		return days.length() < 2 ? 0 + days : days;
 	}
 	

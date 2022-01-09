@@ -1,27 +1,21 @@
 package com.hotel.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
 
-import com.hotel.entity.Prodotto;
+import com.hotel.entity.Product;
 import com.hotel.util.HibernateUtil;
 
-/**
- *
- *
- * @author Matthew Mazzotta
- */
-public class ProdottoDao {
+public class ProductDao {
 	
-	public void saveProdotto(Prodotto prodotto) {
+	public void saveProduct(Product product) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		session.saveOrUpdate(prodotto);
+		session.saveOrUpdate(product);
 		session.getTransaction().commit();
 	}
-	
+
 //	public void deleteProdotto(Prodotto prodotto) {
 //		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 //		session.beginTransaction();
@@ -30,20 +24,20 @@ public class ProdottoDao {
 //		session.getTransaction().commit();
 //	}
 	
-	public List<Prodotto> getAll() {
-		List<Prodotto> prodotti = new ArrayList<>();
+	public List<Product> getAll() {
+		List<Product> products;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		prodotti = session.createQuery("from Prodotto", Prodotto.class).getResultList();
+		products = session.createQuery("from Product", Product.class).getResultList();
 		session.getTransaction().commit();
-		return prodotti;
+		return products;
 	}
 	
-	public Prodotto getByNome(String nome) {
+	public Product getByName(String name) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		Prodotto prodotto = session.get(Prodotto.class, nome);
+		Product product = session.get(Product.class, name);
 		session.getTransaction().commit();
-		return prodotto;
+		return product;
 	}
 }

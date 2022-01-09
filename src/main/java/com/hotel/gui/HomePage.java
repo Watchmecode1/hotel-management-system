@@ -11,13 +11,13 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
-import com.hotel.service.CameraService;
-import com.hotel.service.ClienteService;
-import com.hotel.service.ConsumazioneService;
-import com.hotel.service.DocumentoService;
-import com.hotel.service.OrdineService;
-import com.hotel.service.PrenotazioneService;
-import com.hotel.service.ProdottoService;
+import com.hotel.service.RoomService;
+import com.hotel.service.CustomerService;
+import com.hotel.service.ConsumptionService;
+import com.hotel.service.DocumentService;
+import com.hotel.service.OrderService;
+import com.hotel.service.ReservationService;
+import com.hotel.service.ProductService;
 import com.hotel.util.FileUtils;
 import com.hotel.util.NoScalingIcon;
 import com.hotel.util.SwingComponentUtil;
@@ -30,11 +30,9 @@ import javax.swing.ImageIcon;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.Serial;
 import java.time.LocalDate;
-import java.awt.event.ActionEvent;
 
 public class HomePage extends JFrame {
 
@@ -45,25 +43,16 @@ public class HomePage extends JFrame {
 	private static final String POSTA_URL = "https://mail.ovh.net/roundcube/?_task=login";
 	private static final String ALLOGGIATI_URL = "https://alloggiatiweb.poliziadistato.it/PortaleAlloggiati/";
 	
-	private Desktop desktop = Desktop.getDesktop();
+	private final Desktop desktop = Desktop.getDesktop();
 
-	/**
-	 * Launch the application.
-	 * @throws UnsupportedLookAndFeelException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 * @throws ClassNotFoundException 
-	 */
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					HomePage frame = new HomePage();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		EventQueue.invokeLater(() -> {
+			try {
+				HomePage frame = new HomePage();
+				frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 	}
@@ -111,11 +100,7 @@ public class HomePage extends JFrame {
 		panel.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Plan");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new Planner(LocalDate.now(), new PrenotazioneService(), new CameraService(), new ConsumazioneService(), new ClienteService(), new DocumentoService());
-			}
-		});
+		btnNewButton.addActionListener(e -> new Planner(LocalDate.now(), new ReservationService(), new RoomService(), new ConsumptionService(), new CustomerService(), new DocumentService()));
 		btnNewButton.setForeground(new Color(224, 255, 255));
 		btnNewButton.setBackground(new Color(0, 128, 128));
 		btnNewButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
@@ -123,11 +108,7 @@ public class HomePage extends JFrame {
 		panel.add(btnNewButton);
 		
 		JButton btnNuovaPrenotazione = new JButton("Nuova Prenotazione");
-		btnNuovaPrenotazione.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new NuovaPrenotazione(new PrenotazioneService(), new CameraService(), new ClienteService(), new DocumentoService());
-			}
-		});
+		btnNuovaPrenotazione.addActionListener(e -> new NuovaPrenotazione(new ReservationService(), new RoomService(), new CustomerService(), new DocumentService()));
 		btnNuovaPrenotazione.setForeground(new Color(224, 255, 255));
 		btnNuovaPrenotazione.setBackground(new Color(0, 128, 128));
 		btnNuovaPrenotazione.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
@@ -135,11 +116,7 @@ public class HomePage extends JFrame {
 		panel.add(btnNuovaPrenotazione);
 		
 		JButton btnInventario = new JButton("Inventario");
-		btnInventario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new Storage(new OrdineService(), new ProdottoService());
-			}
-		});
+		btnInventario.addActionListener(e -> new Storage(new OrderService(), new ProductService()));
 		btnInventario.setForeground(new Color(224, 255, 255));
 		btnInventario.setBackground(new Color(0, 128, 128));
 		btnInventario.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
@@ -147,11 +124,7 @@ public class HomePage extends JFrame {
 		panel.add(btnInventario);
 		
 		JButton btnRegPrenotazioni = new JButton("Reg. Prenotazioni");
-		btnRegPrenotazioni.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new RegistroPrenotazioni(new PrenotazioneService());
-			}
-		});
+		btnRegPrenotazioni.addActionListener(e -> new RegistroPrenotazioni(new ReservationService()));
 		btnRegPrenotazioni.setForeground(new Color(224, 255, 255));
 		btnRegPrenotazioni.setBackground(new Color(0, 128, 128));
 		btnRegPrenotazioni.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
@@ -159,11 +132,7 @@ public class HomePage extends JFrame {
 		panel.add(btnRegPrenotazioni);
 		
 		JButton btnRegClienti = new JButton("Reg. Clienti");
-		btnRegClienti.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new RegistroClienti(new ClienteService());
-			}
-		});
+		btnRegClienti.addActionListener(e -> new RegistroClienti(new CustomerService()));
 		btnRegClienti.setForeground(new Color(224, 255, 255));
 		btnRegClienti.setBackground(new Color(0, 128, 128));
 		btnRegClienti.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
@@ -171,11 +140,7 @@ public class HomePage extends JFrame {
 		panel.add(btnRegClienti);
 		
 		JButton btnSezioneCamere = new JButton("Sezione Camere");
-		btnSezioneCamere.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new PrezziCamere();
-			}
-		});
+		btnSezioneCamere.addActionListener(e -> new PrezziCamere());
 		btnSezioneCamere.setForeground(new Color(224, 255, 255));
 		btnSezioneCamere.setBackground(new Color(0, 128, 128));
 		btnSezioneCamere.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
@@ -183,11 +148,7 @@ public class HomePage extends JFrame {
 		panel.add(btnSezioneCamere);
 		
 		JButton btnSezionePulizie = new JButton("Sezione Pulizie");
-		btnSezionePulizie.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new CleanRooms(new CameraService());
-			}
-		});
+		btnSezionePulizie.addActionListener(e -> new CleanRooms(new RoomService()));
 		btnSezionePulizie.setForeground(new Color(224, 255, 255));
 		btnSezionePulizie.setBackground(new Color(0, 128, 128));
 		btnSezionePulizie.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
@@ -195,11 +156,7 @@ public class HomePage extends JFrame {
 		panel.add(btnSezionePulizie);
 		
 		JButton btnProdotti = new JButton("Prodotti");
-		btnProdotti.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new RegistroProdotti(new ProdottoService());
-			}
-		});
+		btnProdotti.addActionListener(e -> new RegistroProdotti(new ProductService()));
 		btnProdotti.setForeground(new Color(224, 255, 255));
 		btnProdotti.setBackground(new Color(0, 128, 128));
 		btnProdotti.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
@@ -207,11 +164,7 @@ public class HomePage extends JFrame {
 		panel.add(btnProdotti);
 		
 		JButton btnSitra = new JButton("Pagina Sitra");
-		btnSitra.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				FileUtils.writeSitraAndOpen(LocalDate.now());
-			}
-		});
+		btnSitra.addActionListener(e -> FileUtils.writeSitraAndOpen(LocalDate.now()));
 		btnSitra.setForeground(new Color(224, 255, 255));
 		btnSitra.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
 		btnSitra.setBackground(new Color(0, 128, 128));
@@ -219,11 +172,9 @@ public class HomePage extends JFrame {
 		panel.add(btnSitra);
 		
 		JButton ristorazioneButton = new JButton("Ristorazione");
-		ristorazioneButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TODO migliora
-				new ElenchiRistorazione(new PrenotazioneService());
-			}
+		ristorazioneButton.addActionListener(e -> {
+			//TODO migliora
+			new ElenchiRistorazione(new ReservationService());
 		});
 		ristorazioneButton.setFont(new Font("Dialog", Font.PLAIN, 20));
 		ristorazioneButton.setForeground(new Color(224, 255, 255));
@@ -232,15 +183,11 @@ public class HomePage extends JFrame {
 		panel.add(ristorazioneButton);
 		
 		JButton btnNewButton_1 = new JButton("Booking.com");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					desktop.browse(new URI(BOOKING_URL));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (URISyntaxException e1) {
-					e1.printStackTrace();
-				}
+		btnNewButton_1.addActionListener(e -> {
+			try {
+				desktop.browse(new URI(BOOKING_URL));
+			} catch (IOException | URISyntaxException e1) {
+				e1.printStackTrace();
 			}
 		});
 		btnNewButton_1.setForeground(new Color(255, 255, 255));
@@ -250,15 +197,11 @@ public class HomePage extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Posta");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					desktop.browse(new URI(POSTA_URL));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (URISyntaxException e1) {
-					e1.printStackTrace();
-				}
+		btnNewButton_2.addActionListener(e -> {
+			try {
+				desktop.browse(new URI(POSTA_URL));
+			} catch (IOException | URISyntaxException e1) {
+				e1.printStackTrace();
 			}
 		});
 		btnNewButton_2.setForeground(new Color(255, 255, 255));
@@ -268,15 +211,11 @@ public class HomePage extends JFrame {
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_1_1 = new JButton("Whatsapp");
-		btnNewButton_1_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					desktop.browse(new URI(WHATSAPP_URL));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (URISyntaxException e1) {
-					e1.printStackTrace();
-				}
+		btnNewButton_1_1.addActionListener(e -> {
+			try {
+				desktop.browse(new URI(WHATSAPP_URL));
+			} catch (IOException | URISyntaxException e1) {
+				e1.printStackTrace();
 			}
 		});
 		btnNewButton_1_1.setForeground(Color.WHITE);
@@ -286,17 +225,13 @@ public class HomePage extends JFrame {
 		contentPane.add(btnNewButton_1_1);
 		
 		JButton btnAlloggiati = new JButton("Alloggiati Web");
-		btnAlloggiati.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					desktop.browse(new URI(ALLOGGIATI_URL));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (URISyntaxException e1) {
-					e1.printStackTrace();
-				}
-			
+		btnAlloggiati.addActionListener(e -> {
+			try {
+				desktop.browse(new URI(ALLOGGIATI_URL));
+			} catch (IOException | URISyntaxException e1) {
+				e1.printStackTrace();
 			}
+
 		});
 		btnAlloggiati.setForeground(Color.WHITE);
 		btnAlloggiati.setFont(new Font("Haettenschweiler", Font.PLAIN, 25));

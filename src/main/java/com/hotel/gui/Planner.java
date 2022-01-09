@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Serial;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -18,18 +19,16 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import com.hotel.entity.Camera;
-import com.hotel.entity.Prenotazione;
-import com.hotel.service.CameraService;
-import com.hotel.service.ClienteService;
-import com.hotel.service.ConsumazioneService;
-import com.hotel.service.DocumentoService;
-import com.hotel.service.PrenotazioneService;
+import com.hotel.entity.Reservation;
+import com.hotel.entity.Room;
+import com.hotel.service.RoomService;
+import com.hotel.service.CustomerService;
+import com.hotel.service.ConsumptionService;
+import com.hotel.service.DocumentService;
+import com.hotel.service.ReservationService;
 import com.hotel.util.SwingComponentUtil;
 
 import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -50,13 +49,13 @@ public class Planner extends JFrame {
 	private static final long serialVersionUID = -3819752603187204888L;
 	private MenuPrenotazione menuPrenotazione;
 
-	public Planner(LocalDate data, PrenotazioneService prenotazioneService, CameraService cameraService, ConsumazioneService consumazioneService, ClienteService clienteService, DocumentoService documentoService) {
+	public Planner(LocalDate data, ReservationService reservationService, RoomService roomService, ConsumptionService consumptionService, CustomerService customerService, DocumentService documentService) {
 		SwingComponentUtil.addHotelIcons(this);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-		List<Camera> camere = cameraService.getAll().stream()
-								.sorted((o1, o2) -> Integer.compare(o1.getNumero(), o2.getNumero()))
+		List<Room> camere = roomService.getAll().stream()
+								.sorted(Comparator.comparingInt(Room::getNumber))
 								.toList();
 		int numeroCamere = camere.size();
 		int numeroGiorni = data.lengthOfMonth();
@@ -76,13 +75,10 @@ public class Planner extends JFrame {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		leftButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//TODO transizione
-				new Planner(data.withDayOfMonth(1).minusMonths(1), prenotazioneService, cameraService, consumazioneService, clienteService, documentoService);
-				Planner.this.dispose();
-			}
+		leftButton.addActionListener(e -> {
+			//TODO transizione
+			new Planner(data.withDayOfMonth(1).minusMonths(1), reservationService, roomService, consumptionService, customerService, documentService);
+			Planner.this.dispose();
 		});
 		leftButton.setBackground(container.getBackground());
 		leftButton.setBorder(null);
@@ -101,12 +97,9 @@ public class Planner extends JFrame {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		rightButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new Planner(data.withDayOfMonth(1).plusMonths(1), prenotazioneService, cameraService, consumazioneService, clienteService, documentoService);
-				Planner.this.dispose();
-			}
+		rightButton.addActionListener(e -> {
+			new Planner(data.withDayOfMonth(1).plusMonths(1), reservationService, roomService, consumptionService, customerService, documentService);
+			Planner.this.dispose();
 		});
 		rightButton.setBackground(container.getBackground());
 		rightButton.setBorder(null);
@@ -168,27 +161,27 @@ public class Planner extends JFrame {
 					}
 				} else {
 					if(column == 0) {
-						JLabel label = new JLabel(String.valueOf(camere.get(row - 1).getNumero()));
+						JLabel label = new JLabel(String.valueOf(camere.get(row - 1).getNumber()));
 						label.setHorizontalAlignment(SwingConstants.CENTER);
 						label.setVerticalAlignment(SwingConstants.CENTER);
 						GridBagConstraints constraints = new GridBagConstraints();
-						constraints.gridx = column * 2;
+						constraints.gridx = 0;
 						constraints.gridy = row;
 						constraints.gridwidth = 2;
 						constraints.weightx = 0.5;
 						constraints.weighty = 0.5;
 						planPanel.add(label, constraints);
 					} else {
-						Camera room = camere.get(row - 1);
+						Room room = camere.get(row - 1);
 						LocalDate cellLocalDate = data.withDayOfMonth(column);
-						Prenotazione prenotazione = prenotazioneService.findByCameraAndDataInizio(room, cellLocalDate);
+						Reservation reservation = reservationService.findByRoomAndStartDate(room, cellLocalDate);
 						
 						//month before bookings
-						if(prenotazione != null) previousMonthBookingIsPossible = false;
+						if(reservation != null) previousMonthBookingIsPossible = false;
 						if(previousMonthBookingIsPossible)
-							prenotazione = prenotazioneService.findByCameraAndDataInizioInPreviousMonth(room, cellLocalDate);
+							reservation = reservationService.findByRoomAndStartDateInPreviousMonth(room, cellLocalDate);
 						
-						if(prenotazione != null) {
+						if(reservation != null) {
 							JLabel label = new JLabel();
 							label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 							GridBagConstraints constraints = new GridBagConstraints();
@@ -205,21 +198,18 @@ public class Planner extends JFrame {
 							constraintsButton.fill = GridBagConstraints.BOTH;
 							constraintsButton.weightx = 0.5;
 							constraintsButton.weighty = 0.5;
-							constraintsButton.gridwidth = previousMonthBookingIsPossible ? prenotazione.getDataFine().getDayOfMonth() * 2 - 1 : (int) prenotazione.getDataInizio().until(prenotazione.getDataFine(), ChronoUnit.DAYS) * 2;
+							constraintsButton.gridwidth = previousMonthBookingIsPossible ? reservation.getEndDate().getDayOfMonth() * 2 - 1 : (int) reservation.getStartDate().until(reservation.getEndDate(), ChronoUnit.DAYS) * 2;
 
-							JButton button = new JButton(prenotazione.getCognome());
+							JButton button = new JButton(reservation.getSurname());
 							button.setFont(new Font("Tahoma", Font.BOLD, 20));
-							setButtonBackground(button, prenotazione);
+							setButtonBackground(button, reservation);
 							button.setMaximumSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / (numeroGiorni + 1), 15));
 							button.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / (numeroGiorni + 1), 15));
-							final Prenotazione prenotazioneFinal = prenotazione;
-							button.addActionListener(new ActionListener() {
-								@Override
-								public void actionPerformed(ActionEvent e) {
-									if(Planner.this.menuPrenotazione != null) Planner.this.menuPrenotazione.dispose();
-									Point mousePosition = MouseInfo.getPointerInfo().getLocation();
-									Planner.this.menuPrenotazione = new MenuPrenotazione((int) mousePosition.getX(), (int) mousePosition.getY() - (button.getHeight()/2), prenotazioneFinal, prenotazioneService, consumazioneService, cameraService, clienteService, documentoService);
-								}
+							final Reservation reservationFinal = reservation;
+							button.addActionListener(e -> {
+								if(Planner.this.menuPrenotazione != null) Planner.this.menuPrenotazione.dispose();
+								Point mousePosition = MouseInfo.getPointerInfo().getLocation();
+								Planner.this.menuPrenotazione = new MenuPrenotazione((int) mousePosition.getX(), (int) mousePosition.getY() - (button.getHeight()/2), reservationFinal, reservationService, consumptionService, roomService, customerService, documentService);
 							});
 							planPanel.add(button, constraintsButton);
 							planPanel.add(label, constraints);
@@ -246,11 +236,11 @@ public class Planner extends JFrame {
 		this.setVisible(true);
 	}
 	
-	private void setButtonBackground(JButton button, Prenotazione prenotazione) {
+	private void setButtonBackground(JButton button, Reservation reservation) {
 		LocalDate today = LocalDate.now();
-		if(today.isAfter(prenotazione.getDataInizio().minusDays(1)) && today.isBefore(prenotazione.getDataFine()))
+		if(today.isAfter(reservation.getStartDate().minusDays(1)) && today.isBefore(reservation.getEndDate()))
 			button.setBackground(Color.YELLOW);
-		else if(today.isAfter(prenotazione.getDataFine().minusDays(1)))
+		else if(today.isAfter(reservation.getEndDate().minusDays(1)))
 			button.setBackground(Color.RED);
 		else
 			button.setBackground(Color.GREEN);
@@ -286,8 +276,8 @@ public class Planner extends JFrame {
 	      final GraphicsConfiguration cfg = getGraphicsConfiguration();
 	      final Insets screenInsets = getToolkit().getScreenInsets(cfg);
 	      final Rectangle screenBounds = cfg.getBounds();
-	      final int x = screenInsets.left + screenBounds.x * 0;
-	      final int y = screenInsets.top + screenBounds.y * 0;
+	      final int x = screenInsets.left;
+	      final int y = screenInsets.top;
 	      final int w = screenBounds.width - screenInsets.right - screenInsets.left;
 	      final int h = screenBounds.height - screenInsets.bottom - screenInsets.top;
 	      final Rectangle maximizedBounds = new Rectangle(x, y, w, h);
