@@ -3,7 +3,7 @@ package com.hotel.gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
+import java.awt.*;
 import javax.swing.border.LineBorder;
 
 import com.hotel.entity.Product;
@@ -12,7 +12,6 @@ import com.hotel.util.Checks;
 import com.hotel.util.SwingComponentUtil;
 
 import javax.swing.JLabel;
-import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.DefaultListModel;
@@ -45,6 +44,7 @@ public class RegistroProdotti extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 128, 128));
@@ -237,5 +237,21 @@ public class RegistroProdotti extends JFrame {
 		if (Checks.isDouble(price.getText())) return true;
 		JOptionPane.showMessageDialog(null, "INSERISCI UN PREZZO VALIDO PER IL PRODOTTO");
 		return false;
+	}
+
+	@Override
+	public synchronized void setExtendedState(final int state) {
+		if ((state & Planner.MAXIMIZED_BOTH) == Planner.MAXIMIZED_BOTH) {
+			final GraphicsConfiguration cfg = getGraphicsConfiguration();
+			final Insets screenInsets = getToolkit().getScreenInsets(cfg);
+			final Rectangle screenBounds = cfg.getBounds();
+			final int x = screenInsets.left;
+			final int y = screenInsets.top;
+			final int w = screenBounds.width - screenInsets.right - screenInsets.left;
+			final int h = screenBounds.height - screenInsets.bottom - screenInsets.top;
+			final Rectangle maximizedBounds = new Rectangle(x, y, w, h);
+			super.setMaximizedBounds(maximizedBounds);
+		}
+		super.setExtendedState(state);
 	}
 }

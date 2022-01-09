@@ -2,7 +2,7 @@ package com.hotel.gui;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.Color;
+import java.awt.*;
 import javax.swing.border.LineBorder;
 
 import com.hotel.entity.RoomType;
@@ -13,7 +13,6 @@ import com.hotel.util.SwingComponentUtil;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.Font;
 import java.math.BigDecimal;
 
 import javax.swing.SwingConstants;
@@ -42,6 +41,7 @@ public class PrezziCamere extends JFrame {
 		contentPane.setBorder(new LineBorder(new Color(224, 255, 255), 3, true));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(224, 255, 255));
@@ -242,5 +242,21 @@ public class PrezziCamere extends JFrame {
 		yn = JOptionPane.showConfirmDialog(null, "SEI SICURO DI VOLER CHIUDERE LA PAGINA?\nATTENZIONE:\nTUTTI I DATI INSERITI NON SALVATI ANDRANNO PERSI.\nVUOI PROCEDERE?", "EXIT", JOptionPane.YES_NO_OPTION);
 		if (yn == JOptionPane.YES_OPTION)
 			super.dispose();
+	}
+
+	@Override
+	public synchronized void setExtendedState(final int state) {
+		if ((state & Planner.MAXIMIZED_BOTH) == Planner.MAXIMIZED_BOTH) {
+			final GraphicsConfiguration cfg = getGraphicsConfiguration();
+			final Insets screenInsets = getToolkit().getScreenInsets(cfg);
+			final Rectangle screenBounds = cfg.getBounds();
+			final int x = screenInsets.left;
+			final int y = screenInsets.top;
+			final int w = screenBounds.width - screenInsets.right - screenInsets.left;
+			final int h = screenBounds.height - screenInsets.bottom - screenInsets.top;
+			final Rectangle maximizedBounds = new Rectangle(x, y, w, h);
+			super.setMaximizedBounds(maximizedBounds);
+		}
+		super.setExtendedState(state);
 	}
 }

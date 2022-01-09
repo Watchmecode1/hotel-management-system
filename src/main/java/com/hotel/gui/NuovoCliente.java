@@ -1,6 +1,6 @@
 package com.hotel.gui;
 
-import java.awt.Font;
+import java.awt.*;
 import java.io.Serial;
 
 import javax.swing.JFrame;
@@ -31,7 +31,6 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
-import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -72,6 +71,7 @@ public class NuovoCliente extends JFrame {
 		JPanel contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 139, 139));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -683,5 +683,21 @@ public class NuovoCliente extends JFrame {
 		if(idExpirationDateChooser.getDate() != null) return true;
 		JOptionPane.showMessageDialog(null, "INSERISCI LA DATA DI SCADENZA DEL DOCUMENTO");
 		return false;
+	}
+
+	@Override
+	public synchronized void setExtendedState(final int state) {
+		if ((state & Planner.MAXIMIZED_BOTH) == Planner.MAXIMIZED_BOTH) {
+			final GraphicsConfiguration cfg = getGraphicsConfiguration();
+			final Insets screenInsets = getToolkit().getScreenInsets(cfg);
+			final Rectangle screenBounds = cfg.getBounds();
+			final int x = screenInsets.left;
+			final int y = screenInsets.top;
+			final int w = screenBounds.width - screenInsets.right - screenInsets.left;
+			final int h = screenBounds.height - screenInsets.bottom - screenInsets.top;
+			final Rectangle maximizedBounds = new Rectangle(x, y, w, h);
+			super.setMaximizedBounds(maximizedBounds);
+		}
+		super.setExtendedState(state);
 	}
 }

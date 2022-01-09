@@ -271,7 +271,7 @@ public class Planner extends JFrame {
 	}
 	
 	@Override
-	  public synchronized void setExtendedState(final int state) {
+	public synchronized void setExtendedState(final int state) {
 	    if ((state & Planner.MAXIMIZED_BOTH) == Planner.MAXIMIZED_BOTH) {
 	      final GraphicsConfiguration cfg = getGraphicsConfiguration();
 	      final Insets screenInsets = getToolkit().getScreenInsets(cfg);
@@ -284,5 +284,5 @@ public class Planner extends JFrame {
 	      super.setMaximizedBounds(maximizedBounds);
 	    }
 	    super.setExtendedState(state);
-	  }
+	}
 }

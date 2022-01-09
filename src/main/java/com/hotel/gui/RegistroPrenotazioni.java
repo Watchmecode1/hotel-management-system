@@ -3,7 +3,7 @@ package com.hotel.gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
+import java.awt.*;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
@@ -15,7 +15,6 @@ import com.hotel.util.SwingComponentUtil;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import java.awt.Font;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
@@ -64,6 +63,7 @@ public class RegistroPrenotazioni extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBorder(new LineBorder(new Color(224, 255, 255), 5, true));
@@ -440,5 +440,21 @@ public class RegistroPrenotazioni extends JFrame {
 			s += room.getNumber() + " ";
 		
 		rooms.setText(s);
+	}
+
+	@Override
+	public synchronized void setExtendedState(final int state) {
+		if ((state & Planner.MAXIMIZED_BOTH) == Planner.MAXIMIZED_BOTH) {
+			final GraphicsConfiguration cfg = getGraphicsConfiguration();
+			final Insets screenInsets = getToolkit().getScreenInsets(cfg);
+			final Rectangle screenBounds = cfg.getBounds();
+			final int x = screenInsets.left;
+			final int y = screenInsets.top;
+			final int w = screenBounds.width - screenInsets.right - screenInsets.left;
+			final int h = screenBounds.height - screenInsets.bottom - screenInsets.top;
+			final Rectangle maximizedBounds = new Rectangle(x, y, w, h);
+			super.setMaximizedBounds(maximizedBounds);
+		}
+		super.setExtendedState(state);
 	}
 }

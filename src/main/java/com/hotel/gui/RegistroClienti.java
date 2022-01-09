@@ -3,7 +3,7 @@ package com.hotel.gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
+import java.awt.*;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
@@ -14,7 +14,6 @@ import com.hotel.util.SwingComponentUtil;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import java.awt.Font;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
@@ -54,6 +53,7 @@ public class RegistroClienti extends JFrame {
 		customers.addAll(customerService.getAll());
 		customersJList = new JList<>(customers);
 		scrollPane.setViewportView(customersJList);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -395,6 +395,22 @@ private void searchResults(String charSeq) {
 		
 			JOptionPane.showMessageDialog(null, "RICERCA COMPLETATA");
 		}
+	}
+
+	@Override
+	public synchronized void setExtendedState(final int state) {
+		if ((state & Planner.MAXIMIZED_BOTH) == Planner.MAXIMIZED_BOTH) {
+			final GraphicsConfiguration cfg = getGraphicsConfiguration();
+			final Insets screenInsets = getToolkit().getScreenInsets(cfg);
+			final Rectangle screenBounds = cfg.getBounds();
+			final int x = screenInsets.left;
+			final int y = screenInsets.top;
+			final int w = screenBounds.width - screenInsets.right - screenInsets.left;
+			final int h = screenBounds.height - screenInsets.bottom - screenInsets.top;
+			final Rectangle maximizedBounds = new Rectangle(x, y, w, h);
+			super.setMaximizedBounds(maximizedBounds);
+		}
+		super.setExtendedState(state);
 	}
 	
 //	private void refreshCustomers() {

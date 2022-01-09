@@ -123,8 +123,8 @@ public class CleanRooms extends JFrame {
 	}
 	
 	@Override
-	  public synchronized void setExtendedState(final int state) {
-	    if ((state & Planner.MAXIMIZED_BOTH) == Planner.MAXIMIZED_BOTH) {
+	public synchronized void setExtendedState(final int state) {
+		if ((state & Planner.MAXIMIZED_BOTH) == Planner.MAXIMIZED_BOTH) {
 	      final GraphicsConfiguration cfg = getGraphicsConfiguration();
 	      final Insets screenInsets = getToolkit().getScreenInsets(cfg);
 	      final Rectangle screenBounds = cfg.getBounds();
@@ -135,6 +135,6 @@ public class CleanRooms extends JFrame {
 	      final Rectangle maximizedBounds = new Rectangle(x, y, w, h);
 	      super.setMaximizedBounds(maximizedBounds);
 	    }
-	    super.setExtendedState(state);
-	  }
+		super.setExtendedState(state);
+	}
 }

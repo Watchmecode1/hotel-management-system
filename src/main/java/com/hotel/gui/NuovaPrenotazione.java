@@ -1,6 +1,6 @@
 package com.hotel.gui;
 
-import java.awt.Font;
+import java.awt.*;
 import java.io.Serial;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.hotel.entity.Reservation;
@@ -34,7 +35,6 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
-import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -80,6 +80,7 @@ public class NuovaPrenotazione extends JFrame {
 		SwingComponentUtil.addHotelIcons(this);
 		setResizable(false);
 		setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setTitle("HOTEL FAGGIOROSSO - NUOVA PRENOTAZIONE");
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -623,5 +624,21 @@ public class NuovaPrenotazione extends JFrame {
 		
 		camereJList.setModel(camere);
 		scrollPane.setViewportView(camereJList);
+	}
+
+	@Override
+	public synchronized void setExtendedState(final int state) {
+		if ((state & Planner.MAXIMIZED_BOTH) == Planner.MAXIMIZED_BOTH) {
+			final GraphicsConfiguration cfg = getGraphicsConfiguration();
+			final Insets screenInsets = getToolkit().getScreenInsets(cfg);
+			final Rectangle screenBounds = cfg.getBounds();
+			final int x = screenInsets.left;
+			final int y = screenInsets.top;
+			final int w = screenBounds.width - screenInsets.right - screenInsets.left;
+			final int h = screenBounds.height - screenInsets.bottom - screenInsets.top;
+			final Rectangle maximizedBounds = new Rectangle(x, y, w, h);
+			super.setMaximizedBounds(maximizedBounds);
+		}
+		super.setExtendedState(state);
 	}
 }
