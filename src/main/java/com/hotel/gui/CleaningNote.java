@@ -19,12 +19,12 @@ import javax.swing.JTextPane;
 import javax.swing.JButton;
 import java.io.Serial;
 
-public class NotePulizie extends JFrame {
+public class CleaningNote extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = -8135019696595591043L;
 
-	public NotePulizie(JButton roomButton, Room room, RoomService roomService, int x, int y) {
+	public CleaningNote(JButton roomButton, Room room, RoomService roomService, int x, int y) {
 		SwingComponentUtil.addHotelIcons(this);
 		setMainFrame(x, y);
 		setContentPane(roomButton, room, roomService);
@@ -70,7 +70,7 @@ public class NotePulizie extends JFrame {
 				roomButton.setForeground(Color.BLACK);
 			else
 				roomButton.setForeground(Color.YELLOW);
-			NotePulizie.this.dispose();
+			CleaningNote.this.dispose();
 		});
 		saveNoteButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
 		saveNoteButton.setForeground(Color.DARK_GRAY);

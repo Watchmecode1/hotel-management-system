@@ -22,21 +22,12 @@ import java.io.Serial;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 
-public class ElenchiRistorazione extends JFrame {
+public class CateringList extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = 6640704140627543254L;
-	private DefaultListModel<String> mezzePensioni = new DefaultListModel<>();
-	private DefaultListModel<String> pensioniComplete = new DefaultListModel<>();
-	private DefaultListModel<String> bnb = new DefaultListModel<>();
-	private JList<String> mezzaPensioneList;
-	private JList<String> pensioneCompletaList;
-	private JList<String> bnbList;
-	private JLabel ospitiColazione;
-	private JLabel ospitiPranzo;
-	private JLabel ospitiCena;
 
-	public ElenchiRistorazione(ReservationService reservationService) {
+	public CateringList(ReservationService reservationService) {
 		SwingComponentUtil.addHotelIcons(this);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		//TODO Implementa in maniera pi� efficiente
@@ -48,11 +39,14 @@ public class ElenchiRistorazione extends JFrame {
 		int A_pc = 0;
 		int b_pc = 0;
 
+		DefaultListModel<String> mezzePensioni = new DefaultListModel<>();
+		DefaultListModel<String> pensioniComplete = new DefaultListModel<>();
+		DefaultListModel<String> bnb = new DefaultListModel<>();
 		for (Reservation p : prenotazioni) {
 			if (p.getStartDate().isBefore(LocalDate.now()) || p.getStartDate().isEqual(LocalDate.now())) {
 				if (p.getEndDate().isAfter(LocalDate.now())) {
 					String s = "";
-					Room c = p.getRooms().toArray(new Room[p.getRooms().size()])[0];
+					Room c = p.getRooms().toArray(new Room[0])[0];
 					int numeroAdulti = p.getNumberOfAdults();
 					int numeroMinori = p.getNumberOfMinors();
 					int numeroBambini = p.getNumberOfChilds();
@@ -116,7 +110,7 @@ public class ElenchiRistorazione extends JFrame {
 		MPscrollPane.setBounds(10, 91, 471, 396);
 		panel_1.add(MPscrollPane);
 
-		mezzaPensioneList = new JList<>(mezzePensioni);
+		JList<String> mezzaPensioneList = new JList<>(mezzePensioni);
 		mezzaPensioneList.setForeground(new Color(0, 139, 139));
 		mezzaPensioneList.setFont(new Font("Haettenschweiler", Font.PLAIN, 25));
 		mezzaPensioneList.setBackground(new Color(224, 255, 255));
@@ -140,7 +134,7 @@ public class ElenchiRistorazione extends JFrame {
 		PCscrollPane.setBounds(10, 91, 471, 396);
 		panel_1_1.add(PCscrollPane);
 
-		pensioneCompletaList = new JList<>(pensioniComplete);
+		JList<String> pensioneCompletaList = new JList<>(pensioniComplete);
 		pensioneCompletaList.setForeground(new Color(0, 139, 139));
 		pensioneCompletaList.setFont(new Font("Haettenschweiler", Font.PLAIN, 25));
 		pensioneCompletaList.setBackground(new Color(224, 255, 255));
@@ -164,7 +158,7 @@ public class ElenchiRistorazione extends JFrame {
 		BNBscrollPane.setBounds(10, 91, 471, 396);
 		panel_1_2.add(BNBscrollPane);
 
-		bnbList = new JList<>(bnb);
+		JList<String> bnbList = new JList<>(bnb);
 		bnbList.setForeground(new Color(0, 139, 139));
 		bnbList.setFont(new Font("Haettenschweiler", Font.PLAIN, 25));
 		bnbList.setBackground(new Color(224, 255, 255));
@@ -198,21 +192,21 @@ public class ElenchiRistorazione extends JFrame {
 		lblOspitiAFormula_1_1_1.setBounds(10, 694, 491, 38);
 		contentPane.add(lblOspitiAFormula_1_1_1);
 
-		ospitiColazione = new JLabel("");
+		JLabel ospitiColazione = new JLabel("");
 		ospitiColazione.setHorizontalAlignment(SwingConstants.LEFT);
 		ospitiColazione.setForeground(new Color(224, 255, 255));
 		ospitiColazione.setFont(new Font("Haettenschweiler", Font.PLAIN, 35));
 		ospitiColazione.setBounds(515, 598, 998, 38);
 		contentPane.add(ospitiColazione);
 
-		ospitiPranzo = new JLabel("");
+		JLabel ospitiPranzo = new JLabel("");
 		ospitiPranzo.setHorizontalAlignment(SwingConstants.LEFT);
 		ospitiPranzo.setForeground(new Color(224, 255, 255));
 		ospitiPranzo.setFont(new Font("Haettenschweiler", Font.PLAIN, 35));
 		ospitiPranzo.setBounds(515, 646, 998, 38);
 		contentPane.add(ospitiPranzo);
 
-		ospitiCena = new JLabel("");
+		JLabel ospitiCena = new JLabel("");
 		ospitiCena.setHorizontalAlignment(SwingConstants.LEFT);
 		ospitiCena.setForeground(new Color(224, 255, 255));
 		ospitiCena.setFont(new Font("Haettenschweiler", Font.PLAIN, 35));

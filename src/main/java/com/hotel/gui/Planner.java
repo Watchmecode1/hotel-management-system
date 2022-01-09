@@ -47,7 +47,7 @@ public class Planner extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = -3819752603187204888L;
-	private MenuPrenotazione menuPrenotazione;
+	private ReservationMenu reservationMenu;
 
 	public Planner(LocalDate data, ReservationService reservationService, RoomService roomService, ConsumptionService consumptionService, CustomerService customerService, DocumentService documentService) {
 		SwingComponentUtil.addHotelIcons(this);
@@ -207,9 +207,9 @@ public class Planner extends JFrame {
 							button.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / (numeroGiorni + 1), 15));
 							final Reservation reservationFinal = reservation;
 							button.addActionListener(e -> {
-								if(Planner.this.menuPrenotazione != null) Planner.this.menuPrenotazione.dispose();
+								if(Planner.this.reservationMenu != null) Planner.this.reservationMenu.dispose();
 								Point mousePosition = MouseInfo.getPointerInfo().getLocation();
-								Planner.this.menuPrenotazione = new MenuPrenotazione((int) mousePosition.getX(), (int) mousePosition.getY() - (button.getHeight()/2), reservationFinal, reservationService, consumptionService, roomService, customerService, documentService);
+								Planner.this.reservationMenu = new ReservationMenu((int) mousePosition.getX(), (int) mousePosition.getY() - (button.getHeight()/2), reservationFinal, reservationService, consumptionService, roomService, customerService, documentService);
 							});
 							planPanel.add(button, constraintsButton);
 							planPanel.add(label, constraints);
@@ -266,7 +266,7 @@ public class Planner extends JFrame {
 
 	@Override
 	public void dispose() {
-		if(menuPrenotazione != null) menuPrenotazione.dispose();
+		if(reservationMenu != null) reservationMenu.dispose();
 		super.dispose();
 	}
 	

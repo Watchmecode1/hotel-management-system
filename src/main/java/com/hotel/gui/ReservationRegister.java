@@ -22,11 +22,10 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import java.io.Serial;
 
-public class RegistroPrenotazioni extends JFrame {
+public class ReservationRegister extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = -4144532333900919080L;
-	private JPanel contentPane;
 	private JTextField research;
 	private DefaultListModel<Reservation> prenotazioni = new DefaultListModel<>();
 	private JList<Reservation> prenotazioniJList;
@@ -49,7 +48,7 @@ public class RegistroPrenotazioni extends JFrame {
 	private JLabel depositPaidResult;
 	private JLabel totalResult;
 	
-	public RegistroPrenotazioni(ReservationService reservationService) {
+	public ReservationRegister(ReservationService reservationService) {
 		SwingComponentUtil.addHotelIcons(this);
 		prenotazioni.addAll(reservationService.getAll());
 		prenotazioniJList = new JList<>(prenotazioni);
@@ -58,7 +57,7 @@ public class RegistroPrenotazioni extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setBounds(0, 0, 1537, 820);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 139, 139));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -406,11 +405,11 @@ public class RegistroPrenotazioni extends JFrame {
 				depositPaidResult.setText(reservation.getDeposit().toString());
 				totalResult.setText(reservation.getTotalCost().toString());
 				
-				String s = "";
+				StringBuilder s = new StringBuilder();
 				for (Room room : reservation.getRooms())
-					s += room.getNumber() + " ";
+					s.append(room.getNumber()).append(" ");
 				
-				rooms.setText(s);
+				rooms.setText(s.toString());
 				
 				JOptionPane.showMessageDialog(null, "DATI CARICATI");
 			}
@@ -435,11 +434,11 @@ public class RegistroPrenotazioni extends JFrame {
 		depositPaidResult.setText(reservation.getDeposit().toString());
 		totalResult.setText(reservation.getTotalCost().toString());
 		
-		String s = "";
+		StringBuilder s = new StringBuilder();
 		for (Room room : reservation.getRooms())
-			s += room.getNumber() + " ";
+			s.append(room.getNumber()).append(" ");
 		
-		rooms.setText(s);
+		rooms.setText(s.toString());
 	}
 
 	@Override

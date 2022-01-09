@@ -14,12 +14,12 @@ import java.awt.Font;
 import java.io.Serial;
 import java.awt.Color;
 
-public class MenuPulizia extends JFrame {
+public class CleaningMenu extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = 48798174319558900L;
 
-	public MenuPulizia(JButton button, RoomService roomService, Room room, int x, int y) {
+	public CleaningMenu(JButton button, RoomService roomService, Room room, int x, int y) {
 		SwingComponentUtil.addHotelIcons(this);
 		this.setBackground(Color.DARK_GRAY);
 		setMainFrame(x, y);
@@ -73,7 +73,7 @@ public class MenuPulizia extends JFrame {
 	
 	private void addMostraNoteButton(JButton roomButton, Room room, RoomService roomService, JPanel contentPane) {
 		JButton mostraNoteButton = new JButton("MOSTRA NOTE");
-		mostraNoteButton.addActionListener(e -> new NotePulizie(roomButton, room, roomService, getX(), getY()));
+		mostraNoteButton.addActionListener(e -> new CleaningNote(roomButton, room, roomService, getX(), getY()));
 		mostraNoteButton.setFont(new Font("Tahoma", Font.BOLD, 10));
 		mostraNoteButton.setBounds(10, 52, 181, 32);
 		contentPane.add(mostraNoteButton);

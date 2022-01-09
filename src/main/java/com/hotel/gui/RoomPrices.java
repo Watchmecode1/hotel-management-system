@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.io.Serial;
 
-public class PrezziCamere extends JFrame {
+public class RoomPrices extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = 6640704140627543254L;
@@ -31,7 +31,7 @@ public class PrezziCamere extends JFrame {
 	private JTextField quintupleTextField;
 	private RoomTypeService roomTypeService = new RoomTypeService();
 
-	public PrezziCamere() {
+	public RoomPrices() {
 		SwingComponentUtil.addHotelIcons(this);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

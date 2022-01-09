@@ -45,7 +45,7 @@ import javax.swing.JRadioButton;
 
 import javax.swing.ListSelectionModel;
 
-public class NuovaPrenotazione extends JFrame {
+public class NewReservation extends JFrame {
 	
 	@Serial
 	private static final long serialVersionUID = 2654050621459550287L;
@@ -73,7 +73,7 @@ public class NuovaPrenotazione extends JFrame {
 	private JScrollPane customerScrollPane;
 	
 
-	public NuovaPrenotazione(Reservation reservation, ReservationService reservationService, RoomService roomService, CustomerService customerService, DocumentService documentService) {
+	public NewReservation(Reservation reservation, ReservationService reservationService, RoomService roomService, CustomerService customerService, DocumentService documentService) {
 		this.initialReservation = reservation;
 		this.reservation = reservation;
 		
@@ -223,9 +223,9 @@ public class NuovaPrenotazione extends JFrame {
 		
 		JButton calculatePaymentButton = new JButton("Calcola totale");
 		calculatePaymentButton.addActionListener(e -> {
-			NuovaPrenotazione.this.reservation = createBooking();
-			if(NuovaPrenotazione.this.reservation != null)
-				calculatePaymentLabel.setText("\u20AC. " + NuovaPrenotazione.this.reservation.getTotalCost().toString());
+			NewReservation.this.reservation = createBooking();
+			if(NewReservation.this.reservation != null)
+				calculatePaymentLabel.setText("\u20AC. " + NewReservation.this.reservation.getTotalCost().toString());
 		});
 		calculatePaymentButton.setBounds(755, 340, 271, 36);
 		newBookingLabel.add(calculatePaymentButton);
@@ -366,7 +366,7 @@ public class NuovaPrenotazione extends JFrame {
 		addCustomer.setBackground(new Color(224, 255, 255));
 		addCustomer.setBounds(351, 510, 366, 65);
 		addCustomer.addActionListener(e -> {
-			new NuovoCliente(NuovaPrenotazione.this.reservation, reservationService, customerService, documentService, customerList);
+			new newCustomer(NewReservation.this.reservation, reservationService, customerService, documentService, customerList);
 			refreshCustomers();
 		});
 		newBookingLabel.add(addCustomer);
@@ -403,7 +403,7 @@ public class NuovaPrenotazione extends JFrame {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public NuovaPrenotazione(ReservationService reservationService, RoomService roomService, CustomerService customerService, DocumentService documentService) {
+	public NewReservation(ReservationService reservationService, RoomService roomService, CustomerService customerService, DocumentService documentService) {
 		this(null, reservationService, roomService, customerService, documentService);
 	}
 	

@@ -36,7 +36,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.JSeparator;
 
-public class NuovoCliente extends JFrame {
+public class newCustomer extends JFrame {
 	
 	@Serial
 	private static final long serialVersionUID = 5512828180724892976L;
@@ -59,7 +59,7 @@ public class NuovoCliente extends JFrame {
 	private JDateChooser idExpirationDateChooser;
 	private Customer customer;
 	
-	public NuovoCliente(Customer customer, Reservation reservation, ReservationService reservationService, CustomerService customerService, DocumentService documentService, DefaultListModel<Customer> customerList) {
+	public newCustomer(Customer customer, Reservation reservation, ReservationService reservationService, CustomerService customerService, DocumentService documentService, DefaultListModel<Customer> customerList) {
 		setResizable(false);
 		setFont(new Font("Harlow Solid Italic", Font.BOLD, 20));
 		SwingComponentUtil.addHotelIcons(this);
@@ -127,7 +127,7 @@ public class NuovoCliente extends JFrame {
 		newCustomerPanel.add(gerarchyComboBox);
 		
 		citizenshipComboBox = new JComboBox<>();
-		citizenshipComboBox.setModel(FileUtils.getStati());
+		citizenshipComboBox.setModel(FileUtils.getStates());
 		citizenshipComboBox.setSelectedIndex(-1);
 		citizenshipComboBox.setForeground(new Color(0, 128, 128));
 		citizenshipComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -140,7 +140,7 @@ public class NuovoCliente extends JFrame {
 		birthplaceBox = new JComboBox<>();
 		birthplaceBox.setEditable(false);
 		birthplaceBox.setEnabled(false);
-		birthplaceBox.setModel(FileUtils.getComuni());
+		birthplaceBox.setModel(FileUtils.getMunicipals());
 		birthplaceBox.setSelectedIndex(-1);
 		birthplaceBox.setForeground(new Color(0, 128, 128));
 		birthplaceBox.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -153,7 +153,7 @@ public class NuovoCliente extends JFrame {
 		provinciaDiNascitaBox = new JComboBox<>();
 		provinciaDiNascitaBox.setEditable(false);
 		provinciaDiNascitaBox.setEnabled(false);
-		provinciaDiNascitaBox.setModel(FileUtils.getProvince());
+		provinciaDiNascitaBox.setModel(FileUtils.getProvinces());
 		provinciaDiNascitaBox.setSelectedIndex(-1);
 		provinciaDiNascitaBox.setForeground(new Color(0, 128, 128));
 		provinciaDiNascitaBox.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -203,7 +203,7 @@ public class NuovoCliente extends JFrame {
 		idProvinciaDiRilascioComboBox.setBackground(new Color(224, 255, 255));
 		idProvinciaDiRilascioComboBox.setForeground(new Color(224, 255, 255));
 		idProvinciaDiRilascioComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
-		idProvinciaDiRilascioComboBox.setModel(FileUtils.getProvince());
+		idProvinciaDiRilascioComboBox.setModel(FileUtils.getProvinces());
 		idProvinciaDiRilascioComboBox.setEnabled(false);
 		idProvinciaDiRilascioComboBox.setEditable(false);
 		idProvinciaDiRilascioComboBox.setSelectedIndex(-1);
@@ -215,7 +215,7 @@ public class NuovoCliente extends JFrame {
 		idReleasePlaceBox = new JComboBox<>();
 		idReleasePlaceBox.setEditable(false);
 		idReleasePlaceBox.setEnabled(false);
-		idReleasePlaceBox.setModel(FileUtils.getStatiAndComuni());
+		idReleasePlaceBox.setModel(FileUtils.getStatesAndMunicipals());
 		idReleasePlaceBox.setSelectedIndex(-1);
 		idReleasePlaceBox.setForeground(new Color(0, 128, 128));
 		idReleasePlaceBox.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -226,7 +226,7 @@ public class NuovoCliente extends JFrame {
 		newCustomerPanel.add(idReleasePlaceBox);
 		idReleasePlaceBox.addActionListener(e -> {
 			String releasePlace = (String) idReleasePlaceBox.getSelectedItem();
-			idProvinciaDiRilascioComboBox.setEnabled(releasePlace != null && !FileUtils.CODICI_STATI.containsKey(releasePlace));
+			idProvinciaDiRilascioComboBox.setEnabled(releasePlace != null && !FileUtils.STATE_CODES.containsKey(releasePlace));
 		});
 		
 		idTypeComboBox = new JComboBox<>();
@@ -255,7 +255,7 @@ public class NuovoCliente extends JFrame {
 		newCustomerPanel.add(idTypeComboBox);
 		
 		statoDiNascitaComboBox = new JComboBox<>();
-		statoDiNascitaComboBox.setModel(FileUtils.getStati());
+		statoDiNascitaComboBox.setModel(FileUtils.getStates());
 		statoDiNascitaComboBox.setSelectedIndex(-1);
 		statoDiNascitaComboBox.setForeground(new Color(0, 128, 128));
 		statoDiNascitaComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -388,7 +388,7 @@ public class NuovoCliente extends JFrame {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public NuovoCliente(Reservation reservation, ReservationService reservationService, CustomerService customerService, DocumentService documentService, DefaultListModel<Customer> customerList) {
+	public newCustomer(Reservation reservation, ReservationService reservationService, CustomerService customerService, DocumentService documentService, DefaultListModel<Customer> customerList) {
 		this(null, reservation, reservationService, customerService, documentService, customerList);
 	}
 	
@@ -664,7 +664,7 @@ public class NuovoCliente extends JFrame {
 	
 	private boolean checkIfItalianDocument() {
 		String releasePlace = (String) idReleasePlaceBox.getSelectedItem();
-		return releasePlace != null && !FileUtils.CODICI_STATI.containsKey(releasePlace);
+		return releasePlace != null && !FileUtils.STATE_CODES.containsKey(releasePlace);
 	}
 	
 	private boolean checkIdProvincia() {

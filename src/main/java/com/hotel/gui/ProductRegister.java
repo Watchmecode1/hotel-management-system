@@ -23,7 +23,7 @@ import javax.swing.ListSelectionModel;
 import java.io.Serial;
 import java.math.BigDecimal;
 
-public class RegistroProdotti extends JFrame {
+public class ProductRegister extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = 2115309755903869630L;
@@ -34,7 +34,7 @@ public class RegistroProdotti extends JFrame {
 	private DefaultListModel<Product> products = new DefaultListModel<>();
 	private JList<Product> productsJList;
 
-	public RegistroProdotti( ProductService productService) {
+	public ProductRegister(ProductService productService) {
 		SwingComponentUtil.addHotelIcons(this);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

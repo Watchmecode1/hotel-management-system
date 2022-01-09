@@ -108,7 +108,7 @@ public class HomePage extends JFrame {
 		panel.add(btnNewButton);
 		
 		JButton btnNuovaPrenotazione = new JButton("Nuova Prenotazione");
-		btnNuovaPrenotazione.addActionListener(e -> new NuovaPrenotazione(new ReservationService(), new RoomService(), new CustomerService(), new DocumentService()));
+		btnNuovaPrenotazione.addActionListener(e -> new NewReservation(new ReservationService(), new RoomService(), new CustomerService(), new DocumentService()));
 		btnNuovaPrenotazione.setForeground(new Color(224, 255, 255));
 		btnNuovaPrenotazione.setBackground(new Color(0, 128, 128));
 		btnNuovaPrenotazione.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
@@ -124,7 +124,7 @@ public class HomePage extends JFrame {
 		panel.add(btnInventario);
 		
 		JButton btnRegPrenotazioni = new JButton("Reg. Prenotazioni");
-		btnRegPrenotazioni.addActionListener(e -> new RegistroPrenotazioni(new ReservationService()));
+		btnRegPrenotazioni.addActionListener(e -> new ReservationRegister(new ReservationService()));
 		btnRegPrenotazioni.setForeground(new Color(224, 255, 255));
 		btnRegPrenotazioni.setBackground(new Color(0, 128, 128));
 		btnRegPrenotazioni.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
@@ -132,7 +132,7 @@ public class HomePage extends JFrame {
 		panel.add(btnRegPrenotazioni);
 		
 		JButton btnRegClienti = new JButton("Reg. Clienti");
-		btnRegClienti.addActionListener(e -> new RegistroClienti(new CustomerService()));
+		btnRegClienti.addActionListener(e -> new CustomerRegister(new CustomerService()));
 		btnRegClienti.setForeground(new Color(224, 255, 255));
 		btnRegClienti.setBackground(new Color(0, 128, 128));
 		btnRegClienti.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
@@ -140,7 +140,7 @@ public class HomePage extends JFrame {
 		panel.add(btnRegClienti);
 		
 		JButton btnSezioneCamere = new JButton("Sezione Camere");
-		btnSezioneCamere.addActionListener(e -> new PrezziCamere());
+		btnSezioneCamere.addActionListener(e -> new RoomPrices());
 		btnSezioneCamere.setForeground(new Color(224, 255, 255));
 		btnSezioneCamere.setBackground(new Color(0, 128, 128));
 		btnSezioneCamere.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
@@ -156,7 +156,7 @@ public class HomePage extends JFrame {
 		panel.add(btnSezionePulizie);
 		
 		JButton btnProdotti = new JButton("Prodotti");
-		btnProdotti.addActionListener(e -> new RegistroProdotti(new ProductService()));
+		btnProdotti.addActionListener(e -> new ProductRegister(new ProductService()));
 		btnProdotti.setForeground(new Color(224, 255, 255));
 		btnProdotti.setBackground(new Color(0, 128, 128));
 		btnProdotti.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
@@ -174,7 +174,7 @@ public class HomePage extends JFrame {
 		JButton ristorazioneButton = new JButton("Ristorazione");
 		ristorazioneButton.addActionListener(e -> {
 			//TODO migliora
-			new ElenchiRistorazione(new ReservationService());
+			new CateringList(new ReservationService());
 		});
 		ristorazioneButton.setFont(new Font("Dialog", Font.PLAIN, 20));
 		ristorazioneButton.setForeground(new Color(224, 255, 255));

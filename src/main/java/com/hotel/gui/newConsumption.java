@@ -26,19 +26,19 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.io.Serial;
 
-public class NuovaConsumazione extends JFrame {
+public class newConsumption extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = -2732123696809924171L;
 	private JSpinner productAmountSpinner;
-	private DefaultListModel<Product> products = new DefaultListModel<>();
 	private JList<Product> productsJList;
-	private JScrollPane productsScrollPane = new JScrollPane();
 
-	public NuovaConsumazione(int x, int y, Reservation reservation, ConsumptionService consumptionService, ProductService productService) {
+	public newConsumption(int x, int y, Reservation reservation, ConsumptionService consumptionService, ProductService productService) {
 		SwingComponentUtil.addHotelIcons(this);
+		DefaultListModel<Product> products = new DefaultListModel<>();
 		products.addAll(productService.getAll());
 		productsJList  = new JList<>(products);
+		JScrollPane productsScrollPane = new JScrollPane();
 		productsScrollPane.setViewportView(productsJList);
 		
 		setResizable(false);

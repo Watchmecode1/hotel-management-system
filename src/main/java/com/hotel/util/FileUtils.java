@@ -38,51 +38,51 @@ public class FileUtils {
 	private static final String SITRA_FILE_EXTENSION = ".txt";
 	private static final String PDF_FILE_EXTENSION = ".pdf";
 	/**
-	 * Comune+SiglaProvincia come chiave
+	 * Comune+SiglaProvincia as keys
 	 */
-	public static final Map<String, Long> CODICI_COMUNI = getCodiciComuni();
-	public static final Map<String, Long> CODICI_STATI = getCodiciStati();
-	public static final Map<String, String> SIGLE_PROVINCE = getSigleProvince();
+	public static final Map<String, Long> MUNICIPAL_CODES = getMunicipalCodes();
+	public static final Map<String, Long> STATE_CODES = getStateCodes();
+	public static final Map<String, String> ABBREVIATIONS_OF_THE_PROVINCES = getAbbreviationsOfTheProvinces();
 	
-	public static DefaultComboBoxModel<String> getComuni() {
-		DefaultComboBoxModel<String> comuniModel = new DefaultComboBoxModel<>();
-		comuniModel.addAll(new BufferedReader(new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream("files/comuni.txt"))).lines()
+	public static DefaultComboBoxModel<String> getMunicipals() {
+		DefaultComboBoxModel<String> municipalModel = new DefaultComboBoxModel<>();
+		municipalModel.addAll(new BufferedReader(new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream("files/comuni.txt"))).lines()
 					.map(line -> line.split(","))
 					.map(array -> array[1])
 					.toList());
-		return comuniModel;
+		return municipalModel;
 	}
 	
-	public static DefaultComboBoxModel<String> getStati() {
-		DefaultComboBoxModel<String> statiModel = new DefaultComboBoxModel<>();
-		statiModel.addAll(new BufferedReader(new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream("files/stati.txt"))).lines()
+	public static DefaultComboBoxModel<String> getStates() {
+		DefaultComboBoxModel<String> statesModel = new DefaultComboBoxModel<>();
+		statesModel.addAll(new BufferedReader(new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream("files/stati.txt"))).lines()
 					.map(line -> line.split(","))
 					.map(array -> array[1])
 					.toList());
-		return statiModel;
+		return statesModel;
 	}
 	
-	public static DefaultComboBoxModel<String> getProvince() {
-		DefaultComboBoxModel<String> provinceModel = new DefaultComboBoxModel<>();
-		provinceModel.addAll(new BufferedReader(new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream("files/elencoProvinceItaliane.txt"))).lines()
+	public static DefaultComboBoxModel<String> getProvinces() {
+		DefaultComboBoxModel<String> provincesModel = new DefaultComboBoxModel<>();
+		provincesModel.addAll(new BufferedReader(new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream("files/elencoProvinceItaliane.txt"))).lines()
 				.map(line -> line.split("\t"))
 				.map(array -> array[0].toUpperCase())
 				.toList());
-		return provinceModel;
+		return provincesModel;
 	}
 	
-	public static DefaultComboBoxModel<String> getStatiAndComuni() {
-		DefaultComboBoxModel<String> statiAndComuniModel = new DefaultComboBoxModel<>();
-		statiAndComuniModel.addAll(new BufferedReader(new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream("files/comuni.txt"))).lines()
+	public static DefaultComboBoxModel<String> getStatesAndMunicipals() {
+		DefaultComboBoxModel<String> statesAndMunicipalsModel = new DefaultComboBoxModel<>();
+		statesAndMunicipalsModel.addAll(new BufferedReader(new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream("files/comuni.txt"))).lines()
 				.map(line -> line.split(","))
 				.map(array -> array[1])
 				.toList());
-		statiAndComuniModel.addAll(new BufferedReader(new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream("files/stati.txt"))).lines()
+		statesAndMunicipalsModel.addAll(new BufferedReader(new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream("files/stati.txt"))).lines()
 					.map(line -> line.split(","))
 					.map(array -> array[1])
 					.toList());
-		statiAndComuniModel.removeElement("ITALIA");
-		return statiAndComuniModel;
+		statesAndMunicipalsModel.removeElement("ITALIA");
+		return statesAndMunicipalsModel;
 	}
 	
 	public static void writePDFAndOpen(Reservation reservation) throws IOException {
@@ -108,7 +108,7 @@ public class FileUtils {
 		ReservationService reservationService = new ReservationService();
 		List<Reservation> prenotazioni = reservationService.getReservationByStartDate(localDate);
 		String sitra = prenotazioni.stream()
-										.map(prenotazione -> sortClienti(prenotazione.getCustomers()).stream()
+										.map(prenotazione -> sortCustomers(prenotazione.getCustomers()).stream()
 																					.map(cliente -> getSitraLine(cliente, prenotazione))
 																					.collect(Collectors.joining("")))
 										.collect(Collectors.joining(""));
@@ -127,48 +127,48 @@ public class FileUtils {
 		}
 	}
 	
-	private static List<Customer> sortClienti(Set<Customer> clienti) {
-		if(clienti.size() == 1) return new ArrayList<>(clienti);
+	private static List<Customer> sortCustomers(Set<Customer> customers) {
+		if(customers.size() == 1) return new ArrayList<>(customers);
 		
-		List<Customer> sortedClienti = new ArrayList<>();
-		for(Customer customer : clienti) {
+		List<Customer> sortedCustomers = new ArrayList<>();
+		for(Customer customer : customers) {
 			if(customer.getHoused() == Housed.HOUSEHOLDER || customer.getHoused() == Housed.GROUP_LEADER) {
-				sortedClienti.add(customer);
-				clienti.remove(customer);
+				sortedCustomers.add(customer);
+				customers.remove(customer);
 				break;
 			}
 		}
-		sortedClienti.addAll(clienti);
+		sortedCustomers.addAll(customers);
 		
-		return sortedClienti;
+		return sortedCustomers;
 	}
 	
 	private static String getSitraLine(Customer customer, Reservation reservation) {
 		StringBuilder sb = new StringBuilder();
-		String nomeCliente = customer.getName().toUpperCase();
-		String cognomeCliente = customer.getSurname().toUpperCase();
-		String dataInizioPrenotazione = reservation.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		String dataDiNascitaCliente = customer.getDateOfBirth().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		String customerName = customer.getName().toUpperCase();
+		String customerSurname = customer.getSurname().toUpperCase();
+		String reservationStartDate = reservation.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		String customerDateOfBirth = customer.getDateOfBirth().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		sb.append(customer.getHoused().getNumber())
-			.append(dataInizioPrenotazione)
+			.append(reservationStartDate)
 			.append(getDaysOfBooking(reservation))
-			.append(padRightSpaces(cognomeCliente, 50))
-			.append(padRightSpaces(nomeCliente, 30))
+			.append(padRightSpaces(customerSurname, 50))
+			.append(padRightSpaces(customerName, 30))
 			.append(customer.getGender().getNumber())
-			.append(dataDiNascitaCliente);
+			.append(customerDateOfBirth);
 		
 		if(customer.getStateOfBirth().equalsIgnoreCase("ITALIA")) {
-			String siglaProvincia = SIGLE_PROVINCE.get(customer.getCountyOfBirth().toUpperCase());
-			Long codiceComune = CODICI_COMUNI.get(customer.getBirthplace().toUpperCase() + siglaProvincia);
-			if(codiceComune == null) throw new GuiInputFieldValueException("IL COMUNE DEL CLIENTE: " + nomeCliente + " " + cognomeCliente + " NON APPARTIENE AD UNA PROVINCIA VALIDA");
-			sb.append(codiceComune)
-				.append(siglaProvincia);
+			String abbreviationOfTheProvince = ABBREVIATIONS_OF_THE_PROVINCES.get(customer.getCountyOfBirth().toUpperCase());
+			Long municipalCode = MUNICIPAL_CODES.get(customer.getBirthplace().toUpperCase() + abbreviationOfTheProvince);
+			if(municipalCode == null) throw new GuiInputFieldValueException("IL COMUNE DEL CLIENTE: " + customerName + " " + customerSurname + " NON APPARTIENE AD UNA PROVINCIA VALIDA");
+			sb.append(municipalCode)
+				.append(abbreviationOfTheProvince);
 		}
 		else
 			sb.append(" ".repeat(11));
 		
-		sb.append(CODICI_STATI.get(customer.getStateOfBirth().toUpperCase()))
-			.append(CODICI_STATI.get(customer.getCitizenship().toUpperCase()));
+		sb.append(STATE_CODES.get(customer.getStateOfBirth().toUpperCase()))
+			.append(STATE_CODES.get(customer.getCitizenship().toUpperCase()));
 		
 		Housed housed = customer.getHoused();
 		if(housed == Housed.HOUSEHOLDER || housed == Housed.GROUP_LEADER || housed == Housed.SINGLE_GUEST) {
@@ -176,11 +176,11 @@ public class FileUtils {
 			sb.append(document.getDocumentType().getCode())
 				.append(padRightSpaces(document.getNumber(), 20));
 
-			String luogoDiRilascioDocumento = document.getPlaceOfIssue().toUpperCase();
-			if(CODICI_STATI.containsKey(luogoDiRilascioDocumento))
-				sb.append(CODICI_STATI.get(luogoDiRilascioDocumento));
+			String documentPlaceOfIssue = document.getPlaceOfIssue().toUpperCase();
+			if(STATE_CODES.containsKey(documentPlaceOfIssue))
+				sb.append(STATE_CODES.get(documentPlaceOfIssue));
 			else
-				sb.append(CODICI_COMUNI.get(luogoDiRilascioDocumento + SIGLE_PROVINCE.get(document.getProvinceOfIssue())));
+				sb.append(MUNICIPAL_CODES.get(documentPlaceOfIssue + ABBREVIATIONS_OF_THE_PROVINCES.get(document.getProvinceOfIssue())));
 		} else
 			sb.append(" ".repeat(34));
 		sb.append("\r\n");
@@ -201,19 +201,19 @@ public class FileUtils {
 		return days.length() < 2 ? 0 + days : days;
 	}
 	
-	private static Map<String, Long> getCodiciComuni() {
+	private static Map<String, Long> getMunicipalCodes() {
 		return new BufferedReader(new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream("files/comuni.txt"))).lines()
 																.map(line -> line.split(","))
 																.collect(Collectors.toMap(array -> array[1] + array[2], array -> Long.valueOf(array[0])));
 	}
 	
-	private static Map<String, Long> getCodiciStati() {
+	private static Map<String, Long> getStateCodes() {
 		return new BufferedReader(new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream("files/stati.txt"))).lines()
 																.map(line -> line.split(","))
 																.collect(Collectors.toMap(array -> array[1], array -> Long.valueOf(array[0])));
 	}
 	
-	private static Map<String, String> getSigleProvince() {
+	private static Map<String, String> getAbbreviationsOfTheProvinces() {
 		return new BufferedReader(new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream("files/elencoProvinceItaliane.txt"))).lines()
 																.map(line -> line.split("\t"))
 																.collect(Collectors.toMap(array -> array[0].toUpperCase(), array -> array[1]));

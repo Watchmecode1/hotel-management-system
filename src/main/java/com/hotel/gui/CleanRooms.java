@@ -41,7 +41,7 @@ public class CleanRooms extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = -3755273086723639091L;
-	private MenuPulizia menuPulizia;
+	private CleaningMenu cleaningMenu;
 
 	public CleanRooms(RoomService roomService) {
 		SwingComponentUtil.addHotelIcons(this);
@@ -84,9 +84,9 @@ public class CleanRooms extends JFrame {
 			JButton button = new JButton(number);
 			button.setFont(new Font("Tahoma", Font.BOLD, 20));
 			button.addActionListener(e -> {
-				if(CleanRooms.this.menuPulizia != null) CleanRooms.this.menuPulizia.dispose();
+				if(CleanRooms.this.cleaningMenu != null) CleanRooms.this.cleaningMenu.dispose();
 				Point mousePosition = MouseInfo.getPointerInfo().getLocation();
-				CleanRooms.this.menuPulizia = new MenuPulizia(button, roomService, room, (int) mousePosition.getX(), (int) mousePosition.getY() - (button.getHeight()/2));
+				CleanRooms.this.cleaningMenu = new CleaningMenu(button, roomService, room, (int) mousePosition.getX(), (int) mousePosition.getY() - (button.getHeight()/2));
 			});
 
 			setButtonColours(button, room);
@@ -117,7 +117,7 @@ public class CleanRooms extends JFrame {
 		int yn;
 		yn = JOptionPane.showConfirmDialog(null, "SEI SICURO DI VOLER CHIUDERE LA PAGINA?\nATTENZIONE:\nTUTTI I DATI INSERITI NON SALVATI ANDRANNO PERSI.\nVUOI PROCEDERE?", "EXIT", JOptionPane.YES_NO_OPTION);
 		if (yn == JOptionPane.YES_OPTION) {
-			if(menuPulizia != null) menuPulizia.dispose();
+			if(cleaningMenu != null) cleaningMenu.dispose();
 			super.dispose();
 		}
 	}

@@ -21,16 +21,16 @@ import java.awt.Font;
 import java.io.IOException;
 import java.io.Serial;
 
-public class MenuPrenotazione extends JFrame {
+public class ReservationMenu extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = -7515500934140028996L;
 	
-	private NuovaConsumazione nuovaConsumazione;
+	private newConsumption newConsumption;
 
-	public MenuPrenotazione(int x, int y, Reservation reservation, ReservationService reservationService,
-							ConsumptionService consumptionService, RoomService roomService,
-							CustomerService customerService, DocumentService documentService) {
+	public ReservationMenu(int x, int y, Reservation reservation, ReservationService reservationService,
+						   ConsumptionService consumptionService, RoomService roomService,
+						   CustomerService customerService, DocumentService documentService) {
 		SwingComponentUtil.addHotelIcons(this);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -44,7 +44,7 @@ public class MenuPrenotazione extends JFrame {
 		JButton addConsumazioneButton = new JButton("Aggiungi Consumazione");
 		addConsumazioneButton.addActionListener(e -> {
 			dispose();
-			nuovaConsumazione = new NuovaConsumazione(x, y, reservation, consumptionService, new ProductService());
+			newConsumption = new newConsumption(x, y, reservation, consumptionService, new ProductService());
 		});
 		addConsumazioneButton.setForeground(Color.BLACK);
 		addConsumazioneButton.setBackground(new Color(0, 191, 255));
@@ -70,7 +70,7 @@ public class MenuPrenotazione extends JFrame {
 		JButton changeReservationButton = new JButton("Modifica Prenotazione");
 		changeReservationButton.addActionListener(e -> {
 			dispose();
-			new NuovaPrenotazione(reservation, reservationService, roomService, customerService, documentService);
+			new NewReservation(reservation, reservationService, roomService, customerService, documentService);
 		});
 		changeReservationButton.setForeground(Color.BLACK);
 		changeReservationButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
@@ -99,7 +99,7 @@ public class MenuPrenotazione extends JFrame {
 	
 	@Override
 	public void dispose() {
-		if(nuovaConsumazione != null) nuovaConsumazione.dispose();
+		if(newConsumption != null) newConsumption.dispose();
 		super.dispose();
 	}
 }

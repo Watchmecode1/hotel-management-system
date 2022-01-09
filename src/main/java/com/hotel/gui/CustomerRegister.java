@@ -21,18 +21,16 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import java.io.Serial;
 
-public class RegistroClienti extends JFrame {
+public class CustomerRegister extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = -5496041474637489808L;
-	private JPanel contentPane;
 	private JTextField research;
 	
 	private DefaultListModel<Customer> customers = new DefaultListModel<>();
 	private JList<Customer> customersJList;
 	private JScrollPane scrollPane = new JScrollPane();
-	
-	private JLabel bookingResult;
+
 	private JLabel surname;
 	private JLabel name;
 	private JLabel dateOfBirth;
@@ -48,7 +46,7 @@ public class RegistroClienti extends JFrame {
 	private JLabel idReleaseSource;
 	private JLabel idReleasePlace;
 
-	public RegistroClienti(CustomerService customerService) {
+	public CustomerRegister(CustomerService customerService) {
 		SwingComponentUtil.addHotelIcons(this);
 		customers.addAll(customerService.getAll());
 		customersJList = new JList<>(customers);
@@ -58,7 +56,7 @@ public class RegistroClienti extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 1537, 820);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 139, 139));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -198,8 +196,8 @@ public class RegistroClienti extends JFrame {
 		releaseSourceId.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		releaseSourceId.setBounds(1014, 489, 204, 28);
 		resultPanel.add(releaseSourceId);
-		
-		bookingResult = new JLabel("");
+
+		JLabel bookingResult = new JLabel("");
 		bookingResult.setForeground(new Color(224, 255, 255));
 		bookingResult.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		bookingResult.setBounds(1228, 10, 185, 28);
