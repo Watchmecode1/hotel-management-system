@@ -9,23 +9,16 @@ public class DocumentDao {
 
 	public void saveDocument(Document document) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		session.saveOrUpdate(document);
-		session.getTransaction().commit();
 	}
 	
 	public void deleteDocument(Document document) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		session.delete(document);
-		session.getTransaction().commit();
 	}
 	
 	public Document getById(Long id) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		Document document = session.get(Document.class, id);
-		session.getTransaction().commit();
-		return document;
+		return session.get(Document.class, id);
 	}
 }

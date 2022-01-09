@@ -11,25 +11,19 @@ import com.hotel.util.HibernateUtil;
 public class RoomTypeDao {
 	public void saveRoomType(RoomType roomType) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		session.saveOrUpdate(roomType);
-		session.getTransaction().commit();
 	}
 	
 	public RoomType getById(Type type) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		RoomType roomType = session.get(RoomType.class, type);
-		session.getTransaction().commit();
 		return roomType;
 	}
 	
 	public List<RoomType> getAll() {
-		List<RoomType> tipiCamere;
+		List<RoomType> roomTypes;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		tipiCamere = session.createQuery("from RoomType", RoomType.class).getResultList();
-		session.getTransaction().commit();
-		return tipiCamere;
+		roomTypes = session.createQuery("from RoomType", RoomType.class).getResultList();
+		return roomTypes;
 	}
 }

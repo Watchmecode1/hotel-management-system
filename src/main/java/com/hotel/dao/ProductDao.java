@@ -11,9 +11,7 @@ public class ProductDao {
 	
 	public void saveProduct(Product product) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		session.saveOrUpdate(product);
-		session.getTransaction().commit();
 	}
 
 //	public void deleteProdotto(Prodotto prodotto) {
@@ -25,19 +23,12 @@ public class ProductDao {
 //	}
 	
 	public List<Product> getAll() {
-		List<Product> products;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		products = session.createQuery("from Product", Product.class).getResultList();
-		session.getTransaction().commit();
-		return products;
+		return session.createQuery("from Product", Product.class).getResultList();
 	}
 	
 	public Product getByName(String name) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		Product product = session.get(Product.class, name);
-		session.getTransaction().commit();
-		return product;
+		return session.get(Product.class, name);
 	}
 }

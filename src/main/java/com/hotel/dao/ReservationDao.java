@@ -15,57 +15,38 @@ public class ReservationDao {
 
 	public void saveReservation(Reservation reservation) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		session.saveOrUpdate(reservation);
-		session.getTransaction().commit();
 	}
 	
 	public void deleteReservation(Reservation reservation) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		reservation.getConsumptions().forEach(session::delete);
 		session.delete(reservation);
-		session.getTransaction().commit();
 	}
 	
 	public List<Reservation> getAll() {
-		List<Reservation> reservations;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		reservations = session.createQuery("from Reservation", Reservation.class).getResultList();
-		session.getTransaction().commit();
-		return reservations;
+		return session.createQuery("from Reservation", Reservation.class).getResultList();
 	}
 	
 	public List<Reservation> getCheckIn() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		
 		Query<Reservation> query = session.createQuery("from Reservation p WHERE p.startDate = :startDate", Reservation.class);
 		query.setParameter("startDate", LocalDate.now());
-		List<Reservation> checkIn = query.getResultList();
-		
-		session.getTransaction().commit();
-		
-		return checkIn;
+		return query.getResultList();
 	}
 	
 	public List<Reservation> getCheckOut() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		
 		Query<Reservation> query = session.createQuery("from Reservation p WHERE p.endDate = :endDate", Reservation.class);
 		query.setParameter("endDate", LocalDate.now());
-		List<Reservation> checkOut = query.getResultList();
-		
-		session.getTransaction().commit();
-		
-		return checkOut;
+		return query.getResultList();
 	}
 	
 	public List<Reservation> getReservationsByCustomerSurname(String surname) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		
 		String queryString = """
 				FROM Reservation p
@@ -73,16 +54,11 @@ public class ReservationDao {
 				""";
 		Query<Reservation> query = session.createQuery(queryString, Reservation.class);
 		query.setParameter("surname", surname);
-		List<Reservation> reservations = query.getResultList();
-		
-		session.getTransaction().commit();
-		
-		return reservations;
+		return query.getResultList();
 	}
 	
 	public List<Reservation> getReservationsByRooms(List<Integer> roomNumbers) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 
 		String queryString = """
 				FROM Reservation p
@@ -90,53 +66,36 @@ public class ReservationDao {
 				""";
 		Query<Reservation> query = session.createQuery(queryString, Reservation.class);
 		query.setParameter("roomNumbers", roomNumbers);
-		List<Reservation> reservations = query.getResultList();
-		
-		session.getTransaction().commit();
-		
-		return reservations;
+		return query.getResultList();
 	}
 	
 	public List<Reservation> getReservatrionsByEndDate(LocalDate endDate) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		
 		Query<Reservation> query = session.createQuery("from Reservation p WHERE p.endDate = :endDate", Reservation.class);
 		query.setParameter("endDate", endDate);
-		List<Reservation> reservations = query.getResultList();
-		
-		session.getTransaction().commit();
-		
-		return reservations;
+		return query.getResultList();
 	}
 	
 	public List<Reservation> getReservationsByStartDate(LocalDate startDate) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		
 		Query<Reservation> query = session.createQuery("from Reservation p WHERE p.startDate = :startDate", Reservation.class);
 		query.setParameter("startDate", startDate);
-		List<Reservation> reservations = query.getResultList();
-		
-		session.getTransaction().commit();
-		
-		return reservations;
+		return query.getResultList();
 	}
 	
 	public Reservation getReservationById(Long id) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		Reservation reservation = session.get(Reservation.class, id);
 		Hibernate.initialize(reservation.getRooms());
 		Hibernate.initialize(reservation.getConsumptions());
-		session.getTransaction().commit();
 		return reservation;
 	}
 	
 	public Reservation findByRoomAndDate(Room room, LocalDate date) {
 		Reservation reservation = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		
 		String queryString = """
 				SELECT p.id
@@ -155,14 +114,12 @@ public class ReservationDao {
 		Long id = query.getResultStream().findFirst().orElse(null);
 		if(id != null)
 			reservation = session.get(Reservation.class, id);
-		session.getTransaction().commit();
 		return reservation;
 	}
 	
 	public Reservation findByRoomAndStartDate(Room room, LocalDate date) {
 		Reservation reservation = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		
 		String queryString = """
 				SELECT p.id
@@ -179,14 +136,12 @@ public class ReservationDao {
 		Long id = query.getResultStream().findFirst().orElse(null);
 		if(id != null)
 			reservation = session.get(Reservation.class, id);
-		session.getTransaction().commit();
 		return reservation;
 	}
 	
 	public Reservation findByRoomAndEndDateAndStartDateInPreviousMonth(Room room, LocalDate date) {
 		Reservation reservation = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		
 		String queryString = """
 				SELECT p.id
@@ -209,14 +164,12 @@ public class ReservationDao {
 		Long id = query.getResultStream().findFirst().orElse(null);
 		if(id != null)
 			reservation = session.get(Reservation.class, id);
-		session.getTransaction().commit();
 		return reservation;
 	}
 	
 	public Reservation findByRoomAndStartDateInPreviousMonth(Room room, LocalDate date) {
 		Reservation reservation = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
 		
 		String queryString = """
 				SELECT p.id
@@ -239,7 +192,6 @@ public class ReservationDao {
 		Long id = query.getResultStream().findFirst().orElse(null);
 		if(id != null)
 			reservation = session.get(Reservation.class, id);
-		session.getTransaction().commit();
 		return reservation;
 	}
 }
