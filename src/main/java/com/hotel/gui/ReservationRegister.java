@@ -27,7 +27,7 @@ public class ReservationRegister extends JFrame {
 	private static final long serialVersionUID = -4144532333900919080L;
 	private JTextField research;
 	private DefaultListModel<Reservation> prenotazioni = new DefaultListModel<>();
-	private JList<Reservation> prenotazioniJList;
+	private JList<Reservation> reservationJList;
 	private JScrollPane scrollPane = new JScrollPane();
 	
 	private JLabel id;
@@ -50,8 +50,8 @@ public class ReservationRegister extends JFrame {
 	public ReservationRegister(ReservationService reservationService) {
 		SwingComponentUtil.addHotelIcons(this);
 		prenotazioni.addAll(reservationService.getAll());
-		prenotazioniJList = new JList<>(prenotazioni);
-		scrollPane.setViewportView(prenotazioniJList);
+		reservationJList = new JList<>(prenotazioni);
+		scrollPane.setViewportView(reservationJList);
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -150,7 +150,7 @@ public class ReservationRegister extends JFrame {
 		checkoutLabel_1.setBounds(1012, 120, 162, 28);
 		resultPanel.add(checkoutLabel_1);
 		
-		JLabel childrenNumberLabel_1 = new JLabel("Childs");
+		JLabel childrenNumberLabel_1 = new JLabel("Children");
 		childrenNumberLabel_1.setForeground(new Color(224, 255, 255));
 		childrenNumberLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		childrenNumberLabel_1.setBounds(1012, 229, 205, 28);
@@ -304,9 +304,9 @@ public class ReservationRegister extends JFrame {
 		scrollPane.setBounds(10, 10, 979, 537);
 		resultPanel.add(scrollPane);	
 	
-		prenotazioniJList = new JList<>(prenotazioni);
-		prenotazioniJList.setBackground(new Color(224, 255, 255));
-		scrollPane.setViewportView(prenotazioniJList);
+		reservationJList = new JList<>(prenotazioni);
+		reservationJList.setBackground(new Color(224, 255, 255));
+		scrollPane.setViewportView(reservationJList);
 		
 		JLabel titleJListLabel = new JLabel("Reservations");
 		titleJListLabel.setForeground(new Color(0, 128, 128));
@@ -351,8 +351,8 @@ public class ReservationRegister extends JFrame {
 			}
 		}
 		if(results.size() > 0) {
-			prenotazioniJList.setModel(results);
-			scrollPane.setViewportView(prenotazioniJList);
+			reservationJList.setModel(results);
+			scrollPane.setViewportView(reservationJList);
 		}
 		research.setText("");
 	}
@@ -363,8 +363,8 @@ public class ReservationRegister extends JFrame {
 //	}
 	
 	private void showSelectedBookingData() {
-		if (prenotazioniJList.getSelectedValue() != null) {
-			Reservation reservation = prenotazioniJList.getSelectedValue();
+		if (reservationJList.getSelectedValue() != null) {
+			Reservation reservation = reservationJList.getSelectedValue();
 			id.setText(Long.toString(reservation.getId()));
 			reference.setText(reservation.getSurname());
 			checkIn.setText(reservation.getStartDate().toString());

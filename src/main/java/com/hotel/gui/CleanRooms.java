@@ -23,7 +23,6 @@ import com.hotel.util.SwingComponentUtil;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.GraphicsConfiguration;
@@ -57,7 +56,7 @@ public class CleanRooms extends JFrame {
 		titlePanel.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width, 30000));
 		titlePanel.setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width, 30000));
 		
-		JLabel titleLabel = new JLabel("Stato Pulizia Camere");
+		JLabel titleLabel = new JLabel("Room cleanliness status");
 		titleLabel.setForeground(new Color(0, 128, 128));
 		titleLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		titlePanel.add(titleLabel);
@@ -78,8 +77,8 @@ public class CleanRooms extends JFrame {
 		this.setVisible(true);
 	}
 	
-	private void addRooms(List<Room> camere, Map<Floor, JPanel> floorPanels, RoomService roomService) {
-		for(Room room : camere) {
+	private void addRooms(List<Room> rooms, Map<Floor, JPanel> floorPanels, RoomService roomService) {
+		for(Room room : rooms) {
 			String number = room.getNumber() + "";
 			JButton button = new JButton(number);
 			button.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -110,16 +109,6 @@ public class CleanRooms extends JFrame {
 		floorPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(224, 255, 255), new Color(224, 255, 255)), "Piano " + floor.getFloor(), TitledBorder.CENTER, TitledBorder.TOP, null, new Color(224, 255, 255)));
 		floorPanel.setBackground(new Color(0, 128, 128));
 		return floorPanel;
-	}
-	
-	@Override
-	public void dispose() {
-		int yn;
-		yn = JOptionPane.showConfirmDialog(null, "SEI SICURO DI VOLER CHIUDERE LA PAGINA?\nATTENZIONE:\nTUTTI I DATI INSERITI NON SALVATI ANDRANNO PERSI.\nVUOI PROCEDERE?", "EXIT", JOptionPane.YES_NO_OPTION);
-		if (yn == JOptionPane.YES_OPTION) {
-			if(cleaningMenu != null) cleaningMenu.dispose();
-			super.dispose();
-		}
 	}
 	
 	@Override

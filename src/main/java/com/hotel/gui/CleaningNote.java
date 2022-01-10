@@ -11,7 +11,6 @@ import com.hotel.util.SwingComponentUtil;
 import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -54,18 +53,17 @@ public class CleaningNote extends JFrame {
 		textPane.setFont(new Font("Tahoma", Font.BOLD, 15));
 		scrollPane.setViewportView(textPane);
 		
-		JLabel noteJLabel = new JLabel("NOTE");
+		JLabel noteJLabel = new JLabel("Note");
 		scrollPane.setColumnHeaderView(noteJLabel);
 		noteJLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		noteJLabel.setForeground(Color.BLACK);
 		noteJLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
-		JButton saveNoteButton = new JButton("Salva Note");
+		JButton saveNoteButton = new JButton("Save note");
 		saveNoteButton.addActionListener(e -> {
 			String noteText = textPane.getText().trim();
 			room.setNote(noteText);
 			roomService.saveRoom(room);
-			JOptionPane.showMessageDialog(null, "NOTE SALVATE");
 			if(noteText.isBlank())
 				roomButton.setForeground(Color.BLACK);
 			else

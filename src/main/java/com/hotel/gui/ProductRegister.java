@@ -66,12 +66,12 @@ public class ProductRegister extends JFrame {
 		productsLabel.setBounds(10, 10, 426, 60);
 		panel_2.add(productsLabel);
 		
-		JLabel lblProdotto = new JLabel("Product");
-		lblProdotto.setHorizontalAlignment(SwingConstants.LEFT);
-		lblProdotto.setForeground(new Color(224, 255, 255));
-		lblProdotto.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblProdotto.setBounds(35, 220, 132, 30);
-		panel.add(lblProdotto);
+		JLabel lblProduct = new JLabel("Product");
+		lblProduct.setHorizontalAlignment(SwingConstants.LEFT);
+		lblProduct.setForeground(new Color(224, 255, 255));
+		lblProduct.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		lblProduct.setBounds(35, 220, 132, 30);
+		panel.add(lblProduct);
 		
 		productName = new JTextField();
 		productName.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -79,12 +79,12 @@ public class ProductRegister extends JFrame {
 		productName.setBounds(206, 220, 230, 30);
 		panel.add(productName);
 		
-		JLabel lblPrezzo = new JLabel("Price each  \u20AC");
-		lblPrezzo.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrezzo.setForeground(new Color(224, 255, 255));
-		lblPrezzo.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblPrezzo.setBounds(35, 280, 161, 30);
-		panel.add(lblPrezzo);
+		JLabel lblPrice = new JLabel("Price each  \u20AC");
+		lblPrice.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPrice.setForeground(new Color(224, 255, 255));
+		lblPrice.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		lblPrice.setBounds(35, 280, 161, 30);
+		panel.add(lblPrice);
 		
 		price = new JTextField();
 		price.setDocument(SwingComponentUtil.financesPlainDocument());
@@ -101,13 +101,13 @@ public class ProductRegister extends JFrame {
 		addProductsButton.setBounds(58, 422, 319, 57);
 		panel.add(addProductsButton);
 		
-		JButton btnModificaProduct = new JButton("Edit product");
-		btnModificaProduct.addActionListener(e -> modifyProduct());
-		btnModificaProduct.setForeground(new Color(0, 128, 128));
-		btnModificaProduct.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
-		btnModificaProduct.setBackground(new Color(224, 255, 255));
-		btnModificaProduct.setBounds(58, 496, 319, 57);
-		panel.add(btnModificaProduct);
+		JButton btnEditProduct = new JButton("Edit product");
+		btnEditProduct.addActionListener(e -> modifyProduct());
+		btnEditProduct.setForeground(new Color(0, 128, 128));
+		btnEditProduct.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
+		btnEditProduct.setBackground(new Color(224, 255, 255));
+		btnEditProduct.setBounds(58, 496, 319, 57);
+		panel.add(btnEditProduct);
 		
 //		JButton btnEliminaProdotto = new JButton("Elimina Prodotto");
 //		btnEliminaProdotto.addActionListener(new ActionListener() {
@@ -207,14 +207,6 @@ public class ProductRegister extends JFrame {
 	private void refreshProductsList() {
 		productsJList.setModel(products);
 		scrollPane.setViewportView(productsJList);
-	}
-	
-	@Override
-	public void dispose() {
-		int yn;
-		yn = JOptionPane.showConfirmDialog(null, "SEI SICURO DI VOLER CHIUDERE LA PAGINA?\nATTENZIONE:\nTUTTI I DATI INSERITI NON SALVATI ANDRANNO PERSI.\nVUOI PROCEDERE?", "EXIT", JOptionPane.YES_NO_OPTION);
-		if(yn == JOptionPane.YES_OPTION)
-			super.dispose();
 	}
 	
 	private boolean checkInputFields() {

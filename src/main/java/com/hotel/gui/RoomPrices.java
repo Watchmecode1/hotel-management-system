@@ -70,23 +70,23 @@ public class RoomPrices extends JFrame {
 		textLabel.setBounds(10, 10, 527, 46);
 		mainPanel.add(textLabel);
 		
-		JLabel quadruplaLabel = new JLabel("Quadruple price");
-		quadruplaLabel.setForeground(new Color(224, 255, 255));
-		quadruplaLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		quadruplaLabel.setBounds(10, 212, 211, 26);
-		mainPanel.add(quadruplaLabel);
+		JLabel quadrupleLabel = new JLabel("Quadruple price");
+		quadrupleLabel.setForeground(new Color(224, 255, 255));
+		quadrupleLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		quadrupleLabel.setBounds(10, 212, 211, 26);
+		mainPanel.add(quadrupleLabel);
 		
-		JLabel matrimonialeLabel = new JLabel("Double price");
-		matrimonialeLabel.setForeground(new Color(224, 255, 255));
-		matrimonialeLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		matrimonialeLabel.setBounds(10, 132, 223, 26);
-		mainPanel.add(matrimonialeLabel);
+		JLabel doubleLabel = new JLabel("Double price");
+		doubleLabel.setForeground(new Color(224, 255, 255));
+		doubleLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		doubleLabel.setBounds(10, 132, 223, 26);
+		mainPanel.add(doubleLabel);
 		
-		JLabel triplaLabel = new JLabel("Triple price");
-		triplaLabel.setForeground(new Color(224, 255, 255));
-		triplaLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		triplaLabel.setBounds(10, 172, 223, 26);
-		mainPanel.add(triplaLabel);
+		JLabel tripleLabel = new JLabel("Triple price");
+		tripleLabel.setForeground(new Color(224, 255, 255));
+		tripleLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		tripleLabel.setBounds(10, 172, 223, 26);
+		mainPanel.add(tripleLabel);
 		
 		doubleTextField = new JTextField();
 		doubleTextField.setDocument(SwingComponentUtil.financesPlainDocument());
@@ -166,8 +166,8 @@ public class RoomPrices extends JFrame {
 		btnNewButton.setBounds(10, 300, 211, 36);
 		mainPanel.add(btnNewButton);
 		
-		JButton btnConferma = new JButton("Confirmation");
-		btnConferma.addActionListener(e -> {
+		JButton btnConfirm = new JButton("Confirmation");
+		btnConfirm.addActionListener(e -> {
 			if (!singleTextField.getText().isBlank()
 					&& !doubleTextField.getText().isBlank()
 					&& !tripleTextField.getText().isBlank()
@@ -185,11 +185,11 @@ public class RoomPrices extends JFrame {
 			} else
 				JOptionPane.showMessageDialog(null, "Insert valid prices for the rooms");
 		});
-		btnConferma.setForeground(new Color(0, 128, 128));
-		btnConferma.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		btnConferma.setBackground(new Color(224, 255, 255));
-		btnConferma.setBounds(326, 300, 211, 36);
-		mainPanel.add(btnConferma);
+		btnConfirm.setForeground(new Color(0, 128, 128));
+		btnConfirm.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		btnConfirm.setBackground(new Color(224, 255, 255));
+		btnConfirm.setBounds(326, 300, 211, 36);
+		mainPanel.add(btnConfirm);
 		
 		JLabel lblNewLabel_2_2_1_1 = new JLabel("Quintuple price");
 		lblNewLabel_2_2_1_1.setForeground(new Color(224, 255, 255));

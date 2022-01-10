@@ -54,11 +54,11 @@ public class Planner extends JFrame {
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-		List<Room> camere = roomService.getAll().stream()
+		List<Room> rooms = roomService.getAll().stream()
 								.sorted(Comparator.comparingInt(Room::getNumber))
 								.toList();
-		int numeroCamere = camere.size();
-		int numeroGiorni = data.lengthOfMonth();
+		int numberOfRooms = rooms.size();
+		int numberOfDays = data.lengthOfMonth();
 		
 		JPanel container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
@@ -114,9 +114,9 @@ public class Planner extends JFrame {
 		planPanel.setLayout(gridLayout);
 		
 		boolean previousMonthBookingIsPossible;
-		for(int row = 0; row <= numeroCamere; row++) {
+		for(int row = 0; row <= numberOfRooms; row++) {
 			previousMonthBookingIsPossible = true;
-			for(int column = 0; column <= numeroGiorni; column++) {
+			for(int column = 0; column <= numberOfDays; column++) {
 				/////////////////////////
 				JLabel halfLabel = new JLabel();
 				GridBagConstraints halfLabelConstraints = new GridBagConstraints();
@@ -161,7 +161,7 @@ public class Planner extends JFrame {
 					}
 				} else {
 					if(column == 0) {
-						JLabel label = new JLabel(String.valueOf(camere.get(row - 1).getNumber()));
+						JLabel label = new JLabel(String.valueOf(rooms.get(row - 1).getNumber()));
 						label.setHorizontalAlignment(SwingConstants.CENTER);
 						label.setVerticalAlignment(SwingConstants.CENTER);
 						GridBagConstraints constraints = new GridBagConstraints();
@@ -172,7 +172,7 @@ public class Planner extends JFrame {
 						constraints.weighty = 0.5;
 						planPanel.add(label, constraints);
 					} else {
-						Room room = camere.get(row - 1);
+						Room room = rooms.get(row - 1);
 						LocalDate cellLocalDate = data.withDayOfMonth(column);
 						Reservation reservation = reservationService.findByRoomAndStartDate(room, cellLocalDate);
 						
@@ -203,8 +203,8 @@ public class Planner extends JFrame {
 							JButton button = new JButton(reservation.getSurname());
 							button.setFont(new Font("Tahoma", Font.BOLD, 20));
 							setButtonBackground(button, reservation);
-							button.setMaximumSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / (numeroGiorni + 1), 15));
-							button.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / (numeroGiorni + 1), 15));
+							button.setMaximumSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / (numberOfDays + 1), 15));
+							button.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / (numberOfDays + 1), 15));
 							final Reservation reservationFinal = reservation;
 							button.addActionListener(e -> {
 								if(Planner.this.reservationMenu != null) Planner.this.reservationMenu.dispose();

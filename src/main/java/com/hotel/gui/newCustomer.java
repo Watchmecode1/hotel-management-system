@@ -51,10 +51,10 @@ public class newCustomer extends JFrame {
 	private JComboBox<Housed> gerarchyComboBox;
 	private JComboBox<String> citizenshipComboBox;
 	private JComboBox<String> birthplaceBox;
-	private JComboBox<String> provinciaDiNascitaBox;
+	private JComboBox<String> countyOfBirthBox;
 	private JComboBox<String> idReleasePlaceBox;
-	private JComboBox<String> statoDiNascitaComboBox;
-	private JComboBox<String> idProvinciaDiRilascioComboBox;
+	private JComboBox<String> stateOfBirthComboBox;
+	private JComboBox<String> idCountyOfBirthComboBox;
 	private JDateChooser idReleaseDateChooser;
 	private JDateChooser idExpirationDateChooser;
 	private Customer customer;
@@ -134,7 +134,7 @@ public class newCustomer extends JFrame {
 		citizenshipComboBox.setBackground(new Color(224, 255, 255));
 		citizenshipComboBox.setBounds(314, 235, 416, 36);
 		@SuppressWarnings("unused")
-		ComboBoxSearchable statiSearch = new ComboBoxSearchable(citizenshipComboBox);
+		ComboBoxSearchable stateSearch = new ComboBoxSearchable(citizenshipComboBox);
 		newCustomerPanel.add(citizenshipComboBox);
 		
 		birthplaceBox = new JComboBox<>();
@@ -150,18 +150,18 @@ public class newCustomer extends JFrame {
 		ComboBoxSearchable searchPlacesOfBirth = new ComboBoxSearchable(birthplaceBox);
 		newCustomerPanel.add(birthplaceBox);
 		
-		provinciaDiNascitaBox = new JComboBox<>();
-		provinciaDiNascitaBox.setEditable(false);
-		provinciaDiNascitaBox.setEnabled(false);
-		provinciaDiNascitaBox.setModel(FileUtils.getProvinces());
-		provinciaDiNascitaBox.setSelectedIndex(-1);
-		provinciaDiNascitaBox.setForeground(new Color(0, 128, 128));
-		provinciaDiNascitaBox.setFont(new Font("Tahoma", Font.BOLD, 17));
-		provinciaDiNascitaBox.setBackground(new Color(224, 255, 255));
-		provinciaDiNascitaBox.setBounds(314, 370, 416, 36);
+		countyOfBirthBox = new JComboBox<>();
+		countyOfBirthBox.setEditable(false);
+		countyOfBirthBox.setEnabled(false);
+		countyOfBirthBox.setModel(FileUtils.getProvinces());
+		countyOfBirthBox.setSelectedIndex(-1);
+		countyOfBirthBox.setForeground(new Color(0, 128, 128));
+		countyOfBirthBox.setFont(new Font("Tahoma", Font.BOLD, 17));
+		countyOfBirthBox.setBackground(new Color(224, 255, 255));
+		countyOfBirthBox.setBounds(314, 370, 416, 36);
 		@SuppressWarnings("unused")
-		ComboBoxSearchable searchResidence = new ComboBoxSearchable(provinciaDiNascitaBox);
-		newCustomerPanel.add(provinciaDiNascitaBox);
+		ComboBoxSearchable searchResidence = new ComboBoxSearchable(countyOfBirthBox);
+		newCustomerPanel.add(countyOfBirthBox);
 		
 		idNumberTextField = new JTextField();
 		idNumberTextField.setEditable(false);
@@ -199,18 +199,18 @@ public class newCustomer extends JFrame {
 		idSourceBox.setBounds(1047, 190, 416, 36);
 		newCustomerPanel.add(idSourceBox);
 		
-		idProvinciaDiRilascioComboBox = new JComboBox<>();
-		idProvinciaDiRilascioComboBox.setBackground(new Color(224, 255, 255));
-		idProvinciaDiRilascioComboBox.setForeground(new Color(224, 255, 255));
-		idProvinciaDiRilascioComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
-		idProvinciaDiRilascioComboBox.setModel(FileUtils.getProvinces());
-		idProvinciaDiRilascioComboBox.setEnabled(false);
-		idProvinciaDiRilascioComboBox.setEditable(false);
-		idProvinciaDiRilascioComboBox.setSelectedIndex(-1);
-		idProvinciaDiRilascioComboBox.setBounds(1047, 280, 416, 36);
+		idCountyOfBirthComboBox = new JComboBox<>();
+		idCountyOfBirthComboBox.setBackground(new Color(224, 255, 255));
+		idCountyOfBirthComboBox.setForeground(new Color(224, 255, 255));
+		idCountyOfBirthComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
+		idCountyOfBirthComboBox.setModel(FileUtils.getProvinces());
+		idCountyOfBirthComboBox.setEnabled(false);
+		idCountyOfBirthComboBox.setEditable(false);
+		idCountyOfBirthComboBox.setSelectedIndex(-1);
+		idCountyOfBirthComboBox.setBounds(1047, 280, 416, 36);
 		@SuppressWarnings("unused")
-		ComboBoxSearchable searchProvinciaDiRilascio = new ComboBoxSearchable(idProvinciaDiRilascioComboBox);
-		newCustomerPanel.add(idProvinciaDiRilascioComboBox);
+		ComboBoxSearchable searchProvinceOfIssue = new ComboBoxSearchable(idCountyOfBirthComboBox);
+		newCustomerPanel.add(idCountyOfBirthComboBox);
 		
 		idReleasePlaceBox = new JComboBox<>();
 		idReleasePlaceBox.setEditable(false);
@@ -226,7 +226,7 @@ public class newCustomer extends JFrame {
 		newCustomerPanel.add(idReleasePlaceBox);
 		idReleasePlaceBox.addActionListener(e -> {
 			String releasePlace = (String) idReleasePlaceBox.getSelectedItem();
-			idProvinciaDiRilascioComboBox.setEnabled(releasePlace != null && !FileUtils.STATE_CODES.containsKey(releasePlace));
+			idCountyOfBirthComboBox.setEnabled(releasePlace != null && !FileUtils.STATE_CODES.containsKey(releasePlace));
 		});
 		
 		idTypeComboBox = new JComboBox<>();
@@ -241,7 +241,7 @@ public class newCustomer extends JFrame {
 				idNumberTextField.setEditable(false);
 				idSourceBox.setEnabled(false);
 				idReleasePlaceBox.setEnabled(false);
-				idProvinciaDiRilascioComboBox.setEnabled(false);
+				idCountyOfBirthComboBox.setEnabled(false);
 				idReleaseDateChooser.setEnabled(false);
 				idExpirationDateChooser.setEnabled(false);
 			}
@@ -254,73 +254,59 @@ public class newCustomer extends JFrame {
 		idTypeComboBox.setBounds(1047, 100, 416, 36);
 		newCustomerPanel.add(idTypeComboBox);
 		
-		statoDiNascitaComboBox = new JComboBox<>();
-		statoDiNascitaComboBox.setModel(FileUtils.getStates());
-		statoDiNascitaComboBox.setSelectedIndex(-1);
-		statoDiNascitaComboBox.setForeground(new Color(0, 128, 128));
-		statoDiNascitaComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
-		statoDiNascitaComboBox.setBackground(new Color(224, 255, 255));
-		statoDiNascitaComboBox.setBounds(314, 280, 416, 36);
-		statoDiNascitaComboBox.addActionListener(e -> {
-			String state = (String) statoDiNascitaComboBox.getSelectedItem();
+		stateOfBirthComboBox = new JComboBox<>();
+		stateOfBirthComboBox.setModel(FileUtils.getStates());
+		stateOfBirthComboBox.setSelectedIndex(-1);
+		stateOfBirthComboBox.setForeground(new Color(0, 128, 128));
+		stateOfBirthComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
+		stateOfBirthComboBox.setBackground(new Color(224, 255, 255));
+		stateOfBirthComboBox.setBounds(314, 280, 416, 36);
+		stateOfBirthComboBox.addActionListener(e -> {
+			String state = (String) stateOfBirthComboBox.getSelectedItem();
 			if(state != null && state.equals("ITALIA")) {
 				birthplaceBox.setEnabled(true);
-				provinciaDiNascitaBox.setEnabled(true);
+				countyOfBirthBox.setEnabled(true);
 			}
 			else {
 				birthplaceBox.setEnabled(false);
-				provinciaDiNascitaBox.setEnabled(false);
+				countyOfBirthBox.setEnabled(false);
 			}
 		});
-		newCustomerPanel.add(statoDiNascitaComboBox);
+		newCustomerPanel.add(stateOfBirthComboBox);
 		
-		JButton addNewCustomerButton = new JButton("Aggiungi");
+		JButton addNewCustomerButton = new JButton("Add");
 		addNewCustomerButton.addActionListener(e -> {
-			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "VUOI AGGIUNGERE IL NUOVO CLIENTE?", "AGGIUNGI CLIENTE", JOptionPane.YES_NO_OPTION);
-			if (yn == JOptionPane.YES_OPTION) {
-				if(checkClientFields()) {
-					Customer customer1 = null;
-					Document document = null;
-					boolean correctFields = true;
-					if(statoDiNascitaComboBox.getSelectedItem().equals("ITALIA")) {
-						if(checkClientItalianFields()) {
-							customer1 = new Customer(nameTextField.getText(),
-									surnameTextField.getText(),
-									(Gender) genderComboBox.getSelectedItem(),
-									DateUtils.convertDateToLocalDate(dateOfBirthChooser.getDate()),
-									(String) statoDiNascitaComboBox.getSelectedItem(),
-									(String) birthplaceBox.getSelectedItem(),
-									(String) provinciaDiNascitaBox.getSelectedItem(),
-									(String) citizenshipComboBox.getSelectedItem(),
-									(Housed) gerarchyComboBox.getSelectedItem());
-						}
-					} else {
+			if(checkClientFields()) {
+				Customer customer1 = null;
+				Document document = null;
+				boolean correctFields = true;
+				if(stateOfBirthComboBox.getSelectedItem().equals("ITALIA")) {
+					if(checkClientItalianFields()) {
 						customer1 = new Customer(nameTextField.getText(),
 								surnameTextField.getText(),
 								(Gender) genderComboBox.getSelectedItem(),
 								DateUtils.convertDateToLocalDate(dateOfBirthChooser.getDate()),
-								(String) statoDiNascitaComboBox.getSelectedItem(),
-								null,
-								null,
+								(String) stateOfBirthComboBox.getSelectedItem(),
+								(String) birthplaceBox.getSelectedItem(),
+								(String) countyOfBirthBox.getSelectedItem(),
 								(String) citizenshipComboBox.getSelectedItem(),
 								(Housed) gerarchyComboBox.getSelectedItem());
 					}
-					if(checkIdType()) {
-						if(checkDocumentFields()) {
-							if(checkIfItalianDocument()) {
-								if(checkIdProvincia()) {
-									document = new Document(customer1,
-											idNumberTextField.getText(),
-											(DocumentType) idTypeComboBox.getSelectedItem(),
-											(Release) idSourceBox.getSelectedItem(),
-											DateUtils.convertDateToLocalDate(idReleaseDateChooser.getDate()),
-											DateUtils.convertDateToLocalDate(idExpirationDateChooser.getDate()),
-											(String) idReleasePlaceBox.getSelectedItem(),
-											(String) idProvinciaDiRilascioComboBox.getSelectedItem());
-								} else
-									correctFields = false;
-							} else
+				} else {
+					customer1 = new Customer(nameTextField.getText(),
+							surnameTextField.getText(),
+							(Gender) genderComboBox.getSelectedItem(),
+							DateUtils.convertDateToLocalDate(dateOfBirthChooser.getDate()),
+							(String) stateOfBirthComboBox.getSelectedItem(),
+							null,
+							null,
+							(String) citizenshipComboBox.getSelectedItem(),
+							(Housed) gerarchyComboBox.getSelectedItem());
+					}
+				if(checkIdType()) {
+					if(checkDocumentFields()) {
+						if(checkIfItalianDocument()) {
+							if(checkIdProvince()) {
 								document = new Document(customer1,
 										idNumberTextField.getText(),
 										(DocumentType) idTypeComboBox.getSelectedItem(),
@@ -328,18 +314,28 @@ public class newCustomer extends JFrame {
 										DateUtils.convertDateToLocalDate(idReleaseDateChooser.getDate()),
 										DateUtils.convertDateToLocalDate(idExpirationDateChooser.getDate()),
 										(String) idReleasePlaceBox.getSelectedItem(),
-										null);
+										(String) idCountyOfBirthComboBox.getSelectedItem());
+							} else
+								correctFields = false;
 						} else
-							correctFields = false;
-					}
-					if(correctFields) {
-						customerService.saveCustomer(customer1);
-						if(document != null) documentService.saveDocument(document);
-						customerList.addElement(customer1);
-						dispose();
-					}
+							document = new Document(customer1,
+									idNumberTextField.getText(),
+									(DocumentType) idTypeComboBox.getSelectedItem(),
+									(Release) idSourceBox.getSelectedItem(),
+									DateUtils.convertDateToLocalDate(idReleaseDateChooser.getDate()),
+									DateUtils.convertDateToLocalDate(idExpirationDateChooser.getDate()),
+									(String) idReleasePlaceBox.getSelectedItem(),
+									null);
+					} else
+						correctFields = false;
 				}
-			} else JOptionPane.showMessageDialog(null, "OPERAZIONE ANNULLATA");
+				if(correctFields) {
+					customerService.saveCustomer(customer1);
+					if(document != null) documentService.saveDocument(document);
+					customerList.addElement(customer1);
+					dispose();
+				}
+			}
 		});
 		addNewCustomerButton.setBounds(878, 600, 303, 51);
 		newCustomerPanel.add(addNewCustomerButton);
@@ -353,14 +349,14 @@ public class newCustomer extends JFrame {
 		newCustomerPanel.add(upPanel);
 		upPanel.setLayout(null);
 		
-		JLabel addCustomerLabel = new JLabel("Nuovo Cliente");
+		JLabel addCustomerLabel = new JLabel("New customer");
 		addCustomerLabel.setBounds(0, 0, 1496, 86);
 		upPanel.add(addCustomerLabel);
 		addCustomerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		addCustomerLabel.setForeground(new Color(0, 128, 128));
 		addCustomerLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 40));
 		
-		JButton refreshButton = new JButton("Reimposta");
+		JButton refreshButton = new JButton("Reset");
 		refreshButton.addActionListener(e -> refreshAttributes());
 		refreshButton.setForeground(new Color(0, 128, 128));
 		refreshButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
@@ -368,13 +364,13 @@ public class newCustomer extends JFrame {
 		refreshButton.setBounds(180, 600, 303, 51);
 		newCustomerPanel.add(refreshButton);
 		
-		JLabel provinciaDiRilascioLabel = new JLabel("Provincia di rilascio");
-		provinciaDiRilascioLabel.setLabelFor(idProvinciaDiRilascioComboBox);
-		provinciaDiRilascioLabel.setForeground(new Color(224, 255, 255));
-		provinciaDiRilascioLabel.setFont(new Font("Dialog", Font.PLAIN, 33));
-		provinciaDiRilascioLabel.setBackground(new Color(0, 128, 128));
-		provinciaDiRilascioLabel.setBounds(754, 281, 281, 36);
-		newCustomerPanel.add(provinciaDiRilascioLabel);
+		JLabel provinceOfIssueLabel = new JLabel("Province of issue");
+		provinceOfIssueLabel.setLabelFor(idCountyOfBirthComboBox);
+		provinceOfIssueLabel.setForeground(new Color(224, 255, 255));
+		provinceOfIssueLabel.setFont(new Font("Dialog", Font.PLAIN, 33));
+		provinceOfIssueLabel.setBackground(new Color(0, 128, 128));
+		provinceOfIssueLabel.setBounds(754, 281, 281, 36);
+		newCustomerPanel.add(provinceOfIssueLabel);
 		
 		JPanel leftPanel = new JPanel();
 		leftPanel.setBackground(new Color(224, 255, 255));
@@ -393,85 +389,85 @@ public class newCustomer extends JFrame {
 	}
 	
 	private void setLabels() {
-		JLabel surnameLabel = new JLabel("Cognome");
+		JLabel surnameLabel = new JLabel("Surname");
 		surnameLabel.setForeground(new Color(224, 255, 255));
 		surnameLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		surnameLabel.setBounds(10, 145, 250, 36);
 		newCustomerPanel.add(surnameLabel);
 		
-		JLabel nameLabel = new JLabel("Nome");
+		JLabel nameLabel = new JLabel("Name");
 		nameLabel.setForeground(new Color(224, 255, 255));
 		nameLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		nameLabel.setBounds(10, 100, 250, 36);
 		newCustomerPanel.add(nameLabel);
 		
-		JLabel dateOfBirthLabel = new JLabel("Data di nascita");
+		JLabel dateOfBirthLabel = new JLabel("Date of birth");
 		dateOfBirthLabel.setForeground(new Color(224, 255, 255));
 		dateOfBirthLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		dateOfBirthLabel.setBounds(10, 415, 250, 36);
 		newCustomerPanel.add(dateOfBirthLabel);
 		
-		JLabel placeOfBirthLabel = new JLabel("Comune di nascita");
+		JLabel placeOfBirthLabel = new JLabel("Birthplace");
 		placeOfBirthLabel.setForeground(new Color(224, 255, 255));
 		placeOfBirthLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		placeOfBirthLabel.setBounds(10, 325, 281, 36);
 		newCustomerPanel.add(placeOfBirthLabel);
 		
-		JLabel provinciaDiNascitaLabel = new JLabel("Provincia di nascita");
-		provinciaDiNascitaLabel.setForeground(new Color(224, 255, 255));
-		provinciaDiNascitaLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		provinciaDiNascitaLabel.setBounds(10, 370, 294, 36);
-		newCustomerPanel.add(provinciaDiNascitaLabel);
+		JLabel countyOfBirthLabel = new JLabel("County of birth");
+		countyOfBirthLabel.setForeground(new Color(224, 255, 255));
+		countyOfBirthLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
+		countyOfBirthLabel.setBounds(10, 370, 294, 36);
+		newCustomerPanel.add(countyOfBirthLabel);
 		
-		JLabel genderLabel = new JLabel("Genere");
+		JLabel genderLabel = new JLabel("Gender");
 		genderLabel.setForeground(new Color(224, 255, 255));
 		genderLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		genderLabel.setBounds(10, 190, 250, 36);
 		newCustomerPanel.add(genderLabel);
 		
-		JLabel idTypeLabel = new JLabel("Tipo documento");
+		JLabel idTypeLabel = new JLabel("Document type");
 		idTypeLabel.setForeground(new Color(224, 255, 255));
 		idTypeLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		idTypeLabel.setBounds(754, 100, 250, 36);
 		newCustomerPanel.add(idTypeLabel);
 		
-		JLabel idNumberLabel = new JLabel("Numero documento");
+		JLabel idNumberLabel = new JLabel("Document number");
 		idNumberLabel.setForeground(new Color(224, 255, 255));
 		idNumberLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		idNumberLabel.setBounds(754, 145, 294, 36);
 		newCustomerPanel.add(idNumberLabel);
 		
-		JLabel idReleaseDateLabel = new JLabel("Data rilascio");
+		JLabel idReleaseDateLabel = new JLabel("Release date");
 		idReleaseDateLabel.setForeground(new Color(224, 255, 255));
 		idReleaseDateLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		idReleaseDateLabel.setBounds(754, 325, 250, 36);
 		newCustomerPanel.add(idReleaseDateLabel);
 		
-		JLabel idReleasePlaceLabel = new JLabel("Luogo di rilascio");
+		JLabel idReleasePlaceLabel = new JLabel("Place of issue");
 		idReleasePlaceLabel.setForeground(new Color(224, 255, 255));
 		idReleasePlaceLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		idReleasePlaceLabel.setBounds(754, 235, 250, 36);
 		newCustomerPanel.add(idReleasePlaceLabel);
 		
-		JLabel idReleaseSource = new JLabel("Rilasciato da");
+		JLabel idReleaseSource = new JLabel("Released by");
 		idReleaseSource.setForeground(new Color(224, 255, 255));
 		idReleaseSource.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		idReleaseSource.setBounds(754, 190, 250, 36);
 		newCustomerPanel.add(idReleaseSource);
 		
-		JLabel idGerarchyLabel = new JLabel("Tipo ospite");
-		idGerarchyLabel.setForeground(new Color(224, 255, 255));
-		idGerarchyLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		idGerarchyLabel.setBounds(10, 460, 250, 36);
-		newCustomerPanel.add(idGerarchyLabel);
+		JLabel idHierarchyLabel = new JLabel("Hierarchy");
+		idHierarchyLabel.setForeground(new Color(224, 255, 255));
+		idHierarchyLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
+		idHierarchyLabel.setBounds(10, 460, 250, 36);
+		newCustomerPanel.add(idHierarchyLabel);
 		
-		JLabel statoDiNascitaLabel = new JLabel("Stato di nascita");
-		statoDiNascitaLabel.setFont(new Font("Dialog", Font.PLAIN, 33));
-		statoDiNascitaLabel.setForeground(new Color(224, 255, 255));
-		statoDiNascitaLabel.setBounds(10, 280, 294, 36);
-		newCustomerPanel.add(statoDiNascitaLabel);
+		JLabel stateOfBirthLabel = new JLabel("State of birth");
+		stateOfBirthLabel.setFont(new Font("Dialog", Font.PLAIN, 33));
+		stateOfBirthLabel.setForeground(new Color(224, 255, 255));
+		stateOfBirthLabel.setBounds(10, 280, 294, 36);
+		newCustomerPanel.add(stateOfBirthLabel);
 		
-		JLabel citizenship = new JLabel("Cittadinanza");
+		JLabel citizenship = new JLabel("Citizenship");
 		citizenship.setForeground(new Color(224, 255, 255));
 		citizenship.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		citizenship.setBounds(10, 235, 250, 36);
@@ -482,7 +478,7 @@ public class newCustomer extends JFrame {
 		separator.setBounds(0, 499, 1480, 13);
 		newCustomerPanel.add(separator);
 		
-		JLabel expirationDateLabel = new JLabel("Data di scadenza");
+		JLabel expirationDateLabel = new JLabel("Expiration date");
 		expirationDateLabel.setForeground(new Color(224, 255, 255));
 		expirationDateLabel.setFont(new Font("Dialog", Font.PLAIN, 33));
 		expirationDateLabel.setBackground(new Color(0, 128, 128));
@@ -492,7 +488,7 @@ public class newCustomer extends JFrame {
 
 	private boolean checkClientFields() {
 		return checkName() && checkSurname() && checkGender() && checkDateOfBirth() && checkStateOfBirth()
-				 && checkCitizenship() && checkGerarchy() && checkStatoDiNascita();
+				 && checkCitizenship() && checkHierarchy();
 	}
 	
 	private boolean checkClientItalianFields() {
@@ -503,18 +499,8 @@ public class newCustomer extends JFrame {
 		return checkDateOfRelease() && checkIdNumber() && checkIdPlaceRelease() && checkSourceId() && checkExpirationDate();
 	}
 	
-	private void refreshAttributes(boolean flag) {
-		if(flag) {
-			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "VUOI REIMPOSTARE I DATI INSERITI FIN'ORA?", "REIMPOSTA DATI", JOptionPane.YES_NO_OPTION);
-			if (yn == JOptionPane.YES_OPTION)
-				refreshFields();
-		} else
-			refreshFields();
-	}
-
 	private void refreshAttributes() {
-		refreshAttributes(false);
+		refreshFields();
 	}
 	
 	private void refreshFields() {
@@ -522,17 +508,17 @@ public class newCustomer extends JFrame {
 			nameTextField.setText("");
 			surnameTextField.setText("");
 			citizenshipComboBox.setSelectedIndex(-1);
-			statoDiNascitaComboBox.setSelectedIndex(-1);
+			stateOfBirthComboBox.setSelectedIndex(-1);
 			gerarchyComboBox.setSelectedIndex(-1);
 			birthplaceBox.setSelectedIndex(-1);
-			provinciaDiNascitaBox.setSelectedIndex(-1);
+			countyOfBirthBox.setSelectedIndex(-1);
 			genderComboBox.setSelectedIndex(-1);
 			dateOfBirthChooser.setDate(null);
 			
 			idTypeComboBox.setSelectedIndex(-1);
 			idNumberTextField.setText("");
 			idReleasePlaceBox.setSelectedIndex(-1);
-			idProvinciaDiRilascioComboBox.setSelectedIndex(-1);
+			idCountyOfBirthComboBox.setSelectedIndex(-1);
 			idSourceBox.setSelectedIndex(-1);
 			idExpirationDateChooser.setDate(null);
 			idReleaseDateChooser.setDate(null);
@@ -540,15 +526,15 @@ public class newCustomer extends JFrame {
 			nameTextField.setText(customer.getName());
 			surnameTextField.setText(customer.getSurname());
 			citizenshipComboBox.setSelectedItem(customer.getCitizenship());
-			statoDiNascitaComboBox.setSelectedItem(customer.getStateOfBirth());
+			stateOfBirthComboBox.setSelectedItem(customer.getStateOfBirth());
 			gerarchyComboBox.setSelectedItem(customer.getHoused());
 			birthplaceBox.setSelectedItem(customer.getBirthplace());
-			provinciaDiNascitaBox.setSelectedItem(customer.getCountyOfBirth());
+			countyOfBirthBox.setSelectedItem(customer.getCountyOfBirth());
 			genderComboBox.setSelectedItem(customer.getGender());
 			dateOfBirthChooser.setDate(DateUtils.convertLocalDateToDate(customer.getDateOfBirth()));
 			
-			Document documentCliente = customer.getDocument();
-			if(documentCliente == null) {
+			Document customerDocument = customer.getDocument();
+			if(customerDocument == null) {
 				idTypeComboBox.setSelectedIndex(-1);
 				idNumberTextField.setText("");
 				idReleasePlaceBox.setSelectedIndex(-1);
@@ -556,15 +542,15 @@ public class newCustomer extends JFrame {
 				idExpirationDateChooser.setDate(null);
 				idReleaseDateChooser.setDate(null);
 			} else {
-				idTypeComboBox.setSelectedItem(documentCliente.getDocumentType());
-				idNumberTextField.setText(documentCliente.getNumber());
-				idReleasePlaceBox.setSelectedItem(documentCliente.getPlaceOfIssue());
-				idSourceBox.setSelectedItem(documentCliente.getReleasedBy());
-				String provinciaDiRilascio = documentCliente.getProvinceOfIssue();
-				if(provinciaDiRilascio == null)
-					idProvinciaDiRilascioComboBox.setSelectedIndex(-1);
+				idTypeComboBox.setSelectedItem(customerDocument.getDocumentType());
+				idNumberTextField.setText(customerDocument.getNumber());
+				idReleasePlaceBox.setSelectedItem(customerDocument.getPlaceOfIssue());
+				idSourceBox.setSelectedItem(customerDocument.getReleasedBy());
+				String countyOfIssue = customerDocument.getProvinceOfIssue();
+				if(countyOfIssue == null)
+					idCountyOfBirthComboBox.setSelectedIndex(-1);
 				else
-					idProvinciaDiRilascioComboBox.setSelectedItem(provinciaDiRilascio);
+					idCountyOfBirthComboBox.setSelectedItem(countyOfIssue);
 				idExpirationDateChooser.setDate(null);
 				idReleaseDateChooser.setDate(null);
 			}
@@ -573,27 +559,27 @@ public class newCustomer extends JFrame {
 	
 	private boolean checkName() {
 		if(!nameTextField.getText().isBlank()) return true;
-		JOptionPane.showMessageDialog(null, "INSERISCI UN NOME");
+		JOptionPane.showMessageDialog(null, "Enter a name");
 		nameTextField.setText("");
 		return false;
 	}
 	private boolean checkSurname() {
 		if(!surnameTextField.getText().isBlank()) return true;
-		JOptionPane.showMessageDialog(null, "INSERISCI UN COGNOME");
+		JOptionPane.showMessageDialog(null, "Enter a surname");
 		surnameTextField.setText("");
 		return false;
 	}
 	
 	private boolean checkIdNumber() {
 		if(!idNumberTextField.getText().isBlank()) return true;
-		JOptionPane.showMessageDialog(null, "INSERISCI UN NUMERO DOCUMENTO");
+		JOptionPane.showMessageDialog(null, "Enter a document number");
 		idNumberTextField.setText("");
 		return false;
 	}
 	
 	private boolean checkGender() {
 		if(genderComboBox.getSelectedIndex() != -1) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA IL GENERE");
+		JOptionPane.showMessageDialog(null, "Select the gender");
 		return false;
 	}
 	
@@ -603,62 +589,56 @@ public class newCustomer extends JFrame {
 	
 	private boolean checkSourceId() {
 		if(idSourceBox.getSelectedIndex() != -1) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA L'ENTE DI RILASCIO DEL DOCUMENTO");
+		JOptionPane.showMessageDialog(null, "Select the document issue body");
 		return false;
 	}
 	
-	private boolean checkGerarchy() {
+	private boolean checkHierarchy() {
 		if(gerarchyComboBox.getSelectedIndex() != -1) {
-			Housed tipologiaHoused = (Housed) gerarchyComboBox.getSelectedItem();
-			if(tipologiaHoused == Housed.RELATIVE || tipologiaHoused == Housed.GROUP_MEMBER)
+			Housed housedType = (Housed) gerarchyComboBox.getSelectedItem();
+			if(housedType == Housed.RELATIVE || housedType == Housed.GROUP_MEMBER)
 				return true;
 			if(idTypeComboBox.getSelectedIndex() != -1)
 				return true;
-			JOptionPane.showMessageDialog(null, "IL TIPO DI ALLOGGIATO DEVE AVERE UN DOCUMENTO ASSOCIATO");
+			JOptionPane.showMessageDialog(null, "Accommodation type must have an associated document");
 		} else
-			JOptionPane.showMessageDialog(null, "SELEZIONA LA TIPOLOGIA DI ALLOGGIATO");
+			JOptionPane.showMessageDialog(null, "Select the type of accommodation");
 		return false;
 	}
 	
 	private boolean checkStateOfBirth() {
-		if(citizenshipComboBox.getSelectedIndex() != -1) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA LA CITTADINANZA");
+		if(stateOfBirthComboBox.getSelectedIndex() != -1) return true;
+		JOptionPane.showMessageDialog(null, "Select a state of birth");
 		return false;
 	}
 	
 	private boolean checkBirthplace() {
 		if(birthplaceBox.getSelectedIndex() != -1) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA IL COMUNE DI NASCITA");
+		JOptionPane.showMessageDialog(null, "Select the birthplace");
 		return false;
 	}
 	
 	private boolean checkCitizenship() {
 		if(citizenshipComboBox.getSelectedIndex() != -1) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA LA CITTADINANZA");
-		return false;
-	}
-	
-	private boolean checkStatoDiNascita() {
-		if(statoDiNascitaComboBox.getSelectedIndex() != -1) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA LO STATO DI NASCITA");
+		JOptionPane.showMessageDialog(null, "Select the citizenship");
 		return false;
 	}
 	
 	private boolean checkCountyOfBirth() {
-		if(provinciaDiNascitaBox.getSelectedIndex() != -1) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA LA PROVINCIA DI NASCITA");
+		if(countyOfBirthBox.getSelectedIndex() != -1) return true;
+		JOptionPane.showMessageDialog(null, "Select the province of birth");
 		return false;
 	}
 	
 	private boolean checkIdPlaceRelease() {
 		if(idReleasePlaceBox.getSelectedIndex() != -1) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA IL LUOGO DI RILASCIO DEL DOCUMENTO, IL COMUNE O  LO STATO SE ESTERO");
+		JOptionPane.showMessageDialog(null, "Select the place of issue of the document, the municipality or the state if foreign");
 		return false;
 	}
 	
 	private boolean checkDateOfRelease() {
 		if(idReleaseDateChooser.getDate() != null) return true;
-		JOptionPane.showMessageDialog(null, "INSERISCI LA DATA DI RILASCIO DEL DOCUMENTO");
+		JOptionPane.showMessageDialog(null, "Enter the document issue date");
 		return false;
 	}
 	
@@ -667,21 +647,21 @@ public class newCustomer extends JFrame {
 		return releasePlace != null && !FileUtils.STATE_CODES.containsKey(releasePlace);
 	}
 	
-	private boolean checkIdProvincia() {
-		if(idProvinciaDiRilascioComboBox.getSelectedItem() != null) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA LA PROVINCIA DI RILASCIO DEL DOCUMENTO");
+	private boolean checkIdProvince() {
+		if(idCountyOfBirthComboBox.getSelectedItem() != null) return true;
+		JOptionPane.showMessageDialog(null, "Select the province of release of the document");
 		return false;
 	}
 	
 	private boolean checkDateOfBirth() {
 		if(dateOfBirthChooser.getDate() != null) return true;
-		JOptionPane.showMessageDialog(null, "INSERISCI LA DATA DI NASCITA");
+		JOptionPane.showMessageDialog(null, "Enter the date of birth");
 		return false;
 	}
 	
 	private boolean checkExpirationDate() {
 		if(idExpirationDateChooser.getDate() != null) return true;
-		JOptionPane.showMessageDialog(null, "INSERISCI LA DATA DI SCADENZA DEL DOCUMENTO");
+		JOptionPane.showMessageDialog(null, "Enter the expiry date of the document");
 		return false;
 	}
 

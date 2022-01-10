@@ -39,9 +39,9 @@ public class ExpiresPage extends JFrame {
 		scrollPane.setBounds(10, 10, 715, 707);
 		contentPane.add(scrollPane);
 		
-		DefaultListModel<String> scaduti = new DefaultListModel<>();
-		scaduti.addAll(orderService.getExpiringOrders().stream().map(ordine -> ordine.getProductName() + " scandenza: " + ordine.getExpirationDate()).toList());
-		JList<String> list = new JList<>(scaduti);
+		DefaultListModel<String> expired = new DefaultListModel<>();
+		expired.addAll(orderService.getExpiringOrders().stream().map(order -> order.getProductName() + " " + "expiry:" + " " + order.getExpirationDate()).toList());
+		JList<String> list = new JList<>(expired);
 		list.setForeground(new Color(0, 128, 128));
 		list.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		list.setSelectionForeground(new Color(0, 139, 139));
@@ -49,7 +49,7 @@ public class ExpiresPage extends JFrame {
 		list.setBackground(new Color(224, 255, 255));
 		scrollPane.setViewportView(list);
 		
-		JLabel lblNewLabel = new JLabel("Scadenze Settimanali");
+		JLabel lblNewLabel = new JLabel("Products expiring this week");
 		lblNewLabel.setForeground(new Color(0, 128, 128));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));

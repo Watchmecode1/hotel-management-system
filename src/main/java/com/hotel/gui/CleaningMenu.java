@@ -39,60 +39,53 @@ public class CleaningMenu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		addMostraNoteButton(button, room, roomService, contentPane);
-		addEliminaNoteButton(button, room, roomService, contentPane);
+		addShowNoteButton(button, room, roomService, contentPane);
+		addDeleteNoteButton(button, room, roomService, contentPane);
 		
-		JButton cambiaStatoButton = new JButton("CAMBIA STATO");
-		cambiaStatoButton.addActionListener(e -> {
+		JButton changeStateButton = new JButton("Change state");
+		changeStateButton.addActionListener(e -> {
 			if (room.getStatus().equals(Room.Status.TO_CLEAN)) {
 				int yn;
-				yn = JOptionPane.showConfirmDialog(null, "VUOI ASSEGNARE ALLA CAMERA LA CONDIZIONE \"PULITA\"?", "", JOptionPane.YES_NO_OPTION);
+				yn = JOptionPane.showConfirmDialog(null, "Do you want to assign the \"clean\" condition to the room?", "", JOptionPane.YES_NO_OPTION);
 				if (yn == JOptionPane.YES_OPTION) {
 					room.setStatus(Room.Status.CLEAN);
 					roomService.saveRoom(room);
-					JOptionPane.showMessageDialog(null, "CONDIZIONE CAMERA AGGIORNATA CORRETTAMENTE");
 					button.setBackground(new Color(51, 204, 51));
 				}
 			} else {
 				int yn;
-				yn = JOptionPane.showConfirmDialog(null, "VUOI ASSEGNARE ALLA CAMERA LA CONDIZIONE \"DA PULIRE\"?", "", JOptionPane.YES_NO_OPTION);
+				yn = JOptionPane.showConfirmDialog(null, "Do you want to assign the \"to clean\" condition to the room?", "", JOptionPane.YES_NO_OPTION);
 				if (yn == JOptionPane.YES_OPTION) {
 					room.setStatus(Room.Status.TO_CLEAN);
 					roomService.saveRoom(room);
-					JOptionPane.showMessageDialog(null, "CONDIZIONE CAMERA AGGIORNATA CORRETTAMENTE");
 					button.setBackground(new Color(204, 0, 0));
 				}
 			}
 		});
-		cambiaStatoButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-		cambiaStatoButton.setBounds(10, 10, 181, 32);
-		contentPane.add(cambiaStatoButton);
+		changeStateButton.setFont(new Font("Tahoma", Font.BOLD, 10));
+		changeStateButton.setBounds(10, 10, 181, 32);
+		contentPane.add(changeStateButton);
 		
 		this.setVisible(true);
 	}
 	
-	private void addMostraNoteButton(JButton roomButton, Room room, RoomService roomService, JPanel contentPane) {
-		JButton mostraNoteButton = new JButton("MOSTRA NOTE");
-		mostraNoteButton.addActionListener(e -> new CleaningNote(roomButton, room, roomService, getX(), getY()));
-		mostraNoteButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-		mostraNoteButton.setBounds(10, 52, 181, 32);
-		contentPane.add(mostraNoteButton);
+	private void addShowNoteButton(JButton roomButton, Room room, RoomService roomService, JPanel contentPane) {
+		JButton showNoteButton = new JButton("Show note");
+		showNoteButton.addActionListener(e -> new CleaningNote(roomButton, room, roomService, getX(), getY()));
+		showNoteButton.setFont(new Font("Tahoma", Font.BOLD, 10));
+		showNoteButton.setBounds(10, 52, 181, 32);
+		contentPane.add(showNoteButton);
 	}
 	
-	private void addEliminaNoteButton(JButton roomButton, Room room, RoomService roomService, JPanel contentPane) {
-		JButton eliminaNoteButton = new JButton("ELIMINA NOTE");
-		eliminaNoteButton.addActionListener(e -> {
-			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "VUOI ELIMINARE LE NOTE DELLA STANZA " + room.getNumber()+"?", "ELIMINA NOTE", JOptionPane.YES_NO_OPTION);
-			if(yn == JOptionPane.YES_OPTION) {
-				room.setNote("");
-				roomService.saveRoom(room);
-				roomButton.setForeground(Color.BLACK);
-				JOptionPane.showMessageDialog(null, "NOTE CANCELLATE CORRETTAMENTE");
-			}
+	private void addDeleteNoteButton(JButton roomButton, Room room, RoomService roomService, JPanel contentPane) {
+		JButton deleteNoteButton = new JButton("Delete note");
+		deleteNoteButton.addActionListener(e -> {
+			room.setNote("");
+			roomService.saveRoom(room);
+			roomButton.setForeground(Color.BLACK);
 		});
-		eliminaNoteButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-		eliminaNoteButton.setBounds(10, 94, 181, 32);
-		contentPane.add(eliminaNoteButton);
+		deleteNoteButton.setFont(new Font("Tahoma", Font.BOLD, 10));
+		deleteNoteButton.setBounds(10, 94, 181, 32);
+		contentPane.add(deleteNoteButton);
 	}
 }

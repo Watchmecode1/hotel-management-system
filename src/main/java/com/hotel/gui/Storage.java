@@ -77,12 +77,12 @@ public class Storage extends JFrame {
 		lblNewLabel.setBounds(10, 10, 426, 60);
 		panel_2.add(lblNewLabel);
 		
-		JLabel numeroLottoLabel = new JLabel("Batch Number");
-		numeroLottoLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		numeroLottoLabel.setForeground(new Color(224, 255, 255));
-		numeroLottoLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		numeroLottoLabel.setBounds(11, 96, 161, 30);
-		panel.add(numeroLottoLabel);
+		JLabel batchNumberLabel = new JLabel("Batch Number");
+		batchNumberLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		batchNumberLabel.setForeground(new Color(224, 255, 255));
+		batchNumberLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		batchNumberLabel.setBounds(11, 96, 161, 30);
+		panel.add(batchNumberLabel);
 		
 		batchId = new JTextField();
 		batchId.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -90,12 +90,12 @@ public class Storage extends JFrame {
 		batchId.setBounds(262, 96, 174, 30);
 		panel.add(batchId);
 		
-		JLabel lblFornitore = new JLabel("Supplier");
-		lblFornitore.setHorizontalAlignment(SwingConstants.LEFT);
-		lblFornitore.setForeground(new Color(224, 255, 255));
-		lblFornitore.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblFornitore.setBounds(10, 136, 140, 30);
-		panel.add(lblFornitore);
+		JLabel lblSupplier = new JLabel("Supplier");
+		lblSupplier.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSupplier.setForeground(new Color(224, 255, 255));
+		lblSupplier.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		lblSupplier.setBounds(10, 136, 140, 30);
+		panel.add(lblSupplier);
 		
 		supplier = new JTextField();
 		supplier.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -109,19 +109,19 @@ public class Storage extends JFrame {
 		deliveryDate.setBounds(262, 179, 174, 30);
 		panel.add(deliveryDate);
 		
-		JLabel lblConsegna = new JLabel("Delivery date");
-		lblConsegna.setHorizontalAlignment(SwingConstants.LEFT);
-		lblConsegna.setForeground(new Color(224, 255, 255));
-		lblConsegna.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblConsegna.setBounds(11, 179, 180, 30);
-		panel.add(lblConsegna);
+		JLabel lblDelivery = new JLabel("Delivery date");
+		lblDelivery.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDelivery.setForeground(new Color(224, 255, 255));
+		lblDelivery.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		lblDelivery.setBounds(11, 179, 180, 30);
+		panel.add(lblDelivery);
 		
-		JLabel lblProdotto = new JLabel("Product");
-		lblProdotto.setHorizontalAlignment(SwingConstants.LEFT);
-		lblProdotto.setForeground(new Color(224, 255, 255));
-		lblProdotto.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblProdotto.setBounds(12, 217, 132, 30);
-		panel.add(lblProdotto);
+		JLabel lblProduct = new JLabel("Product");
+		lblProduct.setHorizontalAlignment(SwingConstants.LEFT);
+		lblProduct.setForeground(new Color(224, 255, 255));
+		lblProduct.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		lblProduct.setBounds(12, 217, 132, 30);
+		panel.add(lblProduct);
 		
 		productName = new JTextField();
 		productName.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -136,19 +136,19 @@ public class Storage extends JFrame {
 		amount.setBounds(262, 260, 174, 30);
 		panel.add(amount);
 		
-		JLabel lblQuantita = new JLabel("Quantity");
-		lblQuantita.setHorizontalAlignment(SwingConstants.LEFT);
-		lblQuantita.setForeground(new Color(224, 255, 255));
-		lblQuantita.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblQuantita.setBounds(10, 257, 117, 30);
-		panel.add(lblQuantita);
+		JLabel lblQuantity = new JLabel("Quantity");
+		lblQuantity.setHorizontalAlignment(SwingConstants.LEFT);
+		lblQuantity.setForeground(new Color(224, 255, 255));
+		lblQuantity.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		lblQuantity.setBounds(10, 257, 117, 30);
+		panel.add(lblQuantity);
 		
-		JLabel lblScadenza = new JLabel("Expiration date");
-		lblScadenza.setHorizontalAlignment(SwingConstants.LEFT);
-		lblScadenza.setForeground(new Color(224, 255, 255));
-		lblScadenza.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblScadenza.setBounds(10, 299, 181, 30);
-		panel.add(lblScadenza);
+		JLabel lblExpiration = new JLabel("Expiration date");
+		lblExpiration.setHorizontalAlignment(SwingConstants.LEFT);
+		lblExpiration.setForeground(new Color(224, 255, 255));
+		lblExpiration.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		lblExpiration.setBounds(10, 299, 181, 30);
+		panel.add(lblExpiration);
 		
 		expireDate = new JDateChooser();
 		((JTextFieldDateEditor) expireDate.getDateEditor()).setEditable(false);
@@ -156,12 +156,12 @@ public class Storage extends JFrame {
 		expireDate.setBounds(262, 299, 174, 30);
 		panel.add(expireDate);
 		
-		JLabel lblPrezzo = new JLabel("Total price              \u20AC");
-		lblPrezzo.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrezzo.setForeground(new Color(224, 255, 255));
-		lblPrezzo.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblPrezzo.setBounds(10, 339, 248, 30);
-		panel.add(lblPrezzo);
+		JLabel lblPrice = new JLabel("Total price              \u20AC");
+		lblPrice.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPrice.setForeground(new Color(224, 255, 255));
+		lblPrice.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		lblPrice.setBounds(10, 339, 248, 30);
+		panel.add(lblPrice);
 		
 		price = new JTextField();
 		price.setDocument(SwingComponentUtil.financesPlainDocument());
@@ -178,21 +178,21 @@ public class Storage extends JFrame {
 		addOrdersButton.setBounds(58, 422, 319, 57);
 		panel.add(addOrdersButton);
 		
-		JButton btnModificaOrdine = new JButton("Edit order");
-		btnModificaOrdine.addActionListener(e -> modifyOrder());
-		btnModificaOrdine.setForeground(new Color(0, 128, 128));
-		btnModificaOrdine.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
-		btnModificaOrdine.setBackground(new Color(224, 255, 255));
-		btnModificaOrdine.setBounds(58, 496, 319, 57);
-		panel.add(btnModificaOrdine);
+		JButton btnEditOrder = new JButton("Edit order");
+		btnEditOrder.addActionListener(e -> modifyOrder());
+		btnEditOrder.setForeground(new Color(0, 128, 128));
+		btnEditOrder.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
+		btnEditOrder.setBackground(new Color(224, 255, 255));
+		btnEditOrder.setBounds(58, 496, 319, 57);
+		panel.add(btnEditOrder);
 		
-		JButton btnEliminaOrdine = new JButton("Delete order");
-		btnEliminaOrdine.addActionListener(e -> deleteOrder(orderService));
-		btnEliminaOrdine.setForeground(new Color(0, 128, 128));
-		btnEliminaOrdine.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
-		btnEliminaOrdine.setBackground(new Color(224, 255, 255));
-		btnEliminaOrdine.setBounds(58, 570, 319, 57);
-		panel.add(btnEliminaOrdine);
+		JButton btnDeleteOrder = new JButton("Delete order");
+		btnDeleteOrder.addActionListener(e -> deleteOrder(orderService));
+		btnDeleteOrder.setForeground(new Color(0, 128, 128));
+		btnDeleteOrder.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
+		btnDeleteOrder.setBackground(new Color(224, 255, 255));
+		btnDeleteOrder.setBounds(58, 570, 319, 57);
+		panel.add(btnDeleteOrder);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(224, 255, 255));
@@ -225,19 +225,19 @@ public class Storage extends JFrame {
 		ordersJList.setBackground(new Color(224, 255, 255));
 		scrollPane.setViewportView(ordersJList);
 		
-		JLabel lblListaOrdini = new JLabel("Order list");
-		lblListaOrdini.setHorizontalAlignment(SwingConstants.CENTER);
-		lblListaOrdini.setForeground(new Color(0, 128, 128));
-		lblListaOrdini.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 35));
-		scrollPane.setColumnHeaderView(lblListaOrdini);
+		JLabel lblOrderList = new JLabel("Order list");
+		lblOrderList.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOrderList.setForeground(new Color(0, 128, 128));
+		lblOrderList.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 35));
+		scrollPane.setColumnHeaderView(lblOrderList);
 		
-		JButton btnMostraProdottiIn = new JButton("Show products about to expire");
-		btnMostraProdottiIn.addActionListener(e -> expiresPage = new ExpiresPage(orderService));
-		btnMostraProdottiIn.setForeground(new Color(0, 128, 128));
-		btnMostraProdottiIn.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
-		btnMostraProdottiIn.setBackground(new Color(224, 255, 255));
-		btnMostraProdottiIn.setBounds(803, 708, 456, 57);
-		contentPane.add(btnMostraProdottiIn);
+		JButton btnShowProductsIn = new JButton("Show products about to expire");
+		btnShowProductsIn.addActionListener(e -> expiresPage = new ExpiresPage(orderService));
+		btnShowProductsIn.setForeground(new Color(0, 128, 128));
+		btnShowProductsIn.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
+		btnShowProductsIn.setBackground(new Color(224, 255, 255));
+		btnShowProductsIn.setBounds(803, 708, 456, 57);
+		contentPane.add(btnShowProductsIn);
 		
 		setVisible(true);
 	}
@@ -266,7 +266,7 @@ public class Storage extends JFrame {
 		Order order = ordersJList.getSelectedValue();
 		if (order != null) {
 			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "Do you want to delete the selected order?", "Elimina ordine", JOptionPane.YES_NO_OPTION);
+			yn = JOptionPane.showConfirmDialog(null, "Do you want to delete the selected order?", "Delete order", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION) {
 					orderService.deleteOrder(order);
 					orders.removeElement(order);

@@ -75,7 +75,7 @@ public class CustomerRegister extends JFrame {
 		registerPanel.add(titlePanel);
 		titlePanel.setLayout(null);
 		
-		JLabel registerLabel = new JLabel("Registro Prenotazioni");
+		JLabel registerLabel = new JLabel("Customer register");
 		registerLabel.setForeground(new Color(0, 128, 128));
 		registerLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		registerLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -91,7 +91,7 @@ public class CustomerRegister extends JFrame {
 		registerPanel.add(research);
 		research.setColumns(10);
 		
-		JButton btnNewButton = new JButton("ricerca");
+		JButton btnNewButton = new JButton("Search");
 		btnNewButton.addActionListener(e -> searchResults(research.getText()));
 		btnNewButton.setForeground(new Color(0, 128, 128));
 		btnNewButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
@@ -106,13 +106,13 @@ public class CustomerRegister extends JFrame {
 		registerPanel.add(resultPanel);
 		resultPanel.setLayout(null);
 		
-		JLabel idTypeLabel = new JLabel("documento");
+		JLabel idTypeLabel = new JLabel("Document");
 		idTypeLabel.setForeground(new Color(224, 255, 255));
 		idTypeLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		idTypeLabel.setBounds(1014, 337, 205, 28);
 		resultPanel.add(idTypeLabel);
 		
-		JLabel idNumberLabel = new JLabel("numero documento");
+		JLabel idNumberLabel = new JLabel("Document number");
 		idNumberLabel.setForeground(new Color(224, 255, 255));
 		idNumberLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		idNumberLabel.setBounds(1014, 375, 205, 28);
@@ -125,73 +125,73 @@ public class CustomerRegister extends JFrame {
 		lblNewLabel_1.setBounds(1204, 531, 26, 28);
 		resultPanel.add(lblNewLabel_1);
 		
-		JLabel bookingLabel_1 = new JLabel("prenotazione");
+		JLabel bookingLabel_1 = new JLabel("Reservation");
 		bookingLabel_1.setForeground(new Color(224, 255, 255));
 		bookingLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		bookingLabel_1.setBounds(1012, 10, 162, 28);
 		resultPanel.add(bookingLabel_1);
 		
-		JLabel surnameLabel = new JLabel("cognome");
+		JLabel surnameLabel = new JLabel("Surname");
 		surnameLabel.setForeground(new Color(224, 255, 255));
 		surnameLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		surnameLabel.setBounds(1014, 43, 162, 28);
 		resultPanel.add(surnameLabel);
 		
-		JLabel nameLabel = new JLabel("nome");
+		JLabel nameLabel = new JLabel("Name");
 		nameLabel.setForeground(new Color(224, 255, 255));
 		nameLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		nameLabel.setBounds(1012, 81, 162, 28);
 		resultPanel.add(nameLabel);
 		
-		JLabel birthDateLabel = new JLabel("data di nascita");
+		JLabel birthDateLabel = new JLabel("Date of birth");
 		birthDateLabel.setForeground(new Color(224, 255, 255));
 		birthDateLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		birthDateLabel.setBounds(1012, 120, 162, 28);
 		resultPanel.add(birthDateLabel);
 		
-		JLabel residenceLabel = new JLabel("residenza");
+		JLabel residenceLabel = new JLabel("Residence");
 		residenceLabel.setForeground(new Color(224, 255, 255));
 		residenceLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		residenceLabel.setBounds(1012, 229, 205, 28);
 		resultPanel.add(residenceLabel);
 		
-		JLabel placeOfBirthLabel = new JLabel("luogo di nascita");
+		JLabel placeOfBirthLabel = new JLabel("Birth place");
 		placeOfBirthLabel.setForeground(new Color(224, 255, 255));
 		placeOfBirthLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		placeOfBirthLabel.setBounds(1012, 193, 204, 28);
 		resultPanel.add(placeOfBirthLabel);
 		
-		JLabel stateOfBirthLabel = new JLabel("stato di nascita");
+		JLabel stateOfBirthLabel = new JLabel("State of birth");
 		stateOfBirthLabel.setForeground(new Color(224, 255, 255));
 		stateOfBirthLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		stateOfBirthLabel.setBounds(1013, 155, 161, 28);
 		resultPanel.add(stateOfBirthLabel);
 		
-		JLabel typeLabel = new JLabel("tipologia");
+		JLabel typeLabel = new JLabel("Housed");
 		typeLabel.setForeground(new Color(224, 255, 255));
 		typeLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		typeLabel.setBounds(1012, 261, 205, 28);
 		resultPanel.add(typeLabel);
 		
-		JLabel genderLabel = new JLabel("genere");
+		JLabel genderLabel = new JLabel("Gender");
 		genderLabel.setForeground(new Color(224, 255, 255));
 		genderLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		genderLabel.setBounds(1012, 299, 205, 28);
 		resultPanel.add(genderLabel);
 		
-		JLabel dreleaseIdLabel = new JLabel("data rilascio");
-		dreleaseIdLabel.setForeground(new Color(224, 255, 255));
-		dreleaseIdLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		dreleaseIdLabel.setBounds(1014, 413, 205, 28);
-		resultPanel.add(dreleaseIdLabel);
+		JLabel releaseDateLabel = new JLabel("Release date");
+		releaseDateLabel.setForeground(new Color(224, 255, 255));
+		releaseDateLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		releaseDateLabel.setBounds(1014, 413, 205, 28);
+		resultPanel.add(releaseDateLabel);
 		
-		JLabel idExpireDatelabel = new JLabel("data scadenza");
-		idExpireDatelabel.setForeground(new Color(224, 255, 255));
-		idExpireDatelabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		idExpireDatelabel.setBounds(1014, 451, 205, 28);
-		resultPanel.add(idExpireDatelabel);
+		JLabel idExpireDateLabel = new JLabel("Expiration date");
+		idExpireDateLabel.setForeground(new Color(224, 255, 255));
+		idExpireDateLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		idExpireDateLabel.setBounds(1014, 451, 205, 28);
+		resultPanel.add(idExpireDateLabel);
 		
-		JLabel releaseSourceId = new JLabel("rilasciato da");
+		JLabel releaseSourceId = new JLabel("Released by");
 		releaseSourceId.setForeground(new Color(224, 255, 255));
 		releaseSourceId.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		releaseSourceId.setBounds(1014, 489, 204, 28);
@@ -203,7 +203,7 @@ public class CustomerRegister extends JFrame {
 		bookingResult.setBounds(1228, 10, 185, 28);
 		resultPanel.add(bookingResult);
 		
-		JLabel placeOfReleaseLabel = new JLabel("luogo di rilascio");
+		JLabel placeOfReleaseLabel = new JLabel("Place of issue");
 		placeOfReleaseLabel.setForeground(new Color(224, 255, 255));
 		placeOfReleaseLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		placeOfReleaseLabel.setBounds(1014, 527, 204, 28);
@@ -311,13 +311,13 @@ public class CustomerRegister extends JFrame {
 		customersJList.setBackground(new Color(224, 255, 255));
 		scrollPane.setViewportView(customersJList);
 		
-		JLabel titleJListLabel = new JLabel("Lista Clienti");
+		JLabel titleJListLabel = new JLabel("Customers");
 		titleJListLabel.setForeground(new Color(0, 128, 128));
 		titleJListLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleJListLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		scrollPane.setColumnHeaderView(titleJListLabel);
 		
-		JButton btnNewButton_1_1 = new JButton("mostra dati");
+		JButton btnNewButton_1_1 = new JButton("Show data");
 		btnNewButton_1_1.addActionListener(e -> showCustomerSelectedData());
 		btnNewButton_1_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnNewButton_1_1.setBackground(new Color(224, 255, 255));
@@ -334,65 +334,40 @@ public class CustomerRegister extends JFrame {
 	}
 	
 	private void showCustomerSelectedData() {
-		if (customersJList.getSelectedValue() != null)
-		{
-			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "VUOI VEDERE LE INFORMAZIONI RELATIVI AL CLIENTE SELEZIONATO?","MOSTRA INFO CLIENTE", JOptionPane.YES_NO_OPTION);
-			if (yn == JOptionPane.YES_OPTION)
-			{
-				Customer customer = customersJList.getSelectedValue();
-				surname.setText(customer.getSurname());
-				name.setText(customer.getName());
-				dateOfBirth.setText(customer.getDateOfBirth().toString());
-				stateOfBirth.setText(customer.getStateOfBirth());
-				placeOfBirth.setText(customer.getBirthplace());
-				citizenship.setText(customer.getCitizenship());
-				ageType.setText(customer.getAge().name());
-				gender.setText(customer.getGender().name());
-				idType.setText(customer.getDocument().getDocumentType().name());
-				idNumber.setText(customer.getDocument().getNumber());
-				releaseIdDate.setText(customer.getDocument().getReleaseDate().toString());
-				expireIdDate.setText(customer.getDocument().getExpirationDate().toString());
-				idReleaseSource.setText(customer.getDocument().getReleasedBy().name());
-				idReleasePlace.setText(customer.getDocument().getPlaceOfIssue());
-				
-				JOptionPane.showMessageDialog(null, "DATI CARICATI");
-			}
-			
+		if (customersJList.getSelectedValue() != null) {
+			Customer customer = customersJList.getSelectedValue();
+			surname.setText(customer.getSurname());
+			name.setText(customer.getName());
+			dateOfBirth.setText(customer.getDateOfBirth().toString());
+			stateOfBirth.setText(customer.getStateOfBirth());
+			placeOfBirth.setText(customer.getBirthplace());
+			citizenship.setText(customer.getCitizenship());
+			ageType.setText(customer.getAge().name());
+			gender.setText(customer.getGender().name());
+			idType.setText(customer.getDocument().getDocumentType().name());
+			idNumber.setText(customer.getDocument().getNumber());
+			releaseIdDate.setText(customer.getDocument().getReleaseDate().toString());
+			expireIdDate.setText(customer.getDocument().getExpirationDate().toString());
+			idReleaseSource.setText(customer.getDocument().getReleasedBy().name());
+			idReleasePlace.setText(customer.getDocument().getPlaceOfIssue());
 		}
-		else JOptionPane.showMessageDialog(null, "SELEZIONA IL CLIENTE DI CUI SI VOGLIONE VEDERE LE INFORMAZIONI");
+		else JOptionPane.showMessageDialog(null, "Select the customer whose information you want to see");
 	}
 	
-private void searchResults(String charSeq) {
+	private void searchResults(String charSeq) {
+		DefaultListModel<Customer> customers = new DefaultListModel<>();
 		
-		JOptionPane.showMessageDialog(null, "AVVIO RICERCA");
-		
-		DefaultListModel<Customer> clientiFiltrati = new DefaultListModel<>();
-		
-		for (int i = 0; i < customers.size(); i++)
-		{
-			if (charSeq.length() != 0)
-			{
-				if (customers.get(i).toString().contains(charSeq))
-				{
-					clientiFiltrati.addElement(customers.get(i));
-				}
+		for (int i = 0; i < this.customers.size(); i++) {
+			if (charSeq.length() != 0) {
+				if (this.customers.get(i).toString().contains(charSeq))
+					customers.addElement(this.customers.get(i));
 			}
 		}
-		if (clientiFiltrati.size() < 1)
-		{
-			JOptionPane.showMessageDialog(null, "NESSUN RISULTATO TROVATO");
-			research.setText("");
-			
-		}
-		else
-		{
-			customersJList.setModel(clientiFiltrati);
+		if(!customers.isEmpty()) {
+			customersJList.setModel(customers);
 			scrollPane.setViewportView(customersJList);
-			research.setText("");
-		
-			JOptionPane.showMessageDialog(null, "RICERCA COMPLETATA");
 		}
+		research.setText("");
 	}
 
 	@Override

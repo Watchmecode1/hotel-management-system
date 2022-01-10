@@ -106,10 +106,10 @@ public class FileUtils {
 	
 	public static void writeSitraAndOpen(LocalDate localDate) {
 		ReservationService reservationService = new ReservationService();
-		List<Reservation> prenotazioni = reservationService.getReservationByStartDate(localDate);
-		String sitra = prenotazioni.stream()
-										.map(prenotazione -> sortCustomers(prenotazione.getCustomers()).stream()
-																					.map(cliente -> getSitraLine(cliente, prenotazione))
+		List<Reservation> reservations = reservationService.getReservationByStartDate(localDate);
+		String sitra = reservations.stream()
+										.map(reservation -> sortCustomers(reservation.getCustomers()).stream()
+																					.map(cliente -> getSitraLine(cliente, reservation))
 																					.collect(Collectors.joining("")))
 										.collect(Collectors.joining(""));
 
@@ -160,7 +160,7 @@ public class FileUtils {
 		if(customer.getStateOfBirth().equalsIgnoreCase("ITALIA")) {
 			String abbreviationOfTheProvince = ABBREVIATIONS_OF_THE_PROVINCES.get(customer.getCountyOfBirth().toUpperCase());
 			Long municipalCode = MUNICIPAL_CODES.get(customer.getBirthplace().toUpperCase() + abbreviationOfTheProvince);
-			if(municipalCode == null) throw new GuiInputFieldValueException("IL COMUNE DEL CLIENTE: " + customerName + " " + customerSurname + " NON APPARTIENE AD UNA PROVINCIA VALIDA");
+			if(municipalCode == null) throw new GuiInputFieldValueException("The customer's municipality:" + " " + customerName + " " + customerSurname + " " + "does not belong to a valid province");
 			sb.append(municipalCode)
 				.append(abbreviationOfTheProvince);
 		}

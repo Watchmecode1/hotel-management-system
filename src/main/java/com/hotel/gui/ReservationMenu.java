@@ -41,19 +41,19 @@ public class ReservationMenu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton addConsumazioneButton = new JButton("Add consumption");
-		addConsumazioneButton.addActionListener(e -> {
+		JButton addConsumptionButton = new JButton("Add consumption");
+		addConsumptionButton.addActionListener(e -> {
 			dispose();
 			newConsumption = new newConsumption(x, y, reservation, consumptionService, new ProductService());
 		});
-		addConsumazioneButton.setForeground(Color.BLACK);
-		addConsumazioneButton.setBackground(new Color(0, 191, 255));
-		addConsumazioneButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		addConsumazioneButton.setBounds(10, 55, 331, 35);
-		contentPane.add(addConsumazioneButton);
+		addConsumptionButton.setForeground(Color.BLACK);
+		addConsumptionButton.setBackground(new Color(0, 191, 255));
+		addConsumptionButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		addConsumptionButton.setBounds(10, 55, 331, 35);
+		contentPane.add(addConsumptionButton);
 		
-		JButton btnSalvaPdf = new JButton("Generate PDF");
-		btnSalvaPdf.addActionListener(e -> {
+		JButton btnSavePdf = new JButton("Generate PDF");
+		btnSavePdf.addActionListener(e -> {
 			try {
 				FileUtils.writePDFAndOpen(reservation);
 			} catch (IOException ex) {
@@ -61,11 +61,11 @@ public class ReservationMenu extends JFrame {
 				JOptionPane.showMessageDialog(null, "An error occurred, the PDF cannot be generated");
 			}
 		});
-		btnSalvaPdf.setForeground(Color.BLACK);
-		btnSalvaPdf.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		btnSalvaPdf.setBackground(new Color(0, 191, 255));
-		btnSalvaPdf.setBounds(10, 100, 331, 35);
-		contentPane.add(btnSalvaPdf);
+		btnSavePdf.setForeground(Color.BLACK);
+		btnSavePdf.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
+		btnSavePdf.setBackground(new Color(0, 191, 255));
+		btnSavePdf.setBounds(10, 100, 331, 35);
+		contentPane.add(btnSavePdf);
 		
 		JButton changeReservationButton = new JButton("Change reservation");
 		changeReservationButton.addActionListener(e -> {
@@ -78,12 +78,12 @@ public class ReservationMenu extends JFrame {
 		changeReservationButton.setBounds(10, 10, 331, 35);
 		contentPane.add(changeReservationButton);
 		
-		JButton eliminaPrenotazioneButton = new JButton("Delete reservation");
-		eliminaPrenotazioneButton.setForeground(Color.BLACK);
-		eliminaPrenotazioneButton.setBackground(new Color(0, 191, 255));
-		eliminaPrenotazioneButton.setFont(new Font("Dialog", Font.PLAIN, 25));
-		eliminaPrenotazioneButton.setBounds(10, 145, 331, 35);
-		eliminaPrenotazioneButton.addActionListener(e -> {
+		JButton deleteReservationButton = new JButton("Delete reservation");
+		deleteReservationButton.setForeground(Color.BLACK);
+		deleteReservationButton.setBackground(new Color(0, 191, 255));
+		deleteReservationButton.setFont(new Font("Dialog", Font.PLAIN, 25));
+		deleteReservationButton.setBounds(10, 145, 331, 35);
+		deleteReservationButton.addActionListener(e -> {
 			int yn;
 			yn = JOptionPane.showConfirmDialog(null, "Do you confirm that you want to delete the reservation?", "Delete reservation", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION) {
@@ -92,7 +92,7 @@ public class ReservationMenu extends JFrame {
 				dispose();
 			}
 		});
-		contentPane.add(eliminaPrenotazioneButton);
+		contentPane.add(deleteReservationButton);
 		
 		this.setVisible(true);
 	}

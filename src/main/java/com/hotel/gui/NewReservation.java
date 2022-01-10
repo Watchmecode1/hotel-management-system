@@ -65,8 +65,8 @@ public class NewReservation extends JFrame {
 	private final Reservation initialReservation;
 	private Reservation reservation;
 	
-	private DefaultListModel<Room> camere = new DefaultListModel<>();
-	private JList<Room> camereJList = new JList<>(camere);
+	private DefaultListModel<Room> rooms = new DefaultListModel<>();
+	private JList<Room> roomsJList = new JList<>(rooms);
 	private JScrollPane scrollPane = new JScrollPane();
 	private DefaultListModel<Customer> customerList = new DefaultListModel<>();
 	private JList<Customer> customerJList;
@@ -81,7 +81,7 @@ public class NewReservation extends JFrame {
 		setResizable(false);
 		setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setTitle("HOTEL FAGGIOROSSO - NUOVA PRENOTAZIONE");
+		setTitle("New reservation");
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 1537, 820);
@@ -98,13 +98,13 @@ public class NewReservation extends JFrame {
 		contentPane.add(newBookingLabel);
 		newBookingLabel.setLayout(null);
 		
-		JLabel checkinLabel = new JLabel("Data checkin");
+		JLabel checkinLabel = new JLabel("Check-in date");
 		checkinLabel.setForeground(new Color(224, 255, 255));
 		checkinLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		checkinLabel.setBounds(10, 210, 250, 36);
 		newBookingLabel.add(checkinLabel);
 		
-		JLabel checkoutLabel = new JLabel("Data checkout");
+		JLabel checkoutLabel = new JLabel("Check-out date");
 		checkoutLabel.setForeground(new Color(224, 255, 255));
 		checkoutLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		checkoutLabel.setBounds(11, 260, 250, 36);
@@ -122,7 +122,7 @@ public class NewReservation extends JFrame {
 		});
 		newBookingLabel.add(checkoutDateChooser);
 		
-		JLabel sourceSpinner = new JLabel("Fonte prenotazione");
+		JLabel sourceSpinner = new JLabel("Reservation source");
 		sourceSpinner.setForeground(new Color(224, 255, 255));
 		sourceSpinner.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		sourceSpinner.setBounds(10, 60, 295, 36);
@@ -137,7 +137,7 @@ public class NewReservation extends JFrame {
 		sourceComboBox.setBounds(300, 60, 416, 36);
 		newBookingLabel.add(sourceComboBox);
 		
-		JLabel boardTypeLabel = new JLabel("Tipologia pensione");
+		JLabel boardTypeLabel = new JLabel("Pension type");
 		boardTypeLabel.setForeground(new Color(224, 255, 255));
 		boardTypeLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		boardTypeLabel.setBounds(10, 110, 280, 36);
@@ -152,7 +152,7 @@ public class NewReservation extends JFrame {
 		boardTypeComboBox.setBounds(300, 110, 416, 36);
 		newBookingLabel.add(boardTypeComboBox);
 		
-		JLabel phoneNumberLabel = new JLabel("Telefono");
+		JLabel phoneNumberLabel = new JLabel("Phone");
 		phoneNumberLabel.setForeground(new Color(224, 255, 255));
 		phoneNumberLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		phoneNumberLabel.setBounds(12, 360, 250, 36);
@@ -167,13 +167,13 @@ public class NewReservation extends JFrame {
 		phoneNumberTextField.setBounds(300, 360, 416, 36);
 		newBookingLabel.add(phoneNumberTextField);
 		
-		JButton savePrenotazioneButton = new JButton("Salva prenotazione");
-		savePrenotazioneButton.addActionListener(e -> addBooking(createBooking(), reservationService));
-		savePrenotazioneButton.setBounds(940, 663, 366, 48);
-		newBookingLabel.add(savePrenotazioneButton);
-		savePrenotazioneButton.setForeground(new Color(0, 128, 128));
-		savePrenotazioneButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		savePrenotazioneButton.setBackground(new Color(224, 255, 255));
+		JButton saveReservationButton = new JButton("Save reservation");
+		saveReservationButton.addActionListener(e -> addBooking(createBooking(), reservationService));
+		saveReservationButton.setBounds(940, 663, 366, 48);
+		newBookingLabel.add(saveReservationButton);
+		saveReservationButton.setForeground(new Color(0, 128, 128));
+		saveReservationButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
+		saveReservationButton.setBackground(new Color(224, 255, 255));
 		
 		JPanel upPanel = new JPanel();
 		upPanel.setBackground(new Color(224, 255, 255));
@@ -181,14 +181,14 @@ public class NewReservation extends JFrame {
 		newBookingLabel.add(upPanel);
 		upPanel.setLayout(null);
 		
-		JLabel addBookingLabel = new JLabel("Nuova Prenotazione");
+		JLabel addBookingLabel = new JLabel("New reservation");
 		addBookingLabel.setBounds(0, 0, 1480, 46);
 		upPanel.add(addBookingLabel);
 		addBookingLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		addBookingLabel.setForeground(new Color(0, 128, 128));
 		addBookingLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 40));
 		
-		JButton refreshButton = new JButton("Reimposta");
+		JButton refreshButton = new JButton("Reset");
 		refreshButton.addActionListener(e -> refreshFields());
 		refreshButton.setForeground(new Color(0, 128, 128));
 		refreshButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
@@ -215,13 +215,13 @@ public class NewReservation extends JFrame {
 		emailAddressTextField.setBounds(300, 410, 416, 36);
 		newBookingLabel.add(emailAddressTextField);
 		
-		JLabel emailAddressLabel = new JLabel("Indirizzo e-mail");
+		JLabel emailAddressLabel = new JLabel("Email");
 		emailAddressLabel.setForeground(new Color(224, 255, 255));
 		emailAddressLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		emailAddressLabel.setBounds(12, 410, 250, 36);
 		newBookingLabel.add(emailAddressLabel);
 		
-		JButton calculatePaymentButton = new JButton("Calcola totale");
+		JButton calculatePaymentButton = new JButton("Calculate total");
 		calculatePaymentButton.addActionListener(e -> {
 			NewReservation.this.reservation = createBooking();
 			if(NewReservation.this.reservation != null)
@@ -245,7 +245,7 @@ public class NewReservation extends JFrame {
 		calculatePaymentLabel.setBounds(0, 0, 417, 36);
 		panel.add(calculatePaymentLabel);
 		
-		JLabel paymentTypeLabel = new JLabel("Tipologia pagamento");
+		JLabel paymentTypeLabel = new JLabel("Payment type");
 		paymentTypeLabel.setForeground(new Color(224, 255, 255));
 		paymentTypeLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		paymentTypeLabel.setBounds(755, 390, 309, 36);
@@ -265,14 +265,14 @@ public class NewReservation extends JFrame {
 		scrollPane.setBounds(755, 63, 715, 255);
 		newBookingLabel.add(scrollPane);
 		
-		camereJList = new JList<>(camere);
-		camereJList.setSelectionForeground(new Color(102, 255, 204));
-		camereJList.setForeground(new Color(0, 128, 128));
-		camereJList.setFont(new Font("Tahoma", Font.BOLD, 17));
-		camereJList.setBackground(new Color(224, 255, 255));
-		scrollPane.setViewportView(camereJList);
+		roomsJList = new JList<>(rooms);
+		roomsJList.setSelectionForeground(new Color(102, 255, 204));
+		roomsJList.setForeground(new Color(0, 128, 128));
+		roomsJList.setFont(new Font("Tahoma", Font.BOLD, 17));
+		roomsJList.setBackground(new Color(224, 255, 255));
+		scrollPane.setViewportView(roomsJList);
 		
-		JLabel roomsLabel = new JLabel("Camere riservate");
+		JLabel roomsLabel = new JLabel("Reserved rooms");
 		roomsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		roomsLabel.setOpaque(true);
 		roomsLabel.setBackground(new Color(224, 255, 255));
@@ -288,7 +288,7 @@ public class NewReservation extends JFrame {
 		referenceNameTextField.setBounds(300, 160, 418, 36);
 		newBookingLabel.add(referenceNameTextField);
 		
-		JLabel referenceNameLabel = new JLabel("Nominativo");
+		JLabel referenceNameLabel = new JLabel("Nominative");
 		referenceNameLabel.setForeground(new Color(224, 255, 255));
 		referenceNameLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		referenceNameLabel.setBounds(10, 160, 250, 36);
@@ -305,13 +305,13 @@ public class NewReservation extends JFrame {
 		depositPaidTextField.setBounds(1090, 440, 380, 36);
 		newBookingLabel.add(depositPaidTextField);
 		
-		JLabel depositPaidLabel = new JLabel("Acconto versato");
+		JLabel depositPaidLabel = new JLabel("Deposit paid");
 		depositPaidLabel.setForeground(new Color(224, 255, 255));
 		depositPaidLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		depositPaidLabel.setBounds(755, 440, 242, 36);
 		newBookingLabel.add(depositPaidLabel);
 		
-		depositRadioButton = new JRadioButton("deposito");
+		depositRadioButton = new JRadioButton("Deposit");
 		depositRadioButton.setBackground(new Color(0, 128, 128));
 		depositRadioButton.setBounds(1003, 450, 22, 21);
 		depositRadioButton.addActionListener(e -> {
@@ -338,7 +338,7 @@ public class NewReservation extends JFrame {
 		lblNewLabel_1.setBounds(10, 0, 26, 36);
 		euroPanel.add(lblNewLabel_1);
 		
-		JLabel animalsNumberLabel = new JLabel("Numero animali");
+		JLabel animalsNumberLabel = new JLabel("Pets");
 		animalsNumberLabel.setForeground(new Color(224, 255, 255));
 		animalsNumberLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		animalsNumberLabel.setBounds(10, 310, 250, 36);
@@ -360,7 +360,7 @@ public class NewReservation extends JFrame {
 		customerScrollPane.setBounds(755, 510, 479, 140);
 		newBookingLabel.add(customerScrollPane);
 		
-		JButton addCustomer = new JButton("Aggiungi Cliente");
+		JButton addCustomer = new JButton("Add customer");
 		addCustomer.setForeground(new Color(0, 128, 128));
 		addCustomer.setFont(new Font("Dialog", Font.PLAIN, 33));
 		addCustomer.setBackground(new Color(224, 255, 255));
@@ -371,25 +371,25 @@ public class NewReservation extends JFrame {
 		});
 		newBookingLabel.add(addCustomer);
 		
-		JButton eliminaClienteButton = new JButton("Elimina Cliente");
-		eliminaClienteButton.setBackground(new Color(224, 255, 255));
-		eliminaClienteButton.setForeground(new Color(0, 128, 128));
-		eliminaClienteButton.setFont(new Font("Dialog", Font.PLAIN, 33));
-		eliminaClienteButton.setBounds(351, 585, 366, 65);
-		eliminaClienteButton.addActionListener(e -> {
-			Customer customerSelezionato = customerJList.getSelectedValue();
-			if(customerSelezionato == null)
-				JOptionPane.showMessageDialog(null, "SELEZIONA UN CLIENTE DA ELIMINARE");
+		JButton deleteCustomerButton = new JButton("Delete customer");
+		deleteCustomerButton.setBackground(new Color(224, 255, 255));
+		deleteCustomerButton.setForeground(new Color(0, 128, 128));
+		deleteCustomerButton.setFont(new Font("Dialog", Font.PLAIN, 33));
+		deleteCustomerButton.setBounds(351, 585, 366, 65);
+		deleteCustomerButton.addActionListener(e -> {
+			Customer selectedCustomer = customerJList.getSelectedValue();
+			if(selectedCustomer == null)
+				JOptionPane.showMessageDialog(null, "Select a customer to delete");
 			else {
-				reservation.getCustomers().remove(customerSelezionato);
+				reservation.getCustomers().remove(selectedCustomer);
 				reservationService.saveReservation(reservation);
-				customerService.deleteCustomer(customerSelezionato);
-				customerList.removeElement(customerSelezionato);
+				customerService.deleteCustomer(selectedCustomer);
+				customerList.removeElement(selectedCustomer);
 				refreshCustomers();
-				JOptionPane.showMessageDialog(null, "CLIENTE ELIMINATO");
+				JOptionPane.showMessageDialog(null, "Customer deleted");
 			}
 		});
-		newBookingLabel.add(eliminaClienteButton);
+		newBookingLabel.add(deleteCustomerButton);
 		
 		JPanel leftPanel = new JPanel();
 		leftPanel.setBackground(new Color(224, 255, 255));
@@ -419,7 +419,7 @@ public class NewReservation extends JFrame {
 			boardTypeComboBox.setSelectedItem(initialReservation.getBoard());
 			paymentTypeComboBox.setSelectedItem(initialReservation.getPaid());
 			animalsNumberSpinner.setValue(initialReservation.getNumberOfPets());
-			camereJList.setSelectedIndices(findRooms());
+			roomsJList.setSelectedIndices(findRooms());
 			if(reservation.getDeposit().intValue() != 0) {
 				depositRadioButton.setSelected(true);
 				depositPaidTextField.setText(initialReservation.getDeposit().toString());
@@ -443,7 +443,7 @@ public class NewReservation extends JFrame {
 			boardTypeComboBox.setSelectedIndex(-1);
 			paymentTypeComboBox.setSelectedIndex(-1);
 			animalsNumberSpinner.setValue(0);
-			camereJList.clearSelection();
+			roomsJList.clearSelection();
 			depositRadioButton.setSelected(false);
 			depositPaidTextField.setText("");
 			calculatePaymentLabel.setText("\u20AC. ");
@@ -456,39 +456,39 @@ public class NewReservation extends JFrame {
 
 	private Reservation createBooking() {
 		if(checkFields()) {
-			String cognome = referenceNameTextField.getText();
+			String surname = referenceNameTextField.getText();
 			String email = emailAddressTextField.getText();
-			String numeroDiTelefono = phoneNumberTextField.getText();
-			LocalDate dataInizio = DateUtils.convertDateToLocalDate(checkinDateChooser.getDate());
-			LocalDate dataFine = DateUtils.convertDateToLocalDate(checkoutDateChooser.getDate());
-			int numeroAnimali = (int) animalsNumberSpinner.getValue();
+			String phoneNumber = phoneNumberTextField.getText();
+			LocalDate startDate = DateUtils.convertDateToLocalDate(checkinDateChooser.getDate());
+			LocalDate endDate = DateUtils.convertDateToLocalDate(checkoutDateChooser.getDate());
+			int pets = (int) animalsNumberSpinner.getValue();
 			Paid paid = (Paid) paymentTypeComboBox.getSelectedItem();
-			Board BOARD = (Board) boardTypeComboBox.getSelectedItem();
-			Source SOURCE = (Source) sourceComboBox.getSelectedItem();
-			Set<Customer> clienti = Arrays.stream(customerList.toArray()).map(x -> (Customer) x).collect(Collectors.toSet());
-			Set<Room> camere = new HashSet<>(camereJList.getSelectedValuesList());
-			BigDecimal deposito = BigDecimal.ZERO;
+			Board board = (Board) boardTypeComboBox.getSelectedItem();
+			Source source = (Source) sourceComboBox.getSelectedItem();
+			Set<Customer> customers = Arrays.stream(customerList.toArray()).map(x -> (Customer) x).collect(Collectors.toSet());
+			Set<Room> rooms = new HashSet<>(roomsJList.getSelectedValuesList());
+			BigDecimal deposit = BigDecimal.ZERO;
 			if(depositRadioButton.isSelected())
 				if(checkDeposit())
-					deposito = BigDecimal.valueOf(Double.parseDouble(depositPaidTextField.getText()));
+					deposit = BigDecimal.valueOf(Double.parseDouble(depositPaidTextField.getText()));
 				else
 					return null;
 			if(reservation != null) {
-				reservation.setSurname(cognome);
+				reservation.setSurname(surname);
 				reservation.setEmail(email);
-				reservation.setPhoneNumber(numeroDiTelefono);
-				reservation.setStartDate(dataInizio);
-				reservation.setEndDate(dataFine);
-				reservation.setNumberOfPets(numeroAnimali);
+				reservation.setPhoneNumber(phoneNumber);
+				reservation.setStartDate(startDate);
+				reservation.setEndDate(endDate);
+				reservation.setNumberOfPets(pets);
 				reservation.setPaid(paid);
-				reservation.setDeposit(deposito);
-				reservation.setBoard(BOARD);
-				reservation.setSource(SOURCE);
-				reservation.setCustomers(clienti);
-				reservation.setRooms(camere);
+				reservation.setDeposit(deposit);
+				reservation.setBoard(board);
+				reservation.setSource(source);
+				reservation.setCustomers(customers);
+				reservation.setRooms(rooms);
 			} else
-				reservation = new Reservation(cognome, email, numeroDiTelefono, dataInizio, dataFine,
-						numeroAnimali, paid, deposito, BOARD, SOURCE, clienti, camere);
+				reservation = new Reservation(surname, email, phoneNumber, startDate, endDate,
+						pets, paid, deposit, board, source, customers, rooms);
 			return reservation;
 		}
 		return null;
@@ -497,17 +497,17 @@ public class NewReservation extends JFrame {
 	private void addBooking(Reservation reservation, ReservationService reservationService) {
 		if(reservation != null) {
 			reservationService.saveReservation(reservation);
-			JOptionPane.showMessageDialog(null, "PRENOTAZIONE SALVATA CORRETTAMENTE");
+			JOptionPane.showMessageDialog(null, "Reservation saved correctly");
 			dispose();
 		}
 		else
-			JOptionPane.showMessageDialog(null, "SI E' VERIFICATO UN ERRORE, LA PRENOTAZIONE NON E' STATA SALVATA");
+			JOptionPane.showMessageDialog(null, "An error occurred");
 	}
 	
 	public int[] findRooms() {
 		List<Integer> roomIndicies = new ArrayList<>();
-		for (int i = 0; i < camere.size(); i++) {
-			if(reservation.getRooms().contains(camere.get(i)))
+		for (int i = 0; i < rooms.size(); i++) {
+			if(reservation.getRooms().contains(rooms.get(i)))
 				roomIndicies.add(i);
 		}
 		return roomIndicies.stream().mapToInt(i -> i).toArray();
@@ -516,7 +516,7 @@ public class NewReservation extends JFrame {
 	private boolean checkPhoneNumber() {
 		if(!phoneNumberTextField.getText().isBlank()) return true;
 		else {
-			JOptionPane.showMessageDialog(null, "INSERISCI UN NUMERO DI TELEFONO VALIDO");
+			JOptionPane.showMessageDialog(null, "Enter a valid phone number");
 			phoneNumberTextField.setText("");
 		}
 		return false;
@@ -525,7 +525,7 @@ public class NewReservation extends JFrame {
 	private boolean checkEmail() {
 		if(!emailAddressTextField.getText().isBlank()) return true;
 		else {
-			JOptionPane.showMessageDialog(null, "INSERISCI UNA MAIL VALIDA");
+			JOptionPane.showMessageDialog(null, "Enter a valid email");
 			emailAddressTextField.setText("");
 		}
 		return false;
@@ -534,7 +534,7 @@ public class NewReservation extends JFrame {
 	private boolean checkReference() {
 		if(!referenceNameTextField.getText().isBlank()) return true;
 		else {
-			JOptionPane.showMessageDialog(null, "INSERISCI UN NOME VALIDO");
+			JOptionPane.showMessageDialog(null, "Enter a valid name");
 			referenceNameTextField.setText("");
 		}
 		return false;
@@ -543,7 +543,7 @@ public class NewReservation extends JFrame {
 	private boolean checkDeposit() {
 		if(!depositPaidTextField.getText().isBlank()) return true;
 		else {
-			JOptionPane.showMessageDialog(null, "INSERISCI UN IMPORTO VALIDO PER L'ACCONTO");
+			JOptionPane.showMessageDialog(null, "Enter a valid amount for the deposit");
 			depositPaidTextField.setText("");
 		}
 		return false;
@@ -551,25 +551,25 @@ public class NewReservation extends JFrame {
 	
 	private boolean checkSource() {
 		if(sourceComboBox.getSelectedIndex() != -1) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA LA FONTE DELLA PRENOTAZIONE");
+		JOptionPane.showMessageDialog(null, "Select the source of the reservation");
 		return false;
 	}
 	
 	private boolean checkBoardType() {
 		if(boardTypeComboBox.getSelectedIndex() != -1) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA IL TIPO DI PENSIONE");
+		JOptionPane.showMessageDialog(null, "Select the type of board");
 		return false;
 	}
 	
 	private boolean checkPaymentType() {
 		if(paymentTypeComboBox.getSelectedIndex() != -1) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA IL TIPO DI PAGAMENTO");
+		JOptionPane.showMessageDialog(null, "Select the type of payment");
 		return false;
 	}
 	
-	private boolean camereCheck() {
-		if(camereJList.getSelectedValuesList().size() > 0) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA ALMENO UNA CAMERA");
+	private boolean roomsCheck() {
+		if(roomsJList.getSelectedValuesList().size() > 0) return true;
+		JOptionPane.showMessageDialog(null, "Select at least one room");
 		return false;
 	}
 	
@@ -577,7 +577,7 @@ public class NewReservation extends JFrame {
 		if(checkinDateChooser.getDate() != null) return true;
 //		if(DateUtils.convertDateToLocalDate(checkinDateChooser.getDate()).isAfter(LocalDate.now().minusDays(1)))
 //			return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA UNA DATA DI INIZIO VALIDA");
+		JOptionPane.showMessageDialog(null, "Select a valid start date");
 		return false;
 	}
 	
@@ -585,20 +585,20 @@ public class NewReservation extends JFrame {
 		if(checkoutDateChooser.getDate() != null) return true;
 //		if(DateUtils.convertDateToLocalDate(checkinDateChooser.getDate()).isBefore(DateUtils.convertDateToLocalDate(checkoutDateChooser.getDate())))
 //			return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA UNA DATA DI FINE VALIDA");
+		JOptionPane.showMessageDialog(null, "Select a valid end date");
 		return false;
 	}
 	
 	private boolean checkPets() {
 		if((int) animalsNumberSpinner.getValue() >= 0) return true;
-		JOptionPane.showMessageDialog(null, "SELEZIONA UN NUMERO DI ANIMALI VALIDO");
+		JOptionPane.showMessageDialog(null, "Select a valid number of pets");
 		return false;
 	}
 	
 	private boolean checkFields() {
 		return checkBoardType() && checkEmail() && checkPaymentType()
 				&& checkPhoneNumber() && checkReference() && checkSource()
-				&& camereCheck() && checkCheckInDate() && checkCheckOutDate()
+				&& roomsCheck() && checkCheckInDate() && checkCheckOutDate()
 				&& checkPets();
 	}
 	
@@ -608,7 +608,7 @@ public class NewReservation extends JFrame {
 	}
 	
 	private void refreshRooms(RoomService roomService, Date start, Date end) {
-		camere = new DefaultListModel<>();
+		rooms = new DefaultListModel<>();
 		
 		if(start != null && end != null) {
 			LocalDate localDateStart = DateUtils.convertDateToLocalDate(start);
@@ -617,13 +617,13 @@ public class NewReservation extends JFrame {
 			if(initialReservation != null && initialReservation.getStartDate().equals(localDateStart)
 					&& initialReservation.getEndDate().equals(localDateEnd))
 				availableRooms.addAll(reservation.getRooms());
-			camere.addAll(availableRooms.stream()
+			rooms.addAll(availableRooms.stream()
 					.toList().stream()
 					.sorted(Comparator.comparingInt(c -> c.getRoomType().getType().getPeople())).toList());
 		}
 		
-		camereJList.setModel(camere);
-		scrollPane.setViewportView(camereJList);
+		roomsJList.setModel(rooms);
+		scrollPane.setViewportView(roomsJList);
 	}
 
 	@Override

@@ -64,11 +64,11 @@ public class newConsumption extends JFrame {
 		productsScrollPane.setBounds(10, 10, 496, 315);
 		consummationPanel.add(productsScrollPane);
 		
-		JLabel prodottiLabel = new JLabel("Prodotti");
-		prodottiLabel.setForeground(new Color(0, 128, 128));
-		prodottiLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		prodottiLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
-		productsScrollPane.setColumnHeaderView(prodottiLabel);
+		JLabel productsLabel = new JLabel("Products");
+		productsLabel.setForeground(new Color(0, 128, 128));
+		productsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		productsLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
+		productsScrollPane.setColumnHeaderView(productsLabel);
 		
 		productsJList = new JList<>(products);
 		productsJList.setForeground(new Color(0, 128, 128));
@@ -85,8 +85,8 @@ public class newConsumption extends JFrame {
 		productAmountSpinner.setBounds(105, 335, 318, 28);
 		consummationPanel.add(productAmountSpinner);
 		
-		JButton addConsummationButton = new JButton("Aggiungi consumazione");
-		addConsummationButton.addActionListener(e -> addConsumazioneToPrenotazione(reservation, consumptionService));
+		JButton addConsummationButton = new JButton("Add consumption");
+		addConsummationButton.addActionListener(e -> addConsumptionToReservation(reservation, consumptionService));
 		addConsummationButton.setBackground(new Color(224, 255, 255));
 		addConsummationButton.setForeground(new Color(0, 128, 128));
 		addConsummationButton.setFont(new Font("Harlow Solid Italic", Font.BOLD, 25));
@@ -96,27 +96,27 @@ public class newConsumption extends JFrame {
 		setVisible(true);
 	}
 	
-	private void addConsumazioneToPrenotazione(Reservation reservation, ConsumptionService consumptionService) {
+	private void addConsumptionToReservation(Reservation reservation, ConsumptionService consumptionService) {
 		Product selectedProduct = productsJList.getSelectedValue();
 		int selectedAmount = (int) productAmountSpinner.getValue();
 		if(selectedProduct != null) {
-			if(selectedAmount <= 0) JOptionPane.showMessageDialog(null, "INSERISCI UNA QUANTITA' VALIDA");
+			if(selectedAmount <= 0) JOptionPane.showMessageDialog(null, "Enter a valid quantity");
 			else {
 				//TODO aggiusta
 				Consumption consumption = new Consumption(reservation, selectedProduct, selectedAmount);
 				
 				int yn;
-				yn = JOptionPane.showConfirmDialog(null, "VUOI AGGIUNGERE " + selectedAmount + " " + consumption.getProductName().toUpperCase() + " ALLA PRENOTAZIONE?", "AGGIUNGI CONSUMAZIONE", JOptionPane.YES_NO_OPTION);
+				yn = JOptionPane.showConfirmDialog(null, "Do you want to add" + " " + selectedAmount + " " + consumption.getProductName().toUpperCase() + " to the reservation?", "Add consumption", JOptionPane.YES_NO_OPTION);
 				if (yn == JOptionPane.YES_OPTION) {
 					consumptionService.saveConsumption(consumption);
-					JOptionPane.showMessageDialog(null, "LA CONSUMAZIONE E'STATA AGGIUNTA CORRETTAMENTE");
+					JOptionPane.showMessageDialog(null, "Consumption has been added correctly");
 				}
 				else
-					JOptionPane.showMessageDialog(null, "OPERAZIONE ANNULLATA");
+					JOptionPane.showMessageDialog(null, "Operation canceled");
 				refreshSelections();
 			}
 		}
-		else JOptionPane.showMessageDialog(null, "SELEZIONA IL PRODOTTO DA AGGIUNGERE ALLA PRENOTAZIONE");
+		else JOptionPane.showMessageDialog(null, "Select the product to add to the reservation");
 	}
 	
 	private void refreshSelections() {
