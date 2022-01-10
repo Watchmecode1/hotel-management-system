@@ -99,7 +99,7 @@ public class ReservationDao {
 		
 		String queryString = """
 				SELECT p.id
-				FROM Reservation p, Reservation_room c
+				FROM Reservation p, Reservation_Room c
 				WHERE
 							p.id = c.reservations_id
 						AND c.rooms_number = :roomNumber
@@ -123,7 +123,7 @@ public class ReservationDao {
 		
 		String queryString = """
 				SELECT p.id
-				FROM Reservation p, Reservation_room c
+				FROM Reservation p, Reservation_Room c
 				WHERE
 							p.id = c.reservations_id
 						AND c.rooms_number = :roomNumber
@@ -145,7 +145,7 @@ public class ReservationDao {
 		
 		String queryString = """
 				SELECT p.id
-				FROM Reservation p, Reservation_room c
+				FROM Reservation p, Reservation_Room c
 				WHERE
 							p.id = c.reservations_id
 						AND c.rooms_number = :roomNumber
@@ -173,7 +173,7 @@ public class ReservationDao {
 		
 		String queryString = """
 				SELECT p.id
-				FROM Reservation p, Reservation_room c
+				FROM Reservation p, Reservation_Room c
 				WHERE
 							p.id = c.reservations_id
 						AND c.rooms_number = :roomNumber

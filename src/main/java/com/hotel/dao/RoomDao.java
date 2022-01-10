@@ -45,7 +45,7 @@ public class RoomDao {
 				FROM Room c
 				WHERE
 					c.number NOT IN (SELECT c.number
-									FROM Reservation p, Reservation_room pc, Room c
+									FROM Reservation p, Reservation_Room pc, Room c
 									WHERE
 											p.id = pc.reservations_id
 										AND c.number = pc.rooms_number
