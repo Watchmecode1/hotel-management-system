@@ -248,18 +248,18 @@ public class Planner extends JFrame {
 
 	private String getMonthFromMonthValue(int monthValue) {
 		return switch(monthValue) {
-			case 1 	-> "GENNAIO";
-			case 2 	-> "FEBBRAIO";
-			case 3 	-> "MARZO";
-			case 4 	-> "APRILE";
-			case 5 	-> "MAGGIO";
-			case 6 	-> "GIUGNO";
-			case 7 	-> "LUGLIO";
-			case 8 	-> "AGOSTO";
-			case 9 	-> "SETTEMBRE";
-			case 10 -> "OTTOBRE";
-			case 11 -> "NOVEMBRE";
-			case 12 -> "DICEMBRE";
+			case 1 	-> "JANUARY";
+			case 2 	-> "FEBRUARY";
+			case 3 	-> "MARCH";
+			case 4 	-> "APRIL";
+			case 5 	-> "MAY";
+			case 6 	-> "JUNE";
+			case 7 	-> "JULY";
+			case 8 	-> "AUGUST";
+			case 9 	-> "SEPTEMBER";
+			case 10 -> "OCTOBER";
+			case 11 -> "NOVEMBER";
+			case 12 -> "DECEMBER";
 			default -> throw new AssertionError("Invalid month");
 		};
 	}

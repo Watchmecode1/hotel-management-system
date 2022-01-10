@@ -49,7 +49,7 @@ public class RoomPrices extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel titleLabel = new JLabel("Gestione camere");
+		JLabel titleLabel = new JLabel("Room management");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setForeground(new Color(0, 128, 128));
 		titleLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
@@ -63,26 +63,26 @@ public class RoomPrices extends JFrame {
 		contentPane.add(mainPanel);
 		mainPanel.setLayout(null);
 		
-		JLabel textLabel = new JLabel("Imposta Prezzi\r\n");
+		JLabel textLabel = new JLabel("Set prices\r\n");
 		textLabel.setForeground(new Color(224, 255, 255));
 		textLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		textLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		textLabel.setBounds(10, 10, 527, 46);
 		mainPanel.add(textLabel);
 		
-		JLabel quadruplaLabel = new JLabel("Prezzo Quadrupla");
+		JLabel quadruplaLabel = new JLabel("Quadruple price");
 		quadruplaLabel.setForeground(new Color(224, 255, 255));
 		quadruplaLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		quadruplaLabel.setBounds(10, 212, 211, 26);
 		mainPanel.add(quadruplaLabel);
 		
-		JLabel matrimonialeLabel = new JLabel("Prezzo Matrimoniale");
+		JLabel matrimonialeLabel = new JLabel("Double price");
 		matrimonialeLabel.setForeground(new Color(224, 255, 255));
 		matrimonialeLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		matrimonialeLabel.setBounds(10, 132, 223, 26);
 		mainPanel.add(matrimonialeLabel);
 		
-		JLabel triplaLabel = new JLabel("Prezzo Tripla");
+		JLabel triplaLabel = new JLabel("Triple price");
 		triplaLabel.setForeground(new Color(224, 255, 255));
 		triplaLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		triplaLabel.setBounds(10, 172, 223, 26);
@@ -148,19 +148,17 @@ public class RoomPrices extends JFrame {
 		lblNewLabel_1_1_3.setBounds(0, 0, 26, 19);
 		euroPanel_3.add(lblNewLabel_1_1_3);
 		
-		JButton btnNewButton = new JButton("Reimposta");
+		JButton btnNewButton = new JButton("Reset");
 		btnNewButton.addActionListener(e -> {
 			int yn;
-			yn  =JOptionPane.showConfirmDialog(null, "VUOI REIMPOSTARE I DATI INSERITI FIN'ORA?", "REIMPOSTA DATI", JOptionPane.YES_NO_OPTION);
+			yn  =JOptionPane.showConfirmDialog(null, "Do you want to reset the data entered so far?", "Reset", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION) {
 				doubleTextField.setText(roomTypeService.getById(RoomType.Type.DOUBLE).getPrice().toString());
 				tripleTextField.setText(roomTypeService.getById(RoomType.Type.TRIPLE).getPrice().toString());
 				quadrupleTextField.setText(roomTypeService.getById(RoomType.Type.QUADRUPLE).getPrice().toString());
 				quintupleTextField.setText(roomTypeService.getById(RoomType.Type.QUINTUPLE).getPrice().toString());
-
-				JOptionPane.showMessageDialog(null, "DATI REIMPOSTATI");
 			} else
-				JOptionPane.showMessageDialog(null, "OPERAZIONE ANNULLATA");
+				JOptionPane.showMessageDialog(null, "Operation canceled");
 		});
 		btnNewButton.setForeground(new Color(0, 128, 128));
 		btnNewButton.setBackground(new Color(224, 255, 255));
@@ -168,7 +166,7 @@ public class RoomPrices extends JFrame {
 		btnNewButton.setBounds(10, 300, 211, 36);
 		mainPanel.add(btnNewButton);
 		
-		JButton btnConferma = new JButton("Conferma");
+		JButton btnConferma = new JButton("Confirmation");
 		btnConferma.addActionListener(e -> {
 			if (!singleTextField.getText().isBlank()
 					&& !doubleTextField.getText().isBlank()
@@ -182,10 +180,10 @@ public class RoomPrices extends JFrame {
 						&& Checks.isDigit(quintupleTextField.getText())) {
 					setPrices();
 				} else {
-					JOptionPane.showMessageDialog(null, "INSERISCI PREZZI VALIDI PER LE CAMERE");
+					JOptionPane.showMessageDialog(null, "Insert valid prices for the rooms");
 				}
 			} else
-				JOptionPane.showMessageDialog(null, "INSERISCI I PREZZI DI TUTTE LE TIPOLOGIE DI CAMERE NEL PERIODO SCELTO");
+				JOptionPane.showMessageDialog(null, "Insert valid prices for the rooms");
 		});
 		btnConferma.setForeground(new Color(0, 128, 128));
 		btnConferma.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
@@ -193,7 +191,7 @@ public class RoomPrices extends JFrame {
 		btnConferma.setBounds(326, 300, 211, 36);
 		mainPanel.add(btnConferma);
 		
-		JLabel lblNewLabel_2_2_1_1 = new JLabel("Prezzo Quintupla");
+		JLabel lblNewLabel_2_2_1_1 = new JLabel("Quintuple price");
 		lblNewLabel_2_2_1_1.setForeground(new Color(224, 255, 255));
 		lblNewLabel_2_2_1_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		lblNewLabel_2_2_1_1.setBounds(10, 248, 211, 26);
@@ -223,25 +221,16 @@ public class RoomPrices extends JFrame {
 	}
 	
 	private void setPrices() {
-		int yn;
-		yn = JOptionPane.showConfirmDialog(null, "VUOI CONFERMARE I NUOVI PREZZI PER LE CAMERE?", "AGGIORNA PREZZI", JOptionPane.YES_NO_OPTION);
+		int yn = JOptionPane.showConfirmDialog(null, "Do you want to confirm the new prices for the rooms?", "Update prices", JOptionPane.YES_NO_OPTION);
 		if (yn == JOptionPane.YES_OPTION) {
 			roomTypeService.saveRoomType(new RoomType(RoomType.Type.DOUBLE, BigDecimal.valueOf(Double.parseDouble(doubleTextField.getText()))));
 			roomTypeService.saveRoomType(new RoomType(RoomType.Type.TRIPLE, BigDecimal.valueOf(Double.parseDouble(tripleTextField.getText()))));
 			roomTypeService.saveRoomType(new RoomType(RoomType.Type.QUADRUPLE, BigDecimal.valueOf(Double.parseDouble(quadrupleTextField.getText()))));
 			roomTypeService.saveRoomType(new RoomType(RoomType.Type.QUINTUPLE, BigDecimal.valueOf(Double.parseDouble(quintupleTextField.getText()))));
 		
-			JOptionPane.showMessageDialog(null, "PREZZI CAMERE AGGIORNATI CORRETTAMENTE");	
+			JOptionPane.showMessageDialog(null, "Room prices updated correctly");
 		}
-		else JOptionPane.showMessageDialog(null, "OPERAZIONE ANNULLATA");	
-	}
-	
-	@Override
-	public void dispose() {
-		int yn;
-		yn = JOptionPane.showConfirmDialog(null, "SEI SICURO DI VOLER CHIUDERE LA PAGINA?\nATTENZIONE:\nTUTTI I DATI INSERITI NON SALVATI ANDRANNO PERSI.\nVUOI PROCEDERE?", "EXIT", JOptionPane.YES_NO_OPTION);
-		if (yn == JOptionPane.YES_OPTION)
-			super.dispose();
+		else JOptionPane.showMessageDialog(null, "Operation canceled");
 	}
 
 	@Override

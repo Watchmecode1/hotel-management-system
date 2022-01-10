@@ -19,7 +19,6 @@ import javax.swing.SwingConstants;
 import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import java.io.Serial;
 
 public class ReservationRegister extends JFrame {
@@ -77,7 +76,7 @@ public class ReservationRegister extends JFrame {
 		registerPanel.add(titlePanel);
 		titlePanel.setLayout(null);
 		
-		JLabel registerLabel = new JLabel("Registro Prenotazioni");
+		JLabel registerLabel = new JLabel("Reservation register");
 		registerLabel.setForeground(new Color(0, 128, 128));
 		registerLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		registerLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -93,7 +92,7 @@ public class ReservationRegister extends JFrame {
 		registerPanel.add(research);
 		research.setColumns(10);
 		
-		JButton btnNewButton = new JButton("ricerca");
+		JButton btnNewButton = new JButton("Search");
 		btnNewButton.addActionListener(e -> searchResults(research.getText()));
 		btnNewButton.setForeground(new Color(0, 128, 128));
 		btnNewButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
@@ -108,13 +107,13 @@ public class ReservationRegister extends JFrame {
 		registerPanel.add(resultPanel);
 		resultPanel.setLayout(null);
 		
-		JLabel emailAddressLabel = new JLabel("indirizzo e-mail");
+		JLabel emailAddressLabel = new JLabel("Email");
 		emailAddressLabel.setForeground(new Color(224, 255, 255));
 		emailAddressLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		emailAddressLabel.setBounds(1014, 337, 205, 28);
 		resultPanel.add(emailAddressLabel);
 		
-		JLabel boardTypeLabel = new JLabel("tipologia pensione");
+		JLabel boardTypeLabel = new JLabel("Board");
 		boardTypeLabel.setForeground(new Color(224, 255, 255));
 		boardTypeLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		boardTypeLabel.setBounds(1014, 375, 205, 28);
@@ -127,73 +126,73 @@ public class ReservationRegister extends JFrame {
 		lblNewLabel_1.setBounds(1204, 531, 26, 28);
 		resultPanel.add(lblNewLabel_1);
 		
-		JLabel bookingLabel_1 = new JLabel("id prenotazione");
+		JLabel bookingLabel_1 = new JLabel("Id");
 		bookingLabel_1.setForeground(new Color(224, 255, 255));
 		bookingLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		bookingLabel_1.setBounds(1012, 10, 162, 28);
 		resultPanel.add(bookingLabel_1);
 		
-		JLabel referenceNameLabel_1 = new JLabel("nominativo");
+		JLabel referenceNameLabel_1 = new JLabel("Nominative");
 		referenceNameLabel_1.setForeground(new Color(224, 255, 255));
 		referenceNameLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		referenceNameLabel_1.setBounds(1014, 43, 162, 28);
 		resultPanel.add(referenceNameLabel_1);
 		
-		JLabel checkinLabel_1 = new JLabel("data checkin");
+		JLabel checkinLabel_1 = new JLabel("Check-in");
 		checkinLabel_1.setForeground(new Color(224, 255, 255));
 		checkinLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		checkinLabel_1.setBounds(1012, 81, 162, 28);
 		resultPanel.add(checkinLabel_1);
 		
-		JLabel checkoutLabel_1 = new JLabel("data checkout");
+		JLabel checkoutLabel_1 = new JLabel("Check-out");
 		checkoutLabel_1.setForeground(new Color(224, 255, 255));
 		checkoutLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		checkoutLabel_1.setBounds(1012, 120, 162, 28);
 		resultPanel.add(checkoutLabel_1);
 		
-		JLabel childrenNumberLabel_1 = new JLabel("numero bambini 0-3");
+		JLabel childrenNumberLabel_1 = new JLabel("Childs");
 		childrenNumberLabel_1.setForeground(new Color(224, 255, 255));
 		childrenNumberLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		childrenNumberLabel_1.setBounds(1012, 229, 205, 28);
 		resultPanel.add(childrenNumberLabel_1);
 		
-		JLabel teenagersNumberLabel_1 = new JLabel("numero minori 14");
+		JLabel teenagersNumberLabel_1 = new JLabel("Minors");
 		teenagersNumberLabel_1.setForeground(new Color(224, 255, 255));
 		teenagersNumberLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		teenagersNumberLabel_1.setBounds(1012, 193, 204, 28);
 		resultPanel.add(teenagersNumberLabel_1);
 		
-		JLabel adultsNumberLabel_1 = new JLabel("numero adulti");
+		JLabel adultsNumberLabel_1 = new JLabel("Adults");
 		adultsNumberLabel_1.setForeground(new Color(224, 255, 255));
 		adultsNumberLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		adultsNumberLabel_1.setBounds(1013, 155, 161, 28);
 		resultPanel.add(adultsNumberLabel_1);
 		
-		JLabel animalsNumberLabel_1 = new JLabel("numero animali");
+		JLabel animalsNumberLabel_1 = new JLabel("Pets");
 		animalsNumberLabel_1.setForeground(new Color(224, 255, 255));
 		animalsNumberLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		animalsNumberLabel_1.setBounds(1012, 261, 205, 28);
 		resultPanel.add(animalsNumberLabel_1);
 		
-		JLabel phoneNumberLabel_1 = new JLabel("numero cellulare");
+		JLabel phoneNumberLabel_1 = new JLabel("Phone number");
 		phoneNumberLabel_1.setForeground(new Color(224, 255, 255));
 		phoneNumberLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		phoneNumberLabel_1.setBounds(1012, 299, 205, 28);
 		resultPanel.add(phoneNumberLabel_1);
 		
-		JLabel sourceSpinner_1 = new JLabel("SOURCE prenotazione");
+		JLabel sourceSpinner_1 = new JLabel("Source");
 		sourceSpinner_1.setForeground(new Color(224, 255, 255));
 		sourceSpinner_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		sourceSpinner_1.setBounds(1014, 413, 205, 28);
 		resultPanel.add(sourceSpinner_1);
 		
-		JLabel paymentTypeLabel_1 = new JLabel("tipologia pagamento");
+		JLabel paymentTypeLabel_1 = new JLabel("Paid");
 		paymentTypeLabel_1.setForeground(new Color(224, 255, 255));
 		paymentTypeLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		paymentTypeLabel_1.setBounds(1014, 490, 205, 28);
 		resultPanel.add(paymentTypeLabel_1);
 		
-		JLabel depositPaidLabel_1 = new JLabel("acconto versato");
+		JLabel depositPaidLabel_1 = new JLabel("Deposit paid");
 		depositPaidLabel_1.setForeground(new Color(224, 255, 255));
 		depositPaidLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		depositPaidLabel_1.setBounds(1014, 528, 204, 28);
@@ -205,7 +204,7 @@ public class ReservationRegister extends JFrame {
 		id.setBounds(1228, 10, 185, 28);
 		resultPanel.add(id);
 		
-		JLabel totalPaymentLabel = new JLabel("totale dovuto");
+		JLabel totalPaymentLabel = new JLabel("Total");
 		totalPaymentLabel.setForeground(new Color(224, 255, 255));
 		totalPaymentLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		totalPaymentLabel.setBounds(1014, 566, 204, 28);
@@ -309,13 +308,13 @@ public class ReservationRegister extends JFrame {
 		prenotazioniJList.setBackground(new Color(224, 255, 255));
 		scrollPane.setViewportView(prenotazioniJList);
 		
-		JLabel titleJListLabel = new JLabel("Lista Prenotazioni");
+		JLabel titleJListLabel = new JLabel("Reservations");
 		titleJListLabel.setForeground(new Color(0, 128, 128));
 		titleJListLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleJListLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		scrollPane.setColumnHeaderView(titleJListLabel);
 		
-		JButton btnNewButton_1_1 = new JButton("mostra dati");
+		JButton btnNewButton_1_1 = new JButton("Show data");
 		btnNewButton_1_1.addActionListener(e -> showSelectedBookingData());
 		btnNewButton_1_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnNewButton_1_1.setBackground(new Color(224, 255, 255));
@@ -323,7 +322,7 @@ public class ReservationRegister extends JFrame {
 		btnNewButton_1_1.setBounds(341, 557, 272, 37);
 		resultPanel.add(btnNewButton_1_1);
 		
-		JLabel roomsLabel = new JLabel("camere occupate");
+		JLabel roomsLabel = new JLabel("Reserved rooms");
 		roomsLabel.setForeground(new Color(224, 255, 255));
 		roomsLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		roomsLabel.setBounds(1014, 451, 205, 28);
@@ -344,35 +343,18 @@ public class ReservationRegister extends JFrame {
 	}
 	
 	private void searchResults(String charSeq) {
-		
-		JOptionPane.showMessageDialog(null, "AVVIO RICERCA");
-		
-		DefaultListModel<Reservation> prenotazioniFiltrate = new DefaultListModel<>();
-		
-		for (int i = 0; i < prenotazioni.size(); i++)
-		{
-			if (charSeq.length() != 0)
-			{
+		DefaultListModel<Reservation> results = new DefaultListModel<>();
+		for(int i = 0; i < prenotazioni.size(); i++) {
+			if (charSeq.length() != 0) {
 				if (prenotazioni.get(i).toString().contains(charSeq))
-				{
-					prenotazioniFiltrate.addElement(prenotazioni.get(i));
-				}
+					results.addElement(prenotazioni.get(i));
 			}
 		}
-		if (prenotazioniFiltrate.size() < 1)
-		{
-			JOptionPane.showMessageDialog(null, "NESSUN RISULTATO TROVATO");
-			research.setText("");
-			
-		}
-		else
-		{
-			prenotazioniJList.setModel(prenotazioniFiltrate);
+		if(results.size() > 0) {
+			prenotazioniJList.setModel(results);
 			scrollPane.setViewportView(prenotazioniJList);
-			research.setText("");
-		
-			JOptionPane.showMessageDialog(null, "RICERCA COMPLETATA");
 		}
+		research.setText("");
 	}
 	
 //	private void refreshBookings() {
@@ -380,41 +362,30 @@ public class ReservationRegister extends JFrame {
 //		scrollPane.setViewportView(prenotazioniJList);
 //	}
 	
-	private void showSelectedBookingData()
-	{
-		if (prenotazioniJList.getSelectedValue() != null)
-		{
-			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "VUOI VISUALIZZARE LE INFORMAZIONI DELLA PRENOTAZIONE SELEZIONATA?","MOSTRA INFO PRENOTAZIONE",JOptionPane.YES_NO_OPTION);
-			if (yn == JOptionPane.YES_OPTION)
-			{
-				Reservation reservation = prenotazioniJList.getSelectedValue();
-				id.setText(Long.toString(reservation.getId()));
-				reference.setText(reservation.getSurname());
-				checkIn.setText(reservation.getStartDate().toString());
-				checkout.setText(reservation.getEndDate().toString());
-				adultNumberResult.setText(Integer.toString(reservation.getNumberOfAdults()));
-				teenagersNumberResult.setText(Integer.toString(reservation.getNumberOfMinors()));
-				childrenNumberResult.setText(Integer.toString(reservation.getNumberOfChilds()));
-				animalNumberResult.setText(Integer.toString(reservation.getNumberOfPets()));
-				phoneNumberResult.setText(reservation.getPhoneNumber());
-				emailResult.setText(reservation.getEmail());
-				typeBoardResult.setText(reservation.getBoard().name());
-				sourceResult.setText(reservation.getSource().name());
-				paymentTypeResult.setText(reservation.getPaid().name());
-				depositPaidResult.setText(reservation.getDeposit().toString());
-				totalResult.setText(reservation.getTotalCost().toString());
+	private void showSelectedBookingData() {
+		if (prenotazioniJList.getSelectedValue() != null) {
+			Reservation reservation = prenotazioniJList.getSelectedValue();
+			id.setText(Long.toString(reservation.getId()));
+			reference.setText(reservation.getSurname());
+			checkIn.setText(reservation.getStartDate().toString());
+			checkout.setText(reservation.getEndDate().toString());
+			adultNumberResult.setText(Integer.toString(reservation.getNumberOfAdults()));
+			teenagersNumberResult.setText(Integer.toString(reservation.getNumberOfMinors()));
+			childrenNumberResult.setText(Integer.toString(reservation.getNumberOfChilds()));
+			animalNumberResult.setText(Integer.toString(reservation.getNumberOfPets()));
+			phoneNumberResult.setText(reservation.getPhoneNumber());
+			emailResult.setText(reservation.getEmail());
+			typeBoardResult.setText(reservation.getBoard().name());
+			sourceResult.setText(reservation.getSource().name());
+			paymentTypeResult.setText(reservation.getPaid().name());
+			depositPaidResult.setText(reservation.getDeposit().toString());
+			totalResult.setText(reservation.getTotalCost().toString());
 				
-				StringBuilder s = new StringBuilder();
-				for (Room room : reservation.getRooms())
-					s.append(room.getNumber()).append(" ");
-				
-				rooms.setText(s.toString());
-				
-				JOptionPane.showMessageDialog(null, "DATI CARICATI");
-			}
+			StringBuilder s = new StringBuilder();
+			for (Room room : reservation.getRooms())
+				s.append(room.getNumber()).append(" ");
+			rooms.setText(s.toString());
 		}
-		else JOptionPane.showMessageDialog(null, "SELEZIONA LA PRENOTAZIONE DI CUI SI VOGLIONO VEDERE LE INFORMAZIONI");
 	}
 	
 	public void showRequiredData(Reservation reservation) {

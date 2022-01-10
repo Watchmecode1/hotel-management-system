@@ -59,14 +59,14 @@ public class ProductRegister extends JFrame {
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel productsLabel = new JLabel("Registra Prodotti");
+		JLabel productsLabel = new JLabel("Register products");
 		productsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		productsLabel.setForeground(new Color(0, 128, 128));
 		productsLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		productsLabel.setBounds(10, 10, 426, 60);
 		panel_2.add(productsLabel);
 		
-		JLabel lblProdotto = new JLabel("Prodotto");
+		JLabel lblProdotto = new JLabel("Product");
 		lblProdotto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblProdotto.setForeground(new Color(224, 255, 255));
 		lblProdotto.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
@@ -79,7 +79,7 @@ public class ProductRegister extends JFrame {
 		productName.setBounds(206, 220, 230, 30);
 		panel.add(productName);
 		
-		JLabel lblPrezzo = new JLabel("Prezzo Cad.  \u20AC");
+		JLabel lblPrezzo = new JLabel("Price each  \u20AC");
 		lblPrezzo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrezzo.setForeground(new Color(224, 255, 255));
 		lblPrezzo.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
@@ -93,7 +93,7 @@ public class ProductRegister extends JFrame {
 		price.setBounds(206, 280, 230, 30);
 		panel.add(price);
 		
-		JButton addProductsButton = new JButton("Aggiungi Prodotto");
+		JButton addProductsButton = new JButton("Add product");
 		addProductsButton.addActionListener(e -> addProduct(productService));
 		addProductsButton.setBackground(new Color(224, 255, 255));
 		addProductsButton.setForeground(new Color(0, 128, 128));
@@ -101,7 +101,7 @@ public class ProductRegister extends JFrame {
 		addProductsButton.setBounds(58, 422, 319, 57);
 		panel.add(addProductsButton);
 		
-		JButton btnModificaProduct = new JButton("Modifica Prodotto");
+		JButton btnModificaProduct = new JButton("Edit product");
 		btnModificaProduct.addActionListener(e -> modifyProduct());
 		btnModificaProduct.setForeground(new Color(0, 128, 128));
 		btnModificaProduct.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
@@ -132,7 +132,7 @@ public class ProductRegister extends JFrame {
 		contentPane.add(panel_3);
 		panel_3.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Sezione Inventario");
+		JLabel lblNewLabel_1 = new JLabel("Inventory section");
 		lblNewLabel_1.setForeground(new Color(0, 128, 128));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 40));
@@ -152,7 +152,7 @@ public class ProductRegister extends JFrame {
 		productsJList.setBackground(new Color(224, 255, 255));
 		scrollPane.setViewportView(productsJList);
 		
-		JLabel productsListLabel = new JLabel("Elenco Prodotti");
+		JLabel productsListLabel = new JLabel("Product list");
 		productsListLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		productsListLabel.setForeground(new Color(0, 128, 128));
 		productsListLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 35));
@@ -163,19 +163,15 @@ public class ProductRegister extends JFrame {
 	
 	private void addProduct(ProductService productService) {
 		if(checkInputFields()) {
-			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "VUOI AGGIUNGERE L'ORDINE IN INVENTARIO?", "AGGIUNGI ORDINE", JOptionPane.YES_NO_OPTION);
-			if (yn == JOptionPane.YES_OPTION) {
-				Product product = new Product(productName.getText(), BigDecimal.valueOf(Double.parseDouble(price.getText())));
+			Product product = new Product(productName.getText(), BigDecimal.valueOf(Double.parseDouble(price.getText())));
 					
-					productService.saveProduct(product);
-					products.addElement(product);
-					refreshProductsList();
+			productService.saveProduct(product);
+			products.addElement(product);
+			refreshProductsList();
 						
-					JOptionPane.showMessageDialog(null, "ORDINE CORRETTAMENTE AGGIUNTO ALL'INVENTARIO");
-				}
-			}
-		else JOptionPane.showMessageDialog(null, "COMPILA TUTTI GLI ATTRIBUTI PER AGGIUNGERE UN ORDINE");
+			JOptionPane.showMessageDialog(null, "Product correctly added to the inventory");
+		}
+		else JOptionPane.showMessageDialog(null, "Fill out all the fields to add a product");
 	}
 	
 //	private void deleteProduct(ProdottoService prodottoService) {
@@ -197,17 +193,15 @@ public class ProductRegister extends JFrame {
 	private void modifyProduct() {
 		if (productsJList.getSelectedValue() != null) {
 			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "VUOI MODIFICARE IL PRODOTTO SELEZIONATO?", "MODIFICA PRODOTTO", JOptionPane.YES_NO_OPTION);
+			yn = JOptionPane.showConfirmDialog(null, "Do you want to modify the selected product?", "Edit product", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION) {
 				Product product = productsJList.getSelectedValue();
 				
 				productName.setText(product.getName());
 				price.setText(Double.toString(product.getPrice().doubleValue()));
-				
-				JOptionPane.showMessageDialog(null, "MODIFICA ABILITATA");
 			}
 		}
-		else JOptionPane.showMessageDialog(null, "SELEZIONA IL PRODOTTO CHE VUOI MODIFICARE");
+		else JOptionPane.showMessageDialog(null, "Select the product you want to edit");
 	}
 	
 	private void refreshProductsList() {
@@ -229,13 +223,13 @@ public class ProductRegister extends JFrame {
 	
 	private boolean checkName() {
 		if(!productName.getText().isBlank()) return true;
-		JOptionPane.showMessageDialog(null, "INSERISCI UN NOME PRODOTTO VALIDO");
+		JOptionPane.showMessageDialog(null, "Enter a valid product name");
 		return false;
 	}
 	
 	private boolean checkPrice() {
 		if (Checks.isDouble(price.getText())) return true;
-		JOptionPane.showMessageDialog(null, "INSERISCI UN PREZZO VALIDO PER IL PRODOTTO");
+		JOptionPane.showMessageDialog(null, "Enter a valid price for the product");
 		return false;
 	}
 

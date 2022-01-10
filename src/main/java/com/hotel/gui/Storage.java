@@ -70,14 +70,14 @@ public class Storage extends JFrame {
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Registra Ordini");
+		JLabel lblNewLabel = new JLabel("Register Orders");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(new Color(0, 128, 128));
 		lblNewLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		lblNewLabel.setBounds(10, 10, 426, 60);
 		panel_2.add(lblNewLabel);
 		
-		JLabel numeroLottoLabel = new JLabel("Numero lotto");
+		JLabel numeroLottoLabel = new JLabel("Batch Number");
 		numeroLottoLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		numeroLottoLabel.setForeground(new Color(224, 255, 255));
 		numeroLottoLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
@@ -90,7 +90,7 @@ public class Storage extends JFrame {
 		batchId.setBounds(262, 96, 174, 30);
 		panel.add(batchId);
 		
-		JLabel lblFornitore = new JLabel("Fornitore");
+		JLabel lblFornitore = new JLabel("Supplier");
 		lblFornitore.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFornitore.setForeground(new Color(224, 255, 255));
 		lblFornitore.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
@@ -109,14 +109,14 @@ public class Storage extends JFrame {
 		deliveryDate.setBounds(262, 179, 174, 30);
 		panel.add(deliveryDate);
 		
-		JLabel lblConsegna = new JLabel("Data consegna");
+		JLabel lblConsegna = new JLabel("Delivery date");
 		lblConsegna.setHorizontalAlignment(SwingConstants.LEFT);
 		lblConsegna.setForeground(new Color(224, 255, 255));
 		lblConsegna.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		lblConsegna.setBounds(11, 179, 180, 30);
 		panel.add(lblConsegna);
 		
-		JLabel lblProdotto = new JLabel("Prodotto");
+		JLabel lblProdotto = new JLabel("Product");
 		lblProdotto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblProdotto.setForeground(new Color(224, 255, 255));
 		lblProdotto.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
@@ -136,14 +136,14 @@ public class Storage extends JFrame {
 		amount.setBounds(262, 260, 174, 30);
 		panel.add(amount);
 		
-		JLabel lblQuantita = new JLabel("Quantit\u00E0");
+		JLabel lblQuantita = new JLabel("Quantity");
 		lblQuantita.setHorizontalAlignment(SwingConstants.LEFT);
 		lblQuantita.setForeground(new Color(224, 255, 255));
 		lblQuantita.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
 		lblQuantita.setBounds(10, 257, 117, 30);
 		panel.add(lblQuantita);
 		
-		JLabel lblScadenza = new JLabel("Data scadenza");
+		JLabel lblScadenza = new JLabel("Expiration date");
 		lblScadenza.setHorizontalAlignment(SwingConstants.LEFT);
 		lblScadenza.setForeground(new Color(224, 255, 255));
 		lblScadenza.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
@@ -156,7 +156,7 @@ public class Storage extends JFrame {
 		expireDate.setBounds(262, 299, 174, 30);
 		panel.add(expireDate);
 		
-		JLabel lblPrezzo = new JLabel("Costo totale              \u20AC");
+		JLabel lblPrezzo = new JLabel("Total price              \u20AC");
 		lblPrezzo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrezzo.setForeground(new Color(224, 255, 255));
 		lblPrezzo.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
@@ -170,7 +170,7 @@ public class Storage extends JFrame {
 		price.setBounds(262, 339, 174, 30);
 		panel.add(price);
 		
-		JButton addOrdersButton = new JButton("Aggiungi Ordine");
+		JButton addOrdersButton = new JButton("Add Order");
 		addOrdersButton.addActionListener(e -> addOrder(orderService, productService));
 		addOrdersButton.setBackground(new Color(224, 255, 255));
 		addOrdersButton.setForeground(new Color(0, 128, 128));
@@ -178,7 +178,7 @@ public class Storage extends JFrame {
 		addOrdersButton.setBounds(58, 422, 319, 57);
 		panel.add(addOrdersButton);
 		
-		JButton btnModificaOrdine = new JButton("Modifica Ordine");
+		JButton btnModificaOrdine = new JButton("Edit order");
 		btnModificaOrdine.addActionListener(e -> modifyOrder());
 		btnModificaOrdine.setForeground(new Color(0, 128, 128));
 		btnModificaOrdine.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
@@ -186,7 +186,7 @@ public class Storage extends JFrame {
 		btnModificaOrdine.setBounds(58, 496, 319, 57);
 		panel.add(btnModificaOrdine);
 		
-		JButton btnEliminaOrdine = new JButton("Elimina Ordine");
+		JButton btnEliminaOrdine = new JButton("Delete order");
 		btnEliminaOrdine.addActionListener(e -> deleteOrder(orderService));
 		btnEliminaOrdine.setForeground(new Color(0, 128, 128));
 		btnEliminaOrdine.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
@@ -205,7 +205,7 @@ public class Storage extends JFrame {
 		contentPane.add(panel_3);
 		panel_3.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Sezione Inventario");
+		JLabel lblNewLabel_1 = new JLabel("Inventory section");
 		lblNewLabel_1.setForeground(new Color(0, 128, 128));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 40));
@@ -225,13 +225,13 @@ public class Storage extends JFrame {
 		ordersJList.setBackground(new Color(224, 255, 255));
 		scrollPane.setViewportView(ordersJList);
 		
-		JLabel lblListaOrdini = new JLabel("Elenco Ordini");
+		JLabel lblListaOrdini = new JLabel("Order list");
 		lblListaOrdini.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListaOrdini.setForeground(new Color(0, 128, 128));
 		lblListaOrdini.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 35));
 		scrollPane.setColumnHeaderView(lblListaOrdini);
 		
-		JButton btnMostraProdottiIn = new JButton("Mostra Prodotti in Scadenza");
+		JButton btnMostraProdottiIn = new JButton("Show products about to expire");
 		btnMostraProdottiIn.addActionListener(e -> expiresPage = new ExpiresPage(orderService));
 		btnMostraProdottiIn.setForeground(new Color(0, 128, 128));
 		btnMostraProdottiIn.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
@@ -245,7 +245,7 @@ public class Storage extends JFrame {
 	private void addOrder(OrderService orderService, ProductService productService) {
 		if(checkInputFields()) {
 			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "VUOI AGGIUNGERE L'ORDINE IN INVENTARIO?", "AGGIUNGI ORDINE", JOptionPane.YES_NO_OPTION);
+			yn = JOptionPane.showConfirmDialog(null, "Do you want to add the order in inventory?", "Add order", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION) {
 				Order order = new Order(batchId.getText(), supplier.getText(), DateUtils.convertDateToLocalDate(deliveryDate.getDate()),
 						DateUtils.convertDateToLocalDate(expireDate.getDate()), productName.getText(),
@@ -255,34 +255,34 @@ public class Storage extends JFrame {
 					orders.addElement(order);
 					refreshOrdersList();
 						
-					JOptionPane.showMessageDialog(null, "ORDINE CORRETTAMENTE AGGIUNTO ALL'INVENTARIO");
+					JOptionPane.showMessageDialog(null, "Order successfully added to inventory");
 				}
-				else JOptionPane.showMessageDialog(null, "OPERAZIONE ANNULLATA");
+				else JOptionPane.showMessageDialog(null, "Operation canceled");
 			}
-		else JOptionPane.showMessageDialog(null, "COMPILA TUTTI GLI ATTRIBUTI PER AGGIUNGERE UN ORDINE");
+		else JOptionPane.showMessageDialog(null, "Fill out all the fields to add an order");
 	}
 	
 	private void deleteOrder(OrderService orderService) {
 		Order order = ordersJList.getSelectedValue();
 		if (order != null) {
 			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "VUOI ELIMINARE L'ORDINE SELEZIONATO?", "ELIMINA ORDINE", JOptionPane.YES_NO_OPTION);
+			yn = JOptionPane.showConfirmDialog(null, "Do you want to delete the selected order?", "Elimina ordine", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION) {
 					orderService.deleteOrder(order);
 					orders.removeElement(order);
 					refreshOrdersList();
 					
-					JOptionPane.showMessageDialog(null, "ORDINE CANCELLATO");
+					JOptionPane.showMessageDialog(null, "Order deleted");
 			}
-			JOptionPane.showMessageDialog(null, "OPERAZIONE ANNULLATA");
+			JOptionPane.showMessageDialog(null, "Operation canceled");
 		}
-		else JOptionPane.showMessageDialog(null, "SELEZIONA L'ORDINE CHE VUOI ELIMINARE");
+		else JOptionPane.showMessageDialog(null, "Select the order you want to delete");
 	}
 	
 	private void modifyOrder() {
 		if (ordersJList.getSelectedValue() != null) {
 			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "VUOI MODIFICARE l'ORDINE SELEZIONATO?", "MODIFICA ORDINE", JOptionPane.YES_NO_OPTION);
+			yn = JOptionPane.showConfirmDialog(null, "Do you want to change the selected order", "Edit order", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION) {
 				Order order = ordersJList.getSelectedValue();
 				
@@ -294,27 +294,16 @@ public class Storage extends JFrame {
 				expireDate.setDate(DateUtils.convertLocalDateToDate(order.getExpirationDate()));
 				price.setText(Double.toString(order.getPrice().doubleValue()));
 				
-				JOptionPane.showMessageDialog(null, "MODIFICA ABILITATA");
+				JOptionPane.showMessageDialog(null, "Editing enabled");
 			}
-			else JOptionPane.showMessageDialog(null, "OPERAZIONE ANNULLATA");
+			else JOptionPane.showMessageDialog(null, "Operation canceled");
 		}
-		else JOptionPane.showMessageDialog(null, "SELEZIONA L'ORDINE CHE VUOI MODIFICARE");
+		else JOptionPane.showMessageDialog(null, "Select the order you want to change");
 	}
 	
 	private void refreshOrdersList() {
 		ordersJList.setModel(orders);
 		scrollPane.setViewportView(ordersJList);
-	}
-	
-	@Override
-	public void dispose() {
-		int yn;
-		yn = JOptionPane.showConfirmDialog(null, "SEI SICURO DI VOLER CHIUDERE LA PAGINA?\nATTENZIONE:\nTUTTI I DATI INSERITI NON SALVATI ANDRANNO PERSI.\nVUOI PROCEDERE?", "EXIT", JOptionPane.YES_NO_OPTION);
-		if(yn == JOptionPane.YES_OPTION) {
-			if(expiresPage != null)
-				expiresPage.dispose();
-			super.dispose();
-		}
 	}
 	
 	private boolean checkInputFields() {
@@ -323,31 +312,31 @@ public class Storage extends JFrame {
 	
 	private boolean checkBatchId() {
 		if(!batchId.getText().isBlank()) return true;
-		JOptionPane.showMessageDialog(null, "INSERISCI UN IDENTIFICATIVO LOTTO DEL PRODOTTO VALIDO");
+		JOptionPane.showMessageDialog(null, "Enter a valid product batch id");
 		return false;
 	}
 	
 	private boolean checkSupplier() {
 		if(!supplier.getText().isBlank()) return true;
-		JOptionPane.showMessageDialog(null, "INSERISCI UN NOME FORNITORE VALIDO");
+		JOptionPane.showMessageDialog(null, "Enter a valid supplier name");
 		return false;
 	}
 	
 	private boolean checkName() {
 		if(!productName.getText().isBlank()) return true;
-		JOptionPane.showMessageDialog(null, "INSERISCI UN NOME PRODOTTO VALIDO");
+		JOptionPane.showMessageDialog(null, "Enter a valid product name");
 		return false;
 	}
 	
 	private boolean checkAmount() {
 		if(!amount.getText().isBlank()) return true;
-		JOptionPane.showMessageDialog(null, "INSERISCI LA QUANTITA' DEL PRODOTTO");
+		JOptionPane.showMessageDialog(null, "Enter the quantity of the product");
 		return false;
 	}
 	
 	private boolean checkPrice() {
 		if (Checks.isDouble(price.getText())) return true;
-		JOptionPane.showMessageDialog(null, "INSERISCI UN PREZZO VALIDO PER L'ORDINE");
+		JOptionPane.showMessageDialog(null, "Enter a valid price for the order");
 		return false;
 	}
 

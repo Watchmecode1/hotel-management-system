@@ -41,7 +41,7 @@ public class ReservationMenu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton addConsumazioneButton = new JButton("Aggiungi Consumazione");
+		JButton addConsumazioneButton = new JButton("Add consumption");
 		addConsumazioneButton.addActionListener(e -> {
 			dispose();
 			newConsumption = new newConsumption(x, y, reservation, consumptionService, new ProductService());
@@ -52,13 +52,13 @@ public class ReservationMenu extends JFrame {
 		addConsumazioneButton.setBounds(10, 55, 331, 35);
 		contentPane.add(addConsumazioneButton);
 		
-		JButton btnSalvaPdf = new JButton("Genera PDF");
+		JButton btnSalvaPdf = new JButton("Generate PDF");
 		btnSalvaPdf.addActionListener(e -> {
 			try {
 				FileUtils.writePDFAndOpen(reservation);
 			} catch (IOException ex) {
 				ex.printStackTrace();
-				JOptionPane.showMessageDialog(null, "SI E' VERIFICATO UN ERRORE, IMPOSSIBILE GENERARE IL PDF");
+				JOptionPane.showMessageDialog(null, "An error occurred, the PDF cannot be generated");
 			}
 		});
 		btnSalvaPdf.setForeground(Color.BLACK);
@@ -67,7 +67,7 @@ public class ReservationMenu extends JFrame {
 		btnSalvaPdf.setBounds(10, 100, 331, 35);
 		contentPane.add(btnSalvaPdf);
 		
-		JButton changeReservationButton = new JButton("Modifica Prenotazione");
+		JButton changeReservationButton = new JButton("Change reservation");
 		changeReservationButton.addActionListener(e -> {
 			dispose();
 			new NewReservation(reservation, reservationService, roomService, customerService, documentService);
@@ -78,17 +78,17 @@ public class ReservationMenu extends JFrame {
 		changeReservationButton.setBounds(10, 10, 331, 35);
 		contentPane.add(changeReservationButton);
 		
-		JButton eliminaPrenotazioneButton = new JButton("Elimina Prenotazione");
+		JButton eliminaPrenotazioneButton = new JButton("Delete reservation");
 		eliminaPrenotazioneButton.setForeground(Color.BLACK);
 		eliminaPrenotazioneButton.setBackground(new Color(0, 191, 255));
 		eliminaPrenotazioneButton.setFont(new Font("Dialog", Font.PLAIN, 25));
 		eliminaPrenotazioneButton.setBounds(10, 145, 331, 35);
 		eliminaPrenotazioneButton.addActionListener(e -> {
 			int yn;
-			yn = JOptionPane.showConfirmDialog(null, "CONFERMI DI VOLER ELIMINARE LA PRENOTAZIONE?", "ELIMINA PRENOTAZIONE", JOptionPane.YES_NO_OPTION);
+			yn = JOptionPane.showConfirmDialog(null, "Do you confirm that you want to delete the reservation?", "Delete reservation", JOptionPane.YES_NO_OPTION);
 			if (yn == JOptionPane.YES_OPTION) {
 				reservationService.deleteReservation(reservation);
-				JOptionPane.showMessageDialog(null, "LA PRENOTAZIONE E' STATA ELIMINATA CORRETTAMENTE");
+				JOptionPane.showMessageDialog(null, "The reservation has been deleted correctly");
 				dispose();
 			}
 		});

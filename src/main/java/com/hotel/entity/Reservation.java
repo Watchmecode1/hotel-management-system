@@ -42,7 +42,7 @@ public class Reservation {
 	private Board board;
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private SOURCE source;
+	private Source source;
 	@Column(nullable = false)
 	private String surname;
 	@Column(nullable = false)
@@ -65,11 +65,11 @@ public class Reservation {
 	
 	public enum Board { HALF_BOARD, FULL_BOARD, BNB }
 	
-	public enum SOURCE { BOOKING, HOTEL }
+	public enum Source { BOOKING, HOTEL }
 	
 	public Reservation(String surname, String email, String phoneNumber, LocalDate startDate, LocalDate endDate,
 					   int numberOfPets, Paid paid, BigDecimal deposit,
-					   Board board, SOURCE source, Set<Customer> customers, Set<Room> rooms) {
+					   Board board, Source source, Set<Customer> customers, Set<Room> rooms) {
 		this.surname = Objects.requireNonNull(surname);
 		this.email = Objects.requireNonNull(email);
 		this.phoneNumber = Objects.requireNonNull(phoneNumber);
@@ -135,9 +135,9 @@ public class Reservation {
 		this.consumptions = Objects.requireNonNull(consumptions);
 	}
 	
-	public SOURCE getSource() { return source; }
+	public Source getSource() { return source; }
 	
-	public void setSource(SOURCE SOURCE) { this.source = SOURCE; }
+	public void setSource(Source source) { this.source = source; }
 	
 	public void addConsumption(Consumption consumption) { consumptions.add(consumption); }
 	

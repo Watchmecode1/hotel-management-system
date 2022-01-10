@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import com.hotel.entity.Reservation;
 import com.hotel.entity.Room;
 import com.hotel.entity.Customer;
-import com.hotel.entity.Reservation.SOURCE;
+import com.hotel.entity.Reservation.Source;
 import com.hotel.entity.Reservation.Paid;
 import com.hotel.entity.Reservation.Board;
 import com.hotel.service.RoomService;
@@ -55,7 +55,7 @@ public class NewReservation extends JFrame {
 	private JTextField depositPaidTextField;
 	private JDateChooser checkoutDateChooser;
 	private JDateChooser checkinDateChooser;
-	private JComboBox<SOURCE> sourceComboBox;
+	private JComboBox<Source> sourceComboBox;
 	private JComboBox<Board> boardTypeComboBox;
 	private JComboBox<Paid> paymentTypeComboBox;
 	private JSpinner animalsNumberSpinner;
@@ -129,7 +129,7 @@ public class NewReservation extends JFrame {
 		newBookingLabel.add(sourceSpinner);
 		
 		sourceComboBox = new JComboBox<>();
-		sourceComboBox.setModel(new DefaultComboBoxModel<>(new SOURCE[]{Reservation.SOURCE.BOOKING, SOURCE.HOTEL}));
+		sourceComboBox.setModel(new DefaultComboBoxModel<>(new Source[]{Source.BOOKING, Source.HOTEL}));
 		sourceComboBox.setSelectedIndex(-1);
 		sourceComboBox.setForeground(new Color(0, 128, 128));
 		sourceComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -464,7 +464,7 @@ public class NewReservation extends JFrame {
 			int numeroAnimali = (int) animalsNumberSpinner.getValue();
 			Paid paid = (Paid) paymentTypeComboBox.getSelectedItem();
 			Board BOARD = (Board) boardTypeComboBox.getSelectedItem();
-			SOURCE SOURCE = (Reservation.SOURCE) sourceComboBox.getSelectedItem();
+			Source SOURCE = (Source) sourceComboBox.getSelectedItem();
 			Set<Customer> clienti = Arrays.stream(customerList.toArray()).map(x -> (Customer) x).collect(Collectors.toSet());
 			Set<Room> camere = new HashSet<>(camereJList.getSelectedValuesList());
 			BigDecimal deposito = BigDecimal.ZERO;
