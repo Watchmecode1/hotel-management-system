@@ -169,8 +169,7 @@ public class HomePage extends JFrame {
 		
 		JButton cateringButton = new JButton("Catering");
 		cateringButton.addActionListener(e -> {
-			//TODO migliora
-			new CateringList(new ReservationService());
+			new Catering(new ReservationService());
 		});
 		cateringButton.setFont(new Font("Dialog", Font.PLAIN, 20));
 		cateringButton.setForeground(new Color(224, 255, 255));
