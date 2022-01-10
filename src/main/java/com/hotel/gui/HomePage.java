@@ -1,7 +1,6 @@
 package com.hotel.gui;
 
-import java.awt.EventQueue;
-import java.awt.Desktop;
+import java.awt.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -22,12 +21,10 @@ import com.hotel.util.FileUtils;
 import com.hotel.util.NoScalingIcon;
 import com.hotel.util.SwingComponentUtil;
 
-import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.io.IOException;
@@ -60,6 +57,7 @@ public class HomePage extends JFrame {
 	public HomePage() {
 		SwingComponentUtil.addHotelIcons(this);
 		setResizable(false);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 1537, 820);
 		JPanel contentPane = new JPanel();
@@ -250,5 +248,21 @@ public class HomePage extends JFrame {
 		yn = JOptionPane.showConfirmDialog(null, "Are you sure you want to close the application?", "Exit", JOptionPane.YES_NO_OPTION);
 		if (yn == JOptionPane.YES_OPTION)
 			System.exit(0);
+	}
+
+	@Override
+	public synchronized void setExtendedState(final int state) {
+		if ((state & Planner.MAXIMIZED_BOTH) == Planner.MAXIMIZED_BOTH) {
+			final GraphicsConfiguration cfg = getGraphicsConfiguration();
+			final Insets screenInsets = getToolkit().getScreenInsets(cfg);
+			final Rectangle screenBounds = cfg.getBounds();
+			final int x = screenInsets.left;
+			final int y = screenInsets.top;
+			final int w = screenBounds.width - screenInsets.right - screenInsets.left;
+			final int h = screenBounds.height - screenInsets.bottom - screenInsets.top;
+			final Rectangle maximizedBounds = new Rectangle(x, y, w, h);
+			super.setMaximizedBounds(maximizedBounds);
+		}
+		super.setExtendedState(state);
 	}
 }

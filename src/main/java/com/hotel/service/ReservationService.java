@@ -79,7 +79,7 @@ public class ReservationService {
 	public List<Reservation> getReservationByEndDate(LocalDate dataFine) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		List<Reservation> reservations = reservationDao.getReservatrionsByEndDate(dataFine);
+		List<Reservation> reservations = reservationDao.getReservationsByEndDate(dataFine);
 		session.getTransaction().commit();
 		return reservations;
 	}

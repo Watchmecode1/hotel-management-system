@@ -16,8 +16,7 @@ public class RoomTypeDao {
 	
 	public RoomType getById(Type type) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		RoomType roomType = session.get(RoomType.class, type);
-		return roomType;
+		return session.get(RoomType.class, type);
 	}
 	
 	public List<RoomType> getAll() {

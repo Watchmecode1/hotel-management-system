@@ -62,14 +62,14 @@ public class ReservationDao {
 
 		String queryString = """
 				FROM Reservation p
-				WHERE p.camere.numero IN :roomNumbers
+				WHERE p.rooms.number IN :roomNumbers
 				""";
 		Query<Reservation> query = session.createQuery(queryString, Reservation.class);
 		query.setParameter("roomNumbers", roomNumbers);
 		return query.getResultList();
 	}
 	
-	public List<Reservation> getReservatrionsByEndDate(LocalDate endDate) {
+	public List<Reservation> getReservationsByEndDate(LocalDate endDate) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		
 		Query<Reservation> query = session.createQuery("from Reservation p WHERE p.endDate = :endDate", Reservation.class);
@@ -101,7 +101,7 @@ public class ReservationDao {
 				SELECT p.id
 				FROM Reservation p, Reservation_room c
 				WHERE
-							p.id = c.reservation_id
+							p.id = c.reservations_id
 						AND c.rooms_number = :roomNumber
 						AND p.startDate <= :date1
 						AND p.endDate >= :date2
@@ -125,7 +125,7 @@ public class ReservationDao {
 				SELECT p.id
 				FROM Reservation p, Reservation_room c
 				WHERE
-							p.id = c.reservation_id
+							p.id = c.reservations_id
 						AND c.rooms_number = :roomNumber
 						AND p.startDate = :date
 				""";
@@ -147,7 +147,7 @@ public class ReservationDao {
 				SELECT p.id
 				FROM Reservation p, Reservation_room c
 				WHERE
-							p.id = c.reservation_id
+							p.id = c.reservations_id
 						AND c.rooms_number = :roomNumber
 						AND p.endDate = :date
 						AND p.startDate >= :previousMonthStart
@@ -175,7 +175,7 @@ public class ReservationDao {
 				SELECT p.id
 				FROM Reservation p, Reservation_room c
 				WHERE
-							p.id = c.reservation_id
+							p.id = c.reservations_id
 						AND c.rooms_number = :roomNumber
 						AND p.startDate >= :previousMonthStart
 						AND p.startDate <= :previousMonthEnd

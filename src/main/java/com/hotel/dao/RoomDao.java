@@ -47,7 +47,7 @@ public class RoomDao {
 					c.number NOT IN (SELECT c.number
 									FROM Reservation p, Reservation_room pc, Room c
 									WHERE
-											p.id = pc.reservation_id
+											p.id = pc.reservations_id
 										AND c.number = pc.rooms_number
 										AND :startDate < p.endDate
 										AND :endDate > p.startDate)
