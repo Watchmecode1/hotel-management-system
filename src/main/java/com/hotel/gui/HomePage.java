@@ -59,7 +59,7 @@ public class HomePage extends JFrame {
 		setResizable(false);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(0, 0, 1537, 820);
+		setBounds(0, 0, Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
 		JPanel contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -89,7 +89,7 @@ public class HomePage extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(224, 255, 255));
-		panel.setBounds(0, 0, 400, 792);
+		panel.setBounds(0, 0, 400, Toolkit.getDefaultToolkit().getScreenSize().height);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -166,9 +166,7 @@ public class HomePage extends JFrame {
 		panel.add(btnSitra);
 		
 		JButton cateringButton = new JButton("Catering");
-		cateringButton.addActionListener(e -> {
-			new Catering(new ReservationService());
-		});
+		cateringButton.addActionListener(e -> new Catering(new ReservationService()));
 		cateringButton.setFont(new Font("Dialog", Font.PLAIN, 20));
 		cateringButton.setForeground(new Color(224, 255, 255));
 		cateringButton.setBackground(new Color(0, 139, 139));
@@ -238,7 +236,7 @@ public class HomePage extends JFrame {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		lblNewLabel.setBounds(198, 0, 1335, 792);
+		lblNewLabel.setBounds(198, 0, Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
 		contentPane.add(lblNewLabel);
 	}
 	
