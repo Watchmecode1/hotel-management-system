@@ -106,7 +106,7 @@ public class CleanRooms extends JFrame {
 
 	private JPanel floorPanel(Floor floor) {
 		JPanel floorPanel = new JPanel(new GridLayout(1, 0, 10, 0));
-		floorPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(224, 255, 255), new Color(224, 255, 255)), "Piano " + floor.getFloor(), TitledBorder.CENTER, TitledBorder.TOP, null, new Color(224, 255, 255)));
+		floorPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(224, 255, 255), new Color(224, 255, 255)), "Floor " + floor.getFloor(), TitledBorder.CENTER, TitledBorder.TOP, null, new Color(224, 255, 255)));
 		floorPanel.setBackground(new Color(0, 128, 128));
 		return floorPanel;
 	}
