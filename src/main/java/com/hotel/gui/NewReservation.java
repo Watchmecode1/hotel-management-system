@@ -266,7 +266,7 @@ public class NewReservation extends JFrame {
 		newBookingLabel.add(scrollPane);
 		
 		roomsJList = new JList<>(rooms);
-		roomsJList.setSelectionForeground(new Color(102, 255, 204));
+		roomsJList.setSelectionBackground(new Color(0, 128, 128));
 		roomsJList.setForeground(new Color(0, 128, 128));
 		roomsJList.setFont(new Font("Tahoma", Font.BOLD, 17));
 		roomsJList.setBackground(new Color(224, 255, 255));

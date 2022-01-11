@@ -26,7 +26,7 @@ public class ReservationRegister extends JFrame {
 	@Serial
 	private static final long serialVersionUID = -4144532333900919080L;
 	private JTextField research;
-	private DefaultListModel<Reservation> prenotazioni = new DefaultListModel<>();
+	private DefaultListModel<Reservation> reservationDefaultListModel = new DefaultListModel<>();
 	private JList<Reservation> reservationJList;
 	private JScrollPane scrollPane = new JScrollPane();
 	
@@ -49,8 +49,8 @@ public class ReservationRegister extends JFrame {
 	
 	public ReservationRegister(ReservationService reservationService) {
 		SwingComponentUtil.addHotelIcons(this);
-		prenotazioni.addAll(reservationService.getAll());
-		reservationJList = new JList<>(prenotazioni);
+		reservationDefaultListModel.addAll(reservationService.getAll());
+		reservationJList = new JList<>(reservationDefaultListModel);
 		scrollPane.setViewportView(reservationJList);
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -304,8 +304,11 @@ public class ReservationRegister extends JFrame {
 		scrollPane.setBounds(10, 10, 979, 537);
 		resultPanel.add(scrollPane);	
 	
-		reservationJList = new JList<>(prenotazioni);
+		reservationJList = new JList<>(reservationDefaultListModel);
+		reservationJList.setSelectionBackground(new Color(0, 128, 128));
+		reservationJList.setForeground(new Color(0, 128, 128));
 		reservationJList.setBackground(new Color(224, 255, 255));
+		reservationJList.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		scrollPane.setViewportView(reservationJList);
 		
 		JLabel titleJListLabel = new JLabel("Reservations");
@@ -344,10 +347,10 @@ public class ReservationRegister extends JFrame {
 	
 	private void searchResults(String charSeq) {
 		DefaultListModel<Reservation> results = new DefaultListModel<>();
-		for(int i = 0; i < prenotazioni.size(); i++) {
+		for(int i = 0; i < reservationDefaultListModel.size(); i++) {
 			if (charSeq.length() != 0) {
-				if (prenotazioni.get(i).toString().contains(charSeq))
-					results.addElement(prenotazioni.get(i));
+				if (reservationDefaultListModel.get(i).toString().contains(charSeq))
+					results.addElement(reservationDefaultListModel.get(i));
 			}
 		}
 		if(results.size() > 0) {
