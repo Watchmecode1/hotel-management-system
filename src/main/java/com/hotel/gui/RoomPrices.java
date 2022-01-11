@@ -24,7 +24,6 @@ public class RoomPrices extends JFrame {
 
 	@Serial
 	private static final long serialVersionUID = 6640704140627543254L;
-	private JTextField singleTextField;
 	private JTextField doubleTextField;
 	private JTextField tripleTextField;
 	private JTextField quadrupleTextField;
@@ -168,13 +167,11 @@ public class RoomPrices extends JFrame {
 		
 		JButton btnConfirm = new JButton("Confirmation");
 		btnConfirm.addActionListener(e -> {
-			if (!singleTextField.getText().isBlank()
-					&& !doubleTextField.getText().isBlank()
+			if (!doubleTextField.getText().isBlank()
 					&& !tripleTextField.getText().isBlank()
 					&& !quadrupleTextField.getText().isBlank()
 					&& !quintupleTextField.getText().isBlank()) {
-				if (Checks.isDigit(singleTextField.getText())
-						&& Checks.isDigit(doubleTextField.getText())
+				if (Checks.isDigit(doubleTextField.getText())
 						&& Checks.isDigit(tripleTextField.getText())
 						&& Checks.isDigit(quadrupleTextField.getText())
 						&& Checks.isDigit(quintupleTextField.getText())) {
