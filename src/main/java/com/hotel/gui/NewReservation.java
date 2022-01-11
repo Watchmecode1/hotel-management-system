@@ -66,8 +66,8 @@ public class NewReservation extends JFrame {
 	private Reservation reservation;
 	
 	private DefaultListModel<Room> rooms = new DefaultListModel<>();
-	private JList<Room> roomsJList = new JList<>(rooms);
-	private JScrollPane scrollPane = new JScrollPane();
+	private JList<Room> roomsJList;
+	private JScrollPane scrollPane;
 	private DefaultListModel<Customer> customerList = new DefaultListModel<>();
 	private JList<Customer> customerJList;
 	private JScrollPane customerScrollPane;
