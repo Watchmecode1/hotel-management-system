@@ -213,8 +213,12 @@ public class Test {
 				"ROMA", "ITALIA", Customer.Housed.SINGLE_GUEST);
 		Document document = new Document(customer, "AK343", Document.DocumentType.CARTA_IDENTITA, Document.Release.QUESTURA, LocalDate.of(2015, 10, 5), LocalDate.of(2025, 10, 5), "ROME", "ROME");
 
+		Customer customer2 = new Customer("Viole", "Green", Customer.Gender.MALE, LocalDate.of(1980, 10, 5), "BRASILE", null,
+				null, "BRASILE", Customer.Housed.SINGLE_GUEST);
+
 		customerService.saveCustomer(customer);
 		documentService.saveDocument(document);
+		customerService.saveCustomer(customer2);
 
 		Product product = new Product("Pepsi", BigDecimal.valueOf(2.50));
 		Order order = new Order("AL1234", "ATX", LocalDate.of(2020, 1, 5), LocalDate.of(2022, 1, 20),
@@ -230,6 +234,28 @@ public class Test {
 
 		Consumption consumption = new Consumption(reservation, product, 2);
 		consumptionService.saveConsumption(consumption);
+
+		Reservation reservation2 = new Reservation("Atlas", "email@example.com", "930490", LocalDate.of(2021, 12, 25), LocalDate.of(2022, 1, 5),
+				0, Reservation.Paid.NOT_PAID, BigDecimal.ZERO,
+				Reservation.Board.FULL_BOARD, Reservation.Source.BOOKING, Set.of(customer), Set.of(camera201, camera204));
+		Reservation reservation3 = new Reservation("Khun", "email@example.com", "930490", LocalDate.of(2022, 1, 18), LocalDate.of(2022, 1, 19),
+				0, Reservation.Paid.NOT_PAID, BigDecimal.ZERO,
+				Reservation.Board.FULL_BOARD, Reservation.Source.BOOKING, Set.of(customer), Set.of(camera401));
+		Reservation reservation4 = new Reservation("Turtle", "email@example.com", "930490", LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 4),
+				0, Reservation.Paid.NOT_PAID, BigDecimal.ZERO,
+				Reservation.Board.FULL_BOARD, Reservation.Source.BOOKING, Set.of(customer), Set.of(camera301, camera302));
+		Reservation reservation5 = new Reservation("Green", "email@example.com", "930490", LocalDate.of(2022, 1, 4), LocalDate.of(2022, 1, 7),
+				0, Reservation.Paid.NOT_PAID, BigDecimal.ZERO,
+				Reservation.Board.FULL_BOARD, Reservation.Source.BOOKING, Set.of(customer2), Set.of(camera301));
+		Reservation reservation6 = new Reservation("Hope", "email@example.com", "930490", LocalDate.of(2022, 1, 28), LocalDate.of(2022, 2, 2),
+				0, Reservation.Paid.NOT_PAID, BigDecimal.ZERO,
+				Reservation.Board.FULL_BOARD, Reservation.Source.BOOKING, Set.of(customer2), Set.of(camera404));
+
+		reservationService.saveReservation(reservation2);
+		reservationService.saveReservation(reservation3);
+		reservationService.saveReservation(reservation4);
+		reservationService.saveReservation(reservation5);
+		reservationService.saveReservation(reservation6);
 
 //		Reservation reservation = reservationService.getReservationById(3L);
 //		reservation.getConsumptions().forEach(consumptionService::deleteConsumption);
