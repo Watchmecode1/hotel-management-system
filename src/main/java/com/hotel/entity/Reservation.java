@@ -125,7 +125,7 @@ public class Reservation {
 		if(this.rooms != null)
 			availableRooms.addAll(this.rooms);
 		if(rooms == null || !availableRooms.containsAll(rooms))
-			throw new GuiInputFieldValueException("SELEZIONA DELLE CAMERE PRENOTABILI PER LE DATE SELEZIONATE");
+			throw new GuiInputFieldValueException("Select bookable rooms for the selected dates");
 		this.rooms = Objects.requireNonNull(rooms);
 	}
 
@@ -187,31 +187,31 @@ public class Reservation {
 	
 	public String getPdf() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("PRENOTAZIONE ID: ").append(id).append("\n")
-		.append("FONTE: ").append(source).append("\n")
-		.append("TIPO PENSIONE: ").append(board).append("\n")
-		.append("NOMINATIVO: ").append(surname.toUpperCase()).append("\n")
-		.append("EMAIL: ").append(email).append("\n")
-		.append("TELEFONO: ").append(phoneNumber).append("\n")
-		.append("DATA ARRIVO: ").append(startDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).append("\n")
-		.append("DATA PARTENZA: ").append(endDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).append("\n")
-		.append("NUMERO PERSONE: ").append(customers.size()).append("\n")
-		.append("ADULTI: ").append(getNumberOfAdults()).append("\n")
-		.append("MINORI: ").append(getNumberOfMinors()).append("\n")
-		.append("BAMBINI: ").append(getNumberOfChilds()).append("\n")
-		.append("NUMERO ANIMALI: ").append(getNumberOfPets()).append("\n")
-		.append("CAMERE OCCUPATE: ");
+		sb.append("RESERVATION ID").append(": ").append(id).append("\n")
+		.append("SOURCE").append(": ").append(source).append("\n")
+		.append("BOARD TYPE").append(": ").append(board).append("\n")
+		.append("NOMINATIVE").append(": ").append(surname.toUpperCase()).append("\n")
+		.append("EMAIL").append(": ").append(email).append("\n")
+		.append("PHONE").append(": ").append(phoneNumber).append("\n")
+		.append("ARRIVAL DATE").append(": ").append(startDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).append("\n")
+		.append("DEPARTURE DATE").append(": ").append(endDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))).append("\n")
+		.append("NUMBER OF CUSTOMERS").append(": ").append(customers.size()).append("\n")
+		.append("ADULTS").append(": ").append(getNumberOfAdults()).append("\n")
+		.append("MINORS").append(": ").append(getNumberOfMinors()).append("\n")
+		.append("CHILDREN").append(": ").append(getNumberOfChilds()).append("\n")
+		.append("NUMBER OF PETS").append(": ").append(getNumberOfPets()).append("\n")
+		.append("BOOKED ROOMS").append(": ");
 		
 		for (Room room : getRooms())
 			sb.append(room.getNumber()).append(" ");
 		
 		sb.append("\n")
-		.append("TOTALE SOGGIORNO: �. ").append(getTotalCost()).append("\n");
+		.append("TOTAL COST OF THE STAY").append(": �. ").append(getTotalCost()).append("\n");
 		
 		switch(getPaid()) {
-			case PAID -> sb.append("PAGATO INTERAMENTE");
-			case NOT_PAID -> sb.append("PAGAMENTO DA EFFETTUARE IN STRUTTURA");
-			case DEPOSIT -> sb.append("DEPOSITO VERSATO: ").append(deposit.doubleValue());
+			case PAID -> sb.append("FULLY PAID");
+			case NOT_PAID -> sb.append("PAYMENT TO BE MADE IN THE STRUCTURE");
+			case DEPOSIT -> sb.append("DEPOSIT PAID").append(": ").append(deposit.doubleValue());
 		}
 		return sb.toString();
 	}
