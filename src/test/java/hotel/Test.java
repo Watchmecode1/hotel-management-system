@@ -1,4 +1,4 @@
-package com.hotel;
+package hotel;
 
 import com.hotel.entity.*;
 import com.hotel.service.RoomService;
