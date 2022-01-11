@@ -37,8 +37,7 @@ public class HomePage extends JFrame {
 	private static final long serialVersionUID = 5263091083750632811L;
 	private static final String BOOKING_URL = "https://www.booking.com";
 	private static final String WHATSAPP_URL = "https://web.whatsapp.com";
-	private static final String EMAIL_URL = "https://mail.ovh.net/roundcube/?_task=login";
-	private static final String ALLOGGIATI_URL = "https://alloggiatiweb.poliziadistato.it/PortaleAlloggiati/";
+	private static final String EMAIL_URL = "https://gmail.com";
 	
 	private final Desktop desktop = Desktop.getDesktop();
 
@@ -214,21 +213,6 @@ public class HomePage extends JFrame {
 		btnNewButton_1_1.setBackground(new Color(255, 204, 102));
 		btnNewButton_1_1.setBounds(1312, 561, 200, 70);
 		contentPane.add(btnNewButton_1_1);
-		
-		JButton btnAlloggiati = new JButton("Alloggiati Web");
-		btnAlloggiati.addActionListener(e -> {
-			try {
-				desktop.browse(new URI(ALLOGGIATI_URL));
-			} catch (IOException | URISyntaxException e1) {
-				e1.printStackTrace();
-			}
-
-		});
-		btnAlloggiati.setForeground(Color.WHITE);
-		btnAlloggiati.setFont(new Font("Haettenschweiler", Font.PLAIN, 25));
-		btnAlloggiati.setBackground(new Color(255, 204, 102));
-		btnAlloggiati.setBounds(1312, 10, 200, 70);
-		contentPane.add(btnAlloggiati);
 		
 		JLabel lblNewLabel = new JLabel("");
 		try {
