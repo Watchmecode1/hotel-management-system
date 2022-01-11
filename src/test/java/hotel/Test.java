@@ -251,6 +251,12 @@ public class Test {
 				0, Reservation.Paid.NOT_PAID, BigDecimal.ZERO,
 				Reservation.Board.FULL_BOARD, Reservation.Source.BOOKING, Set.of(customer2), Set.of(camera404));
 
+		Reservation reservation7 = new Reservation("Luna", "email@example.com", "930490", LocalDate.now().minusDays(1), LocalDate.now().plusDays(3),
+				0, Reservation.Paid.NOT_PAID, BigDecimal.ZERO,
+				Reservation.Board.FULL_BOARD, Reservation.Source.BOOKING, Set.of(customer2), Set.of(camera204, camera205));
+		reservationService.saveReservation(reservation7);
+
+
 		reservationService.saveReservation(reservation2);
 		reservationService.saveReservation(reservation3);
 		reservationService.saveReservation(reservation4);
