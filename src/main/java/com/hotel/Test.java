@@ -1,8 +1,6 @@
 package com.hotel;
 
-import com.hotel.entity.Reservation;
-import com.hotel.entity.Room;
-import com.hotel.entity.RoomType;
+import com.hotel.entity.*;
 import com.hotel.service.RoomService;
 import com.hotel.service.CustomerService;
 import com.hotel.service.ConsumptionService;
@@ -14,6 +12,8 @@ import com.hotel.service.ProductService;
 import com.hotel.service.RoomTypeService;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Set;
 
 public class Test {
 	
@@ -208,8 +208,30 @@ public class Test {
 		roomService.saveRoom(camera405);
 		roomService.saveRoom(camera1000);
 		roomService.saveRoom(camera1001);
-		
-		Reservation reservation = reservationService.getReservationById(3L);
-		reservation.getConsumptions().forEach(consumptionService::deleteConsumption);
+
+		Customer customer = new Customer("Luke", "Skywalker", Customer.Gender.MALE, LocalDate.of(1980, 10, 5), "ITALIA", "ROMA",
+				"ROMA", "ITALIA", Customer.Housed.SINGLE_GUEST);
+		Document document = new Document(customer, "AK343", Document.DocumentType.CARTA_IDENTITA, Document.Release.QUESTURA, LocalDate.of(2015, 10, 5), LocalDate.of(2025, 10, 5), "ROME", "ROME");
+
+		customerService.saveCustomer(customer);
+		documentService.saveDocument(document);
+
+		Product product = new Product("Pepsi", BigDecimal.valueOf(2.50));
+		Order order = new Order("AL1234", "ATX", LocalDate.of(2020, 1, 5), LocalDate.of(2022, 1, 20),
+				"Pepsi", 200, BigDecimal.valueOf(150));
+
+		productService.saveProduct(product);
+		orderService.saveOrder(order);
+
+		Reservation reservation = new Reservation("Skywalker", "email@example.com", "930490", LocalDate.now(), LocalDate.now().plusDays(5),
+		0, Reservation.Paid.NOT_PAID, BigDecimal.ZERO,
+				Reservation.Board.FULL_BOARD, Reservation.Source.BOOKING, Set.of(customer), Set.of(camera101, camera102));
+		reservationService.saveReservation(reservation);
+
+		Consumption consumption = new Consumption(reservation, product, 2);
+		consumptionService.saveConsumption(consumption);
+
+//		Reservation reservation = reservationService.getReservationById(3L);
+//		reservation.getConsumptions().forEach(consumptionService::deleteConsumption);
 	}
 }

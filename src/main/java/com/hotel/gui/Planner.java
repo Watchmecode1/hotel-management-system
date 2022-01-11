@@ -9,14 +9,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 import java.awt.Color;
 
-import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import com.hotel.entity.Reservation;
@@ -26,14 +22,12 @@ import com.hotel.service.CustomerService;
 import com.hotel.service.ConsumptionService;
 import com.hotel.service.DocumentService;
 import com.hotel.service.ReservationService;
+import com.hotel.util.NoScalingIcon;
 import com.hotel.util.SwingComponentUtil;
 
 import java.awt.Toolkit;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -70,7 +64,7 @@ public class Planner extends JFrame {
 		topPanel.setBackground(new Color(0, 139, 139));
 		JButton leftButton = new JButton();
 		try {
-			ImageIcon img = new ImageIcon(ImageIO.read(getClass().getClassLoader().getResourceAsStream("imgs/leftArrow.png")));
+			Icon img = new NoScalingIcon(new ImageIcon(ImageIO.read(getClass().getClassLoader().getResourceAsStream("imgs/leftArrow.png"))));
 			leftButton.setIcon(img);
 		} catch(IOException e) {
 			e.printStackTrace();
@@ -92,7 +86,7 @@ public class Planner extends JFrame {
 		
 		JButton rightButton = new JButton();
 		try {
-			ImageIcon img = new ImageIcon(ImageIO.read(getClass().getClassLoader().getResourceAsStream("imgs/rightArrow.png")));
+			Icon img = new NoScalingIcon(new ImageIcon(ImageIO.read(getClass().getClassLoader().getResourceAsStream("imgs/rightArrow.png"))));
 			rightButton.setIcon(img);
 		} catch(IOException e) {
 			e.printStackTrace();
