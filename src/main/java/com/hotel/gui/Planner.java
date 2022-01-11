@@ -6,8 +6,7 @@ import java.io.IOException;
 import java.io.Serial;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.*;
 
@@ -43,7 +42,9 @@ public class Planner extends JFrame {
 	private static final long serialVersionUID = -3819752603187204888L;
 	private ReservationMenu reservationMenu;
 
-	public Planner(LocalDate data, ReservationService reservationService, RoomService roomService, ConsumptionService consumptionService, CustomerService customerService, DocumentService documentService) {
+	private record ReservationKey(LocalDate startDate, Room room) {}
+
+	public Planner(LocalDate date, ReservationService reservationService, RoomService roomService, ConsumptionService consumptionService, CustomerService customerService, DocumentService documentService) {
 		SwingComponentUtil.addHotelIcons(this);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -52,7 +53,7 @@ public class Planner extends JFrame {
 								.sorted(Comparator.comparingInt(Room::getNumber))
 								.toList();
 		int numberOfRooms = rooms.size();
-		int numberOfDays = data.lengthOfMonth();
+		int numberOfDays = date.lengthOfMonth();
 		
 		JPanel container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
@@ -71,14 +72,14 @@ public class Planner extends JFrame {
 		}
 		leftButton.addActionListener(e -> {
 			//TODO transizione
-			new Planner(data.withDayOfMonth(1).minusMonths(1), reservationService, roomService, consumptionService, customerService, documentService);
+			new Planner(date.withDayOfMonth(1).minusMonths(1), reservationService, roomService, consumptionService, customerService, documentService);
 			Planner.this.dispose();
 		});
 		leftButton.setBackground(container.getBackground());
 		leftButton.setBorder(null);
 		topPanel.add(leftButton);
 		
-		JLabel monthYear = new JLabel(getMonthFromMonthValue(data.getMonthValue()) + "/" + data.getYear());
+		JLabel monthYear = new JLabel(getMonthFromMonthValue(date.getMonthValue()) + "/" + date.getYear());
 		monthYear.setHorizontalAlignment(SwingConstants.CENTER);
 		monthYear.setForeground(new Color(224, 255, 255));
 		monthYear.setFont(new Font("Dialog", Font.PLAIN, 33));
@@ -92,7 +93,7 @@ public class Planner extends JFrame {
 			e.printStackTrace();
 		}
 		rightButton.addActionListener(e -> {
-			new Planner(data.withDayOfMonth(1).plusMonths(1), reservationService, roomService, consumptionService, customerService, documentService);
+			new Planner(date.withDayOfMonth(1).plusMonths(1), reservationService, roomService, consumptionService, customerService, documentService);
 			Planner.this.dispose();
 		});
 		rightButton.setBackground(container.getBackground());
@@ -106,10 +107,16 @@ public class Planner extends JFrame {
 		JPanel planPanel = new JPanel();
 		GridBagLayout gridLayout = new GridBagLayout();
 		planPanel.setLayout(gridLayout);
-		
-		boolean previousMonthBookingIsPossible;
+
+		Map<ReservationKey, Reservation> keyReservationMap = new HashMap<>();
+		for(Reservation reservation : reservationService.findByDateMonth(date)) {
+			LocalDate startDate = reservation.getStartDate().getMonthValue() == date.getMonthValue() ? reservation.getStartDate() : reservation.getStartDate().plusMonths(1).withDayOfMonth(1);
+			reservation.getRooms()
+					.forEach(room ->
+							keyReservationMap.put(new ReservationKey(startDate, room), reservation));
+		}
+
 		for(int row = 0; row <= numberOfRooms; row++) {
-			previousMonthBookingIsPossible = true;
 			for(int column = 0; column <= numberOfDays; column++) {
 				/////////////////////////
 				JLabel halfLabel = new JLabel();
@@ -167,13 +174,8 @@ public class Planner extends JFrame {
 						planPanel.add(label, constraints);
 					} else {
 						Room room = rooms.get(row - 1);
-						LocalDate cellLocalDate = data.withDayOfMonth(column);
-						Reservation reservation = reservationService.findByRoomAndStartDate(room, cellLocalDate);
-						
-						//month before bookings
-						if(reservation != null) previousMonthBookingIsPossible = false;
-						if(previousMonthBookingIsPossible)
-							reservation = reservationService.findByRoomAndStartDateInPreviousMonth(room, cellLocalDate);
+						LocalDate cellLocalDate = date.withDayOfMonth(column);
+						Reservation reservation = keyReservationMap.get(new ReservationKey(cellLocalDate, room));
 						
 						if(reservation != null) {
 							JLabel label = new JLabel();
@@ -187,12 +189,12 @@ public class Planner extends JFrame {
 							constraints.weighty = 0.5;
 							
 							GridBagConstraints constraintsButton = new GridBagConstraints();
-							constraintsButton.gridx = previousMonthBookingIsPossible ? 2 : column * 2 + 1;
+							constraintsButton.gridx =  reservation.getStartDate().getMonthValue() != date.getMonthValue() ? 2 : column * 2 + 1;
 							constraintsButton.gridy = row;
 							constraintsButton.fill = GridBagConstraints.BOTH;
 							constraintsButton.weightx = 0.5;
 							constraintsButton.weighty = 0.5;
-							constraintsButton.gridwidth = previousMonthBookingIsPossible ? reservation.getEndDate().getDayOfMonth() * 2 - 1 : (int) reservation.getStartDate().until(reservation.getEndDate(), ChronoUnit.DAYS) * 2;
+							constraintsButton.gridwidth = reservation.getStartDate().getMonthValue() != date.getMonthValue() ? reservation.getEndDate().getDayOfMonth() * 2 - 1 : (int) reservation.getStartDate().until(reservation.getEndDate(), ChronoUnit.DAYS) * 2;
 
 							JButton button = new JButton(reservation.getSurname());
 							button.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -207,7 +209,6 @@ public class Planner extends JFrame {
 							});
 							planPanel.add(button, constraintsButton);
 							planPanel.add(label, constraints);
-							previousMonthBookingIsPossible = false;
 						} else {
 							JLabel label = new JLabel();
 							label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));

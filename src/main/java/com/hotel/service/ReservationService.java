@@ -1,7 +1,12 @@
 package com.hotel.service;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.hotel.dao.ReservationDao;
 import com.hotel.entity.Reservation;
@@ -122,5 +127,16 @@ public class ReservationService {
 		Reservation reservation = reservationDao.findByRoomAndStartDateInPreviousMonth(room, data);
 		session.getTransaction().commit();
 		return reservation;
+	}
+
+	public Set<Reservation> findByDateMonth(LocalDate date) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		List<Reservation> reservationsStartedInPreviousMonth = reservationDao.findByStartDateInPreviousMonthAndEndDateInCurrentMonth(date);
+		List<Reservation> reservationsInCurrentMonth = reservationDao.findByStartDateInCurrentMonth(date);
+		session.getTransaction().commit();
+		return Stream.of(reservationsStartedInPreviousMonth, reservationsInCurrentMonth)
+				.flatMap(Collection::stream)
+				.collect(Collectors.toCollection(HashSet::new));
 	}
 }

@@ -194,4 +194,43 @@ public class ReservationDao {
 			reservation = session.get(Reservation.class, id);
 		return reservation;
 	}
+
+	public List<Reservation> findByStartDateInPreviousMonthAndEndDateInCurrentMonth(LocalDate date) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		String queryString = """
+				FROM Reservation r
+				WHERE
+							r.startDate >= :previousMonthStart
+						AND r.startDate <= :previousMonthEnd
+						AND r.endDate >= :thisMonthStart
+						AND r.endDate <=:thisMonthEnd
+				""";
+
+		Query<Reservation> query = session.createQuery(queryString, Reservation.class);
+		LocalDate previousMonth = date.minusMonths(1);
+		query.setParameter("previousMonthStart", previousMonth.withDayOfMonth(1));
+		query.setParameter("previousMonthEnd", previousMonth.withDayOfMonth(previousMonth.lengthOfMonth()));
+		query.setParameter("thisMonthStart", date.withDayOfMonth(1));
+		query.setParameter("thisMonthEnd", date.withDayOfMonth(date.lengthOfMonth()));
+
+		return query.getResultList();
+	}
+
+	public List<Reservation> findByStartDateInCurrentMonth(LocalDate date) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		String queryString = """
+				FROM Reservation r
+				WHERE
+							r.startDate >= :thisMonthStart
+						AND r.startDate <= :thisMonthEnd
+				""";
+
+		Query<Reservation> query = session.createQuery(queryString, Reservation.class);
+		query.setParameter("thisMonthStart", date.withDayOfMonth(1));
+		query.setParameter("thisMonthEnd", date.withDayOfMonth(date.lengthOfMonth()));
+
+		return query.getResultList();
+	}
 }
