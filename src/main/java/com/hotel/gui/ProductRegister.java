@@ -22,6 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import java.io.Serial;
 import java.math.BigDecimal;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class ProductRegister extends JFrame {
 
@@ -36,112 +38,68 @@ public class ProductRegister extends JFrame {
 
 	public ProductRegister(ProductService productService) {
 		SwingComponentUtil.addHotelIcons(this);
-		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(0, 0, 1537, 820);
 		JPanel contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 139, 139));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 128, 128));
 		panel.setBorder(new LineBorder(new Color(224, 255, 255), 5, true));
-		panel.setBounds(21, 104, 446, 669);
-		contentPane.add(panel);
-		panel.setLayout(null);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(224, 255, 255));
-		panel_2.setBounds(0, 0, 446, 80);
-		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
 		JLabel productsLabel = new JLabel("Register products");
 		productsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		productsLabel.setForeground(new Color(0, 128, 128));
 		productsLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
-		productsLabel.setBounds(10, 10, 426, 60);
+		productsLabel.setBounds(10, 10, 436, 60);
 		panel_2.add(productsLabel);
 		
 		JLabel lblProduct = new JLabel("Product");
 		lblProduct.setHorizontalAlignment(SwingConstants.LEFT);
 		lblProduct.setForeground(new Color(224, 255, 255));
 		lblProduct.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblProduct.setBounds(35, 220, 132, 30);
-		panel.add(lblProduct);
 		
 		productName = new JTextField();
 		productName.setFont(new Font("Tahoma", Font.BOLD, 17));
 		productName.setColumns(10);
-		productName.setBounds(206, 220, 230, 30);
-		panel.add(productName);
 		
 		JLabel lblPrice = new JLabel("Price each  \u20AC");
 		lblPrice.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrice.setForeground(new Color(224, 255, 255));
 		lblPrice.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblPrice.setBounds(35, 280, 161, 30);
-		panel.add(lblPrice);
 		
 		price = new JTextField();
 		price.setDocument(SwingComponentUtil.financesPlainDocument());
 		price.setFont(new Font("Tahoma", Font.BOLD, 17));
 		price.setColumns(10);
-		price.setBounds(206, 280, 230, 30);
-		panel.add(price);
 		
 		JButton addProductsButton = new JButton("Add product");
 		addProductsButton.addActionListener(e -> addProduct(productService));
 		addProductsButton.setBackground(new Color(224, 255, 255));
 		addProductsButton.setForeground(new Color(0, 128, 128));
 		addProductsButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
-		addProductsButton.setBounds(58, 422, 319, 57);
-		panel.add(addProductsButton);
 		
 		JButton btnEditProduct = new JButton("Edit product");
 		btnEditProduct.addActionListener(e -> modifyProduct());
 		btnEditProduct.setForeground(new Color(0, 128, 128));
 		btnEditProduct.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnEditProduct.setBackground(new Color(224, 255, 255));
-		btnEditProduct.setBounds(58, 496, 319, 57);
-		panel.add(btnEditProduct);
 		
-//		JButton btnEliminaProdotto = new JButton("Elimina Prodotto");
-//		btnEliminaProdotto.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				deleteProduct(prodottoService);
-//			}
-//		});
-//		btnEliminaProdotto.setForeground(new Color(0, 128, 128));
-//		btnEliminaProdotto.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
-//		btnEliminaProdotto.setBackground(new Color(224, 255, 255));
-//		btnEliminaProdotto.setBounds(58, 570, 319, 57);
-//		panel.add(btnEliminaProdotto);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(224, 255, 255));
-		panel_1.setBounds(10, 104, 10, 669);
-		contentPane.add(panel_1);
-		
-		JPanel panel_3 = new JPanel();
+		JPanel panel_3 = new JPanel(new GridBagLayout());
 		panel_3.setBackground(new Color(224, 255, 255));
-		panel_3.setBounds(0, 0, 1523, 94);
-		contentPane.add(panel_3);
-		panel_3.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Inventory section");
 		lblNewLabel_1.setForeground(new Color(0, 128, 128));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 40));
-		lblNewLabel_1.setBounds(10, 10, 1503, 74);
-		panel_3.add(lblNewLabel_1);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(477, 104, 1036, 585);
-		contentPane.add(scrollPane);
 		
 		products.addAll(productService.getAll());
 		productsJList = new JList<>(products);
@@ -157,6 +115,82 @@ public class ProductRegister extends JFrame {
 		productsListLabel.setForeground(new Color(0, 128, 128));
 		productsListLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 35));
 		scrollPane.setColumnHeaderView(productsListLabel);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 467, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 1036, Short.MAX_VALUE))
+						.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 1513, Short.MAX_VALUE))
+					.addGap(0))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE)
+						.addComponent(scrollPane))
+					.addGap(0))
+		);
+		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
+		gl_panel_3.setHorizontalGroup(
+			gl_panel_3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_3.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 1503, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_panel_3.setVerticalGroup(
+			gl_panel_3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_3.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
+		);
+		panel_3.setLayout(gl_panel_3);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(35)
+					.addComponent(lblProduct, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+					.addGap(39)
+					.addComponent(productName, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(35)
+					.addComponent(lblPrice, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(price, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(58)
+					.addComponent(addProductsButton, GroupLayout.PREFERRED_SIZE, 319, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(58)
+					.addComponent(btnEditProduct, GroupLayout.PREFERRED_SIZE, 319, GroupLayout.PREFERRED_SIZE))
+				.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+					.addGap(140)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblProduct, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(productName, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addGap(30)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblPrice, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(price, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addGap(112)
+					.addComponent(addProductsButton, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
+					.addGap(17)
+					.addComponent(btnEditProduct, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE))
+		);
+		panel.setLayout(gl_panel);
+		contentPane.setLayout(gl_contentPane);
 		
 		setVisible(true);
 	}

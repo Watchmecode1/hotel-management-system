@@ -21,6 +21,9 @@ import javax.swing.DefaultListModel;
 import java.io.Serial;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Catering extends JFrame {
 
@@ -84,31 +87,20 @@ public class Catering extends JFrame {
 		contentPane.setBackground(new Color(0, 139, 139));
 		contentPane.setBorder(new LineBorder(new Color(224, 255, 255), 3, true));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(224, 255, 255));
-		panel.setBounds(0, 0, 1533, 81);
-		contentPane.add(panel);
-		panel.setLayout(null);
 
 		JLabel titleLabel = new JLabel("Guests overview");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setForeground(new Color(0, 128, 128));
 		titleLabel.setFont(new Font("Haettenschweiler", Font.PLAIN, 40));
-		titleLabel.setBounds(10, 10, 1513, 61);
-		panel.add(titleLabel);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(0, 139, 139));
 		panel_1.setBorder(new LineBorder(new Color(224, 255, 255), 3));
-		panel_1.setBounds(515, 91, 491, 497);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
 
 		JScrollPane halfBoardScrollPane = new JScrollPane();
-		halfBoardScrollPane.setBounds(10, 91, 471, 396);
-		panel_1.add(halfBoardScrollPane);
 
 		JList<String> halfBoardList = new JList<>(halfBoards);
 		halfBoardList.setForeground(new Color(0, 139, 139));
@@ -120,19 +112,12 @@ public class Catering extends JFrame {
 		lblNewLabel.setForeground(new Color(224, 255, 255));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Haettenschweiler", Font.PLAIN, 35));
-		lblNewLabel.setBounds(10, 10, 471, 76);
-		panel_1.add(lblNewLabel);
 
 		JPanel panel_1_1 = new JPanel();
-		panel_1_1.setLayout(null);
 		panel_1_1.setBorder(new LineBorder(new Color(224, 255, 255), 3));
 		panel_1_1.setBackground(new Color(0, 139, 139));
-		panel_1_1.setBounds(1022, 91, 491, 497);
-		contentPane.add(panel_1_1);
 
 		JScrollPane fullBoardScrollPane = new JScrollPane();
-		fullBoardScrollPane.setBounds(10, 91, 471, 396);
-		panel_1_1.add(fullBoardScrollPane);
 
 		JList<String> fullBoardList = new JList<>(fullBoards);
 		fullBoardList.setForeground(new Color(0, 139, 139));
@@ -144,19 +129,12 @@ public class Catering extends JFrame {
 		fullBoardGuestsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		fullBoardGuestsLabel.setForeground(new Color(224, 255, 255));
 		fullBoardGuestsLabel.setFont(new Font("Haettenschweiler", Font.PLAIN, 35));
-		fullBoardGuestsLabel.setBounds(10, 10, 471, 76);
-		panel_1_1.add(fullBoardGuestsLabel);
 
 		JPanel panel_1_2 = new JPanel();
-		panel_1_2.setLayout(null);
 		panel_1_2.setBorder(new LineBorder(new Color(224, 255, 255), 3));
 		panel_1_2.setBackground(new Color(0, 139, 139));
-		panel_1_2.setBounds(10, 91, 491, 497);
-		contentPane.add(panel_1_2);
 
 		JScrollPane BNBScrollPane = new JScrollPane();
-		BNBScrollPane.setBounds(10, 91, 471, 396);
-		panel_1_2.add(BNBScrollPane);
 
 		JList<String> bnbList = new JList<>(bnb);
 		bnbList.setForeground(new Color(0, 139, 139));
@@ -168,50 +146,36 @@ public class Catering extends JFrame {
 		BNBGuests.setHorizontalAlignment(SwingConstants.CENTER);
 		BNBGuests.setForeground(new Color(224, 255, 255));
 		BNBGuests.setFont(new Font("Haettenschweiler", Font.PLAIN, 35));
-		BNBGuests.setBounds(10, 10, 471, 76);
-		panel_1_2.add(BNBGuests);
 
 		JLabel guestsAtBreakfastLabel = new JLabel("Guests at breakfast");
 		guestsAtBreakfastLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		guestsAtBreakfastLabel.setForeground(new Color(224, 255, 255));
 		guestsAtBreakfastLabel.setFont(new Font("Haettenschweiler", Font.PLAIN, 35));
-		guestsAtBreakfastLabel.setBounds(10, 598, 491, 38);
-		contentPane.add(guestsAtBreakfastLabel);
 
 		JLabel guestsAtLunchLabel = new JLabel("Guests at lunch");
 		guestsAtLunchLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		guestsAtLunchLabel.setForeground(new Color(224, 255, 255));
 		guestsAtLunchLabel.setFont(new Font("Haettenschweiler", Font.PLAIN, 35));
-		guestsAtLunchLabel.setBounds(10, 646, 491, 38);
-		contentPane.add(guestsAtLunchLabel);
 
 		JLabel guestsAtDinnerLabel = new JLabel("Guests at dinner");
 		guestsAtDinnerLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		guestsAtDinnerLabel.setForeground(new Color(224, 255, 255));
 		guestsAtDinnerLabel.setFont(new Font("Haettenschweiler", Font.PLAIN, 35));
-		guestsAtDinnerLabel.setBounds(10, 694, 491, 38);
-		contentPane.add(guestsAtDinnerLabel);
 
 		JLabel guestsBreakfast = new JLabel("");
 		guestsBreakfast.setHorizontalAlignment(SwingConstants.LEFT);
 		guestsBreakfast.setForeground(new Color(224, 255, 255));
 		guestsBreakfast.setFont(new Font("Haettenschweiler", Font.PLAIN, 35));
-		guestsBreakfast.setBounds(515, 598, 998, 38);
-		contentPane.add(guestsBreakfast);
 
 		JLabel guestsLunch = new JLabel("");
 		guestsLunch.setHorizontalAlignment(SwingConstants.LEFT);
 		guestsLunch.setForeground(new Color(224, 255, 255));
 		guestsLunch.setFont(new Font("Haettenschweiler", Font.PLAIN, 35));
-		guestsLunch.setBounds(515, 646, 998, 38);
-		contentPane.add(guestsLunch);
 
 		JLabel guestsDinner = new JLabel("");
 		guestsDinner.setHorizontalAlignment(SwingConstants.LEFT);
 		guestsDinner.setForeground(new Color(224, 255, 255));
 		guestsDinner.setFont(new Font("Haettenschweiler", Font.PLAIN, 35));
-		guestsDinner.setBounds(515, 694, 998, 38);
-		contentPane.add(guestsDinner);
 
 		int adultsBreakfast = adultsBNB + adultsHalfBoard + adultsFullBoard;
 		int childrenBreakfast = childrenBNB + childrenHalfBoard + childrenFullBoard;
@@ -221,6 +185,133 @@ public class Catering extends JFrame {
 		guestsBreakfast.setText("ADULTS:" + " " + adultsBreakfast + "    |    " + "CHILDREN:" + " " + childrenBreakfast + "    |    TOT. " + (adultsBreakfast + childrenBreakfast));
 		guestsLunch.setText("ADULTS:" + " " + adultsFullBoard + "    |    " + "CHILDREN:" + " " + childrenFullBoard + "    |    TOT. " + (adultsFullBoard + childrenFullBoard));
 		guestsDinner.setText("ADULTS:" + " " + adultsLunch + "    |    " + "CHILDREN:" + " " + childrenLunch + "    |    TOT. " + (adultsLunch + childrenLunch));
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel_1_2, GroupLayout.PREFERRED_SIZE, 491, GroupLayout.PREFERRED_SIZE)
+					.addGap(14)
+					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+					.addGap(16)
+					.addComponent(panel_1_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(11))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(10)
+					.addComponent(guestsAtBreakfastLabel, GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+					.addGap(14)
+					.addComponent(guestsBreakfast, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
+					.addGap(4))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(10)
+					.addComponent(guestsAtLunchLabel, GroupLayout.PREFERRED_SIZE, 491, GroupLayout.PREFERRED_SIZE)
+					.addGap(14)
+					.addComponent(guestsLunch, GroupLayout.PREFERRED_SIZE, 998, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(10)
+					.addComponent(guestsAtDinnerLabel, GroupLayout.PREFERRED_SIZE, 491, GroupLayout.PREFERRED_SIZE)
+					.addGap(14)
+					.addComponent(guestsDinner, GroupLayout.PREFERRED_SIZE, 998, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+						.addComponent(panel_1_1, GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+						.addComponent(panel_1_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(guestsAtBreakfastLabel, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+						.addComponent(guestsBreakfast, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(guestsAtLunchLabel, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+						.addComponent(guestsLunch, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(guestsAtDinnerLabel, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+						.addComponent(guestsDinner, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+					.addGap(45))
+		);
+		GroupLayout gl_panel_1_2 = new GroupLayout(panel_1_2);
+		gl_panel_1_2.setHorizontalGroup(
+			gl_panel_1_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1_2.createSequentialGroup()
+					.addGap(7)
+					.addGroup(gl_panel_1_2.createParallelGroup(Alignment.LEADING)
+						.addComponent(BNBGuests, GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
+						.addComponent(BNBScrollPane, GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE))
+					.addGap(7))
+		);
+		gl_panel_1_2.setVerticalGroup(
+			gl_panel_1_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1_2.createSequentialGroup()
+					.addGap(7)
+					.addComponent(BNBGuests, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+					.addGap(5)
+					.addComponent(BNBScrollPane, GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+					.addGap(7))
+		);
+		panel_1_2.setLayout(gl_panel_1_2);
+		GroupLayout gl_panel_1_1 = new GroupLayout(panel_1_1);
+		gl_panel_1_1.setHorizontalGroup(
+			gl_panel_1_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1_1.createSequentialGroup()
+					.addGap(7)
+					.addGroup(gl_panel_1_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1_1.createSequentialGroup()
+							.addComponent(fullBoardScrollPane, GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+							.addContainerGap())
+						.addComponent(fullBoardGuestsLabel, GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)))
+		);
+		gl_panel_1_1.setVerticalGroup(
+			gl_panel_1_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1_1.createSequentialGroup()
+					.addGap(7)
+					.addComponent(fullBoardGuestsLabel, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+					.addGap(5)
+					.addComponent(fullBoardScrollPane, GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+					.addGap(7))
+		);
+		panel_1_1.setLayout(gl_panel_1_1);
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(7)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
+						.addComponent(halfBoardScrollPane, GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE))
+					.addGap(7))
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(7)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+					.addGap(5)
+					.addComponent(halfBoardScrollPane, GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+					.addGap(7))
+		);
+		panel_1.setLayout(gl_panel_1);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addComponent(titleLabel, GroupLayout.DEFAULT_SIZE, 1517, Short.MAX_VALUE)
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(titleLabel, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		panel.setLayout(gl_panel);
+		contentPane.setLayout(gl_contentPane);
 
 		setVisible(true);
 	}

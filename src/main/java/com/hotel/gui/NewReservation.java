@@ -40,10 +40,12 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
-import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
 
 import javax.swing.ListSelectionModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class NewReservation extends JFrame {
 	
@@ -58,7 +60,6 @@ public class NewReservation extends JFrame {
 	private JComboBox<Source> sourceComboBox;
 	private JComboBox<Board> boardTypeComboBox;
 	private JComboBox<Paid> paymentTypeComboBox;
-	private JSpinner animalsNumberSpinner;
 	private JRadioButton depositRadioButton;
 	private JLabel calculatePaymentLabel;
 	
@@ -71,6 +72,7 @@ public class NewReservation extends JFrame {
 	private DefaultListModel<Customer> customerList = new DefaultListModel<>();
 	private JList<Customer> customerJList;
 	private JScrollPane customerScrollPane;
+	private JTextField animalsTextField;
 	
 
 	public NewReservation(Reservation reservation, ReservationService reservationService, RoomService roomService, CustomerService customerService, DocumentService documentService) {
@@ -89,44 +91,32 @@ public class NewReservation extends JFrame {
 		contentPane.setBackground(new Color(0, 139, 139));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		JPanel newBookingLabel = new JPanel();
 		newBookingLabel.setBorder(new LineBorder(new Color(224, 255, 255), 5, true));
 		newBookingLabel.setBackground(new Color(0, 128, 128));
-		newBookingLabel.setBounds(33, 20, 1480, 741);
-		contentPane.add(newBookingLabel);
-		newBookingLabel.setLayout(null);
 		
 		JLabel checkinLabel = new JLabel("Check-in date");
 		checkinLabel.setForeground(new Color(224, 255, 255));
 		checkinLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		checkinLabel.setBounds(10, 210, 250, 36);
-		newBookingLabel.add(checkinLabel);
 		
 		JLabel checkoutLabel = new JLabel("Check-out date");
 		checkoutLabel.setForeground(new Color(224, 255, 255));
 		checkoutLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		checkoutLabel.setBounds(11, 260, 250, 36);
-		newBookingLabel.add(checkoutLabel);
 		
 		checkoutDateChooser = new JDateChooser();
 		((JTextFieldDateEditor) checkoutDateChooser.getDateEditor()).setEditable(false);
 		checkoutDateChooser.setBackground(new Color(224, 255, 255));
 		checkoutDateChooser.setForeground(new Color(0, 128, 128));
 		checkoutDateChooser.setFont(new Font("Tahoma", Font.BOLD, 20));
-		checkoutDateChooser.setBounds(300, 260, 417, 36);
 		checkoutDateChooser.getDateEditor().addPropertyChangeListener(evt -> {
 			if(evt.getPropertyName().equals("date"))
 				refreshRooms(roomService,checkinDateChooser.getDate(), checkoutDateChooser.getDate());
 		});
-		newBookingLabel.add(checkoutDateChooser);
 		
 		JLabel sourceSpinner = new JLabel("Reservation source");
 		sourceSpinner.setForeground(new Color(224, 255, 255));
 		sourceSpinner.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		sourceSpinner.setBounds(10, 60, 295, 36);
-		newBookingLabel.add(sourceSpinner);
 		
 		sourceComboBox = new JComboBox<>();
 		sourceComboBox.setModel(new DefaultComboBoxModel<>(new Source[]{Source.BOOKING, Source.HOTEL}));
@@ -134,14 +124,10 @@ public class NewReservation extends JFrame {
 		sourceComboBox.setForeground(new Color(0, 128, 128));
 		sourceComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
 		sourceComboBox.setBackground(new Color(224, 255, 255));
-		sourceComboBox.setBounds(300, 60, 416, 36);
-		newBookingLabel.add(sourceComboBox);
 		
 		JLabel boardTypeLabel = new JLabel("Pension type");
 		boardTypeLabel.setForeground(new Color(224, 255, 255));
 		boardTypeLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		boardTypeLabel.setBounds(10, 110, 280, 36);
-		newBookingLabel.add(boardTypeLabel);
 		
 		boardTypeComboBox = new JComboBox<>();
 		boardTypeComboBox.setModel(new DefaultComboBoxModel<>(new Board[]{Board.FULL_BOARD, Board.HALF_BOARD, Board.BNB}));
@@ -149,14 +135,10 @@ public class NewReservation extends JFrame {
 		boardTypeComboBox.setForeground(new Color(0, 128, 128));
 		boardTypeComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
 		boardTypeComboBox.setBackground(new Color(224, 255, 255));
-		boardTypeComboBox.setBounds(300, 110, 416, 36);
-		newBookingLabel.add(boardTypeComboBox);
 		
 		JLabel phoneNumberLabel = new JLabel("Phone");
 		phoneNumberLabel.setForeground(new Color(224, 255, 255));
 		phoneNumberLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		phoneNumberLabel.setBounds(12, 360, 250, 36);
-		newBookingLabel.add(phoneNumberLabel);
 		
 		phoneNumberTextField = new JTextField();
 		phoneNumberTextField.setDocument(SwingComponentUtil.numberPlainDocument());
@@ -164,26 +146,17 @@ public class NewReservation extends JFrame {
 		phoneNumberTextField.setFont(new Font("Tahoma", Font.BOLD, 17));
 		phoneNumberTextField.setColumns(10);
 		phoneNumberTextField.setBackground(new Color(224, 255, 255));
-		phoneNumberTextField.setBounds(300, 360, 416, 36);
-		newBookingLabel.add(phoneNumberTextField);
 		
 		JButton saveReservationButton = new JButton("Save reservation");
 		saveReservationButton.addActionListener(e -> addBooking(createBooking(), reservationService));
-		saveReservationButton.setBounds(940, 663, 366, 48);
-		newBookingLabel.add(saveReservationButton);
 		saveReservationButton.setForeground(new Color(0, 128, 128));
 		saveReservationButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		saveReservationButton.setBackground(new Color(224, 255, 255));
 		
 		JPanel upPanel = new JPanel();
 		upPanel.setBackground(new Color(224, 255, 255));
-		upPanel.setBounds(0, 0, 1480, 48);
-		newBookingLabel.add(upPanel);
-		upPanel.setLayout(null);
 		
 		JLabel addBookingLabel = new JLabel("New reservation");
-		addBookingLabel.setBounds(0, 0, 1480, 46);
-		upPanel.add(addBookingLabel);
 		addBookingLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		addBookingLabel.setForeground(new Color(0, 128, 128));
 		addBookingLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 40));
@@ -193,33 +166,25 @@ public class NewReservation extends JFrame {
 		refreshButton.setForeground(new Color(0, 128, 128));
 		refreshButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		refreshButton.setBackground(new Color(224, 255, 255));
-		refreshButton.setBounds(145, 663, 366, 48);
-		newBookingLabel.add(refreshButton);
 		
 		checkinDateChooser = new JDateChooser();
 		((JTextFieldDateEditor) checkinDateChooser.getDateEditor()).setEditable(false);
 		checkinDateChooser.setForeground(new Color(0, 128, 128));
 		checkinDateChooser.setFont(new Font("Tahoma", Font.BOLD, 20));
-		checkinDateChooser.setBounds(300, 210, 417, 36);
 		checkinDateChooser.getDateEditor().addPropertyChangeListener(evt -> {
 			if(evt.getPropertyName().equals("date"))
 				refreshRooms(roomService, checkinDateChooser.getDate(), checkoutDateChooser.getDate());
 		});
-		newBookingLabel.add(checkinDateChooser);
 		
 		emailAddressTextField = new JTextField();
 		emailAddressTextField.setForeground(new Color(0, 128, 128));
 		emailAddressTextField.setFont(new Font("Tahoma", Font.BOLD, 17));
 		emailAddressTextField.setColumns(10);
 		emailAddressTextField.setBackground(new Color(224, 255, 255));
-		emailAddressTextField.setBounds(300, 410, 416, 36);
-		newBookingLabel.add(emailAddressTextField);
 		
 		JLabel emailAddressLabel = new JLabel("Email");
 		emailAddressLabel.setForeground(new Color(224, 255, 255));
 		emailAddressLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		emailAddressLabel.setBounds(12, 410, 250, 36);
-		newBookingLabel.add(emailAddressLabel);
 		
 		JButton calculatePaymentButton = new JButton("Calculate total");
 		calculatePaymentButton.addActionListener(e -> {
@@ -227,29 +192,20 @@ public class NewReservation extends JFrame {
 			if(NewReservation.this.reservation != null)
 				calculatePaymentLabel.setText("\u20AC. " + NewReservation.this.reservation.getTotalCost().toString());
 		});
-		calculatePaymentButton.setBounds(755, 340, 271, 36);
-		newBookingLabel.add(calculatePaymentButton);
 		calculatePaymentButton.setForeground(new Color(0, 128, 128));
 		calculatePaymentButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		calculatePaymentButton.setBackground(new Color(224, 255, 255));
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(1090, 340, 380, 36);
-		newBookingLabel.add(panel);
-		panel.setLayout(null);
 		
 		calculatePaymentLabel = new JLabel("\u20AC. ");
 		calculatePaymentLabel.setForeground(new Color(0, 128, 128));
 		calculatePaymentLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		calculatePaymentLabel.setFont(new Font("Tahoma", Font.BOLD, 17));
-		calculatePaymentLabel.setBounds(0, 0, 417, 36);
-		panel.add(calculatePaymentLabel);
 		
 		JLabel paymentTypeLabel = new JLabel("Payment type");
 		paymentTypeLabel.setForeground(new Color(224, 255, 255));
 		paymentTypeLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		paymentTypeLabel.setBounds(755, 390, 309, 36);
-		newBookingLabel.add(paymentTypeLabel);
 		
 		paymentTypeComboBox = new JComboBox<>();
 		paymentTypeComboBox.setModel(new DefaultComboBoxModel<>(new Paid[]{Paid.PAID, Paid.NOT_PAID, Paid.DEPOSIT}));
@@ -257,13 +213,9 @@ public class NewReservation extends JFrame {
 		paymentTypeComboBox.setForeground(new Color(0, 128, 128));
 		paymentTypeComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
 		paymentTypeComboBox.setBackground(new Color(224, 255, 255));
-		paymentTypeComboBox.setBounds(1090, 390, 380, 36);
-		newBookingLabel.add(paymentTypeComboBox);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBackground(new Color(224, 255, 255));
-		scrollPane.setBounds(755, 63, 715, 255);
-		newBookingLabel.add(scrollPane);
 		
 		roomsJList = new JList<>(rooms);
 		roomsJList.setSelectionBackground(new Color(0, 128, 128));
@@ -285,14 +237,10 @@ public class NewReservation extends JFrame {
 		referenceNameTextField.setFont(new Font("Tahoma", Font.BOLD, 17));
 		referenceNameTextField.setColumns(10);
 		referenceNameTextField.setBackground(new Color(224, 255, 255));
-		referenceNameTextField.setBounds(300, 160, 418, 36);
-		newBookingLabel.add(referenceNameTextField);
 		
 		JLabel referenceNameLabel = new JLabel("Nominative");
 		referenceNameLabel.setForeground(new Color(224, 255, 255));
 		referenceNameLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		referenceNameLabel.setBounds(10, 160, 250, 36);
-		newBookingLabel.add(referenceNameLabel);
 		
 		depositPaidTextField = new JTextField();
 		depositPaidTextField.setDocument(SwingComponentUtil.financesPlainDocument());
@@ -302,18 +250,13 @@ public class NewReservation extends JFrame {
 		depositPaidTextField.setFont(new Font("Tahoma", Font.BOLD, 17));
 		depositPaidTextField.setColumns(10);
 		depositPaidTextField.setBackground(new Color(224, 255, 255));
-		depositPaidTextField.setBounds(1090, 440, 380, 36);
-		newBookingLabel.add(depositPaidTextField);
 		
 		JLabel depositPaidLabel = new JLabel("Deposit paid");
 		depositPaidLabel.setForeground(new Color(224, 255, 255));
 		depositPaidLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		depositPaidLabel.setBounds(755, 440, 242, 36);
-		newBookingLabel.add(depositPaidLabel);
 		
 		depositRadioButton = new JRadioButton("Deposit");
 		depositRadioButton.setBackground(new Color(0, 128, 128));
-		depositRadioButton.setBounds(1003, 450, 22, 21);
 		depositRadioButton.addActionListener(e -> {
 			if(depositRadioButton.isSelected()) {
 				depositPaidTextField.setEnabled(true);
@@ -323,32 +266,18 @@ public class NewReservation extends JFrame {
 				depositPaidTextField.setEditable(false);
 			}
 		});
-		newBookingLabel.add(depositRadioButton);
 		
 		JPanel euroPanel = new JPanel();
 		euroPanel.setBackground(new Color(224, 255, 255));
-		euroPanel.setBounds(1054, 440, 37, 36);
-		newBookingLabel.add(euroPanel);
-		euroPanel.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("\u20AC");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setForeground(new Color(0, 128, 128));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblNewLabel_1.setBounds(10, 0, 26, 36);
-		euroPanel.add(lblNewLabel_1);
 		
 		JLabel animalsNumberLabel = new JLabel("Pets");
 		animalsNumberLabel.setForeground(new Color(224, 255, 255));
 		animalsNumberLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		animalsNumberLabel.setBounds(10, 310, 250, 36);
-		newBookingLabel.add(animalsNumberLabel);
-		
-		animalsNumberSpinner = SwingComponentUtil.numberJSpinner();
-		animalsNumberSpinner.setForeground(new Color(0, 128, 128));
-		animalsNumberSpinner.setFont(new Font("Tahoma", Font.BOLD, 17));
-		animalsNumberSpinner.setBounds(300, 310, 415, 36);
-		newBookingLabel.add(animalsNumberSpinner);
 		
 		customerJList = new JList<>(customerList);
 		customerJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -357,25 +286,20 @@ public class NewReservation extends JFrame {
 		customerJList.setBackground(new Color(224, 255, 255));
 		customerJList.setBounds(755, 523, 479, 130);
 		customerScrollPane = new JScrollPane(customerJList);
-		customerScrollPane.setBounds(755, 510, 479, 140);
-		newBookingLabel.add(customerScrollPane);
 		
 		JButton addCustomer = new JButton("Add customer");
 		addCustomer.setForeground(new Color(0, 128, 128));
 		addCustomer.setFont(new Font("Dialog", Font.PLAIN, 33));
 		addCustomer.setBackground(new Color(224, 255, 255));
-		addCustomer.setBounds(351, 510, 366, 65);
 		addCustomer.addActionListener(e -> {
 			new newCustomer(NewReservation.this.reservation, reservationService, customerService, documentService, customerList);
 			refreshCustomers();
 		});
-		newBookingLabel.add(addCustomer);
 		
 		JButton deleteCustomerButton = new JButton("Delete customer");
 		deleteCustomerButton.setBackground(new Color(224, 255, 255));
 		deleteCustomerButton.setForeground(new Color(0, 128, 128));
 		deleteCustomerButton.setFont(new Font("Dialog", Font.PLAIN, 33));
-		deleteCustomerButton.setBounds(351, 585, 366, 65);
 		deleteCustomerButton.addActionListener(e -> {
 			Customer selectedCustomer = customerJList.getSelectedValue();
 			if(selectedCustomer == null)
@@ -389,12 +313,221 @@ public class NewReservation extends JFrame {
 				JOptionPane.showMessageDialog(null, "Customer deleted");
 			}
 		});
-		newBookingLabel.add(deleteCustomerButton);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(newBookingLabel, GroupLayout.DEFAULT_SIZE, 1513, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(15)
+					.addComponent(newBookingLabel, GroupLayout.DEFAULT_SIZE, 741, Short.MAX_VALUE)
+					.addGap(17))
+		);
 		
-		JPanel leftPanel = new JPanel();
-		leftPanel.setBackground(new Color(224, 255, 255));
-		leftPanel.setBounds(10, 20, 24, 741);
-		contentPane.add(leftPanel);
+		animalsTextField = new JTextField();
+		animalsTextField.setFont(new Font("Tahoma", Font.BOLD, 17));
+		animalsTextField.setForeground(new Color(0, 128, 128));
+		animalsTextField.setBackground(new Color(224, 255, 255));
+		animalsTextField.setColumns(10);
+		GroupLayout gl_newBookingLabel = new GroupLayout(newBookingLabel);
+		gl_newBookingLabel.setHorizontalGroup(
+			gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_newBookingLabel.createSequentialGroup()
+					.addGap(10)
+					.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_newBookingLabel.createSequentialGroup()
+							.addGap(2)
+							.addComponent(phoneNumberLabel, GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(phoneNumberTextField, GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+							.addGap(2))
+						.addGroup(gl_newBookingLabel.createSequentialGroup()
+							.addGap(2)
+							.addComponent(emailAddressLabel, GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(emailAddressTextField, GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+							.addGap(2))
+						.addGroup(Alignment.LEADING, gl_newBookingLabel.createSequentialGroup()
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.TRAILING)
+								.addGroup(Alignment.LEADING, gl_newBookingLabel.createSequentialGroup()
+									.addGap(1)
+									.addComponent(checkoutLabel, GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE))
+								.addComponent(checkinLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+								.addComponent(referenceNameLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+								.addComponent(boardTypeLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+								.addComponent(sourceSpinner, GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+								.addComponent(animalsNumberLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE))
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_newBookingLabel.createSequentialGroup()
+									.addGap(3)
+									.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+										.addComponent(animalsTextField, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+										.addComponent(checkoutDateChooser, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+										.addGroup(gl_newBookingLabel.createSequentialGroup()
+											.addComponent(checkinDateChooser, GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+											.addGap(1))
+										.addGroup(Alignment.TRAILING, gl_newBookingLabel.createSequentialGroup()
+											.addComponent(referenceNameTextField, GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED)))
+									.addGap(1))
+								.addGroup(Alignment.TRAILING, gl_newBookingLabel.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.TRAILING)
+										.addComponent(sourceComboBox, Alignment.LEADING, 0, 428, Short.MAX_VALUE)
+										.addComponent(boardTypeComboBox, Alignment.LEADING, 0, 428, Short.MAX_VALUE))
+									.addGap(2)))))
+					.addGap(37)
+					.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
+						.addGroup(gl_newBookingLabel.createSequentialGroup()
+							.addComponent(calculatePaymentButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(64)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 380, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_newBookingLabel.createSequentialGroup()
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+								.addComponent(paymentTypeLabel, GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+								.addComponent(depositPaidLabel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))
+							.addGap(6)
+							.addComponent(depositRadioButton, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+							.addGap(29)
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_newBookingLabel.createSequentialGroup()
+									.addComponent(euroPanel, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+									.addGap(379))
+								.addGroup(Alignment.LEADING, gl_newBookingLabel.createSequentialGroup()
+									.addGap(36)
+									.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+										.addComponent(paymentTypeComboBox, Alignment.TRAILING, 0, 380, Short.MAX_VALUE)
+										.addComponent(depositPaidTextField, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))))))
+					.addGap(23))
+				.addGroup(gl_newBookingLabel.createSequentialGroup()
+					.addGap(351)
+					.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+						.addComponent(addCustomer, GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+						.addComponent(deleteCustomerButton, GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE))
+					.addGap(38)
+					.addComponent(customerScrollPane, GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
+					.addGap(259))
+				.addGroup(gl_newBookingLabel.createSequentialGroup()
+					.addGap(145)
+					.addComponent(refreshButton, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)
+					.addGap(429)
+					.addComponent(saveReservationButton, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)
+					.addGap(187))
+				.addComponent(upPanel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1493, Short.MAX_VALUE)
+		);
+		gl_newBookingLabel.setVerticalGroup(
+			gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_newBookingLabel.createSequentialGroup()
+					.addComponent(upPanel, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addGap(12)
+					.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_newBookingLabel.createSequentialGroup()
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+								.addComponent(sourceComboBox, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+								.addComponent(sourceSpinner, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 36, Short.MAX_VALUE))
+							.addGap(14)
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+								.addComponent(boardTypeComboBox, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+								.addComponent(boardTypeLabel, GroupLayout.PREFERRED_SIZE, 36, Short.MAX_VALUE))
+							.addGap(14)
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+								.addComponent(referenceNameTextField, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+								.addComponent(referenceNameLabel, GroupLayout.PREFERRED_SIZE, 36, Short.MAX_VALUE))
+							.addGap(14)
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+								.addComponent(checkinLabel, GroupLayout.PREFERRED_SIZE, 36, Short.MAX_VALUE)
+								.addComponent(checkinDateChooser, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+							.addGap(14)
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+								.addComponent(checkoutDateChooser, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+								.addComponent(checkoutLabel, GroupLayout.PREFERRED_SIZE, 36, Short.MAX_VALUE))
+							.addGap(14)
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+								.addComponent(animalsTextField, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+								.addComponent(animalsNumberLabel, GroupLayout.PREFERRED_SIZE, 36, Short.MAX_VALUE))
+							.addGap(14)
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+								.addComponent(phoneNumberTextField, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+								.addComponent(phoneNumberLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+							.addGap(14)
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_newBookingLabel.createSequentialGroup()
+									.addComponent(emailAddressLabel, GroupLayout.PREFERRED_SIZE, 36, Short.MAX_VALUE)
+									.addGap(30))
+								.addComponent(emailAddressTextField, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_newBookingLabel.createSequentialGroup()
+							.addGap(3)
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+							.addGap(22)
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+								.addComponent(calculatePaymentButton, GroupLayout.PREFERRED_SIZE, 36, Short.MAX_VALUE)
+								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+							.addGap(14)
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+								.addComponent(paymentTypeComboBox, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+								.addComponent(paymentTypeLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+								.addComponent(depositPaidLabel, GroupLayout.PREFERRED_SIZE, 36, Short.MAX_VALUE)
+								.addGroup(gl_newBookingLabel.createSequentialGroup()
+									.addGap(10)
+									.addComponent(depositRadioButton))
+								.addComponent(euroPanel, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+								.addComponent(depositPaidTextField, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))))
+					.addGap(34)
+					.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_newBookingLabel.createSequentialGroup()
+							.addComponent(addCustomer, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(deleteCustomerButton, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
+						.addComponent(customerScrollPane, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+					.addGap(13)
+					.addGroup(gl_newBookingLabel.createParallelGroup(Alignment.LEADING)
+						.addComponent(refreshButton, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+						.addComponent(saveReservationButton, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
+					.addGap(20))
+		);
+		GroupLayout gl_euroPanel = new GroupLayout(euroPanel);
+		gl_euroPanel.setHorizontalGroup(
+			gl_euroPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_euroPanel.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_euroPanel.setVerticalGroup(
+			gl_euroPanel.createParallelGroup(Alignment.LEADING)
+				.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+		);
+		euroPanel.setLayout(gl_euroPanel);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addComponent(calculatePaymentLabel, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addComponent(calculatePaymentLabel, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+		);
+		panel.setLayout(gl_panel);
+		GroupLayout gl_upPanel = new GroupLayout(upPanel);
+		gl_upPanel.setHorizontalGroup(
+			gl_upPanel.createParallelGroup(Alignment.LEADING)
+				.addComponent(addBookingLabel, GroupLayout.DEFAULT_SIZE, 1493, Short.MAX_VALUE)
+		);
+		gl_upPanel.setVerticalGroup(
+			gl_upPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_upPanel.createSequentialGroup()
+					.addComponent(addBookingLabel, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		upPanel.setLayout(gl_upPanel);
+		newBookingLabel.setLayout(gl_newBookingLabel);
+		contentPane.setLayout(gl_contentPane);
 		
 		refreshFields();
 		setVisible(true);
@@ -418,7 +551,7 @@ public class NewReservation extends JFrame {
 			sourceComboBox.setSelectedItem(initialReservation.getSource());
 			boardTypeComboBox.setSelectedItem(initialReservation.getBoard());
 			paymentTypeComboBox.setSelectedItem(initialReservation.getPaid());
-			animalsNumberSpinner.setValue(initialReservation.getNumberOfPets());
+			animalsTextField.setText(String.valueOf(initialReservation.getNumberOfPets()));
 			roomsJList.setSelectedIndices(findRooms());
 			if(reservation.getDeposit().intValue() != 0) {
 				depositRadioButton.setSelected(true);
@@ -442,7 +575,7 @@ public class NewReservation extends JFrame {
 			sourceComboBox.setSelectedIndex(-1);
 			boardTypeComboBox.setSelectedIndex(-1);
 			paymentTypeComboBox.setSelectedIndex(-1);
-			animalsNumberSpinner.setValue(0);
+			animalsTextField.setText("");
 			roomsJList.clearSelection();
 			depositRadioButton.setSelected(false);
 			depositPaidTextField.setText("");
@@ -461,7 +594,7 @@ public class NewReservation extends JFrame {
 			String phoneNumber = phoneNumberTextField.getText();
 			LocalDate startDate = DateUtils.convertDateToLocalDate(checkinDateChooser.getDate());
 			LocalDate endDate = DateUtils.convertDateToLocalDate(checkoutDateChooser.getDate());
-			int pets = (int) animalsNumberSpinner.getValue();
+			int pets = Integer.valueOf(animalsTextField.getText());
 			Paid paid = (Paid) paymentTypeComboBox.getSelectedItem();
 			Board board = (Board) boardTypeComboBox.getSelectedItem();
 			Source source = (Source) sourceComboBox.getSelectedItem();
@@ -590,7 +723,7 @@ public class NewReservation extends JFrame {
 	}
 	
 	private boolean checkPets() {
-		if((int) animalsNumberSpinner.getValue() >= 0) return true;
+		if(Integer.valueOf(animalsTextField.getText()) >= 0) return true;
 		JOptionPane.showMessageDialog(null, "Select a valid number of pets");
 		return false;
 	}
