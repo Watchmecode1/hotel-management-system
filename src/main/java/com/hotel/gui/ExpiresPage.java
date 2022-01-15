@@ -17,6 +17,8 @@ import java.io.Serial;
 
 import javax.swing.SwingConstants;
 import javax.swing.ListSelectionModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class ExpiresPage extends JFrame {
 
@@ -33,11 +35,8 @@ public class ExpiresPage extends JFrame {
 		contentPane.setBackground(new Color(0, 128, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 10, 715, 707);
-		contentPane.add(scrollPane);
 		
 		DefaultListModel<String> expired = new DefaultListModel<>();
 		expired.addAll(orderService.getExpiringOrders().stream().map(order -> order.getProductName() + " " + "expiry:" + " " + order.getExpirationDate()).toList());
@@ -54,6 +53,20 @@ public class ExpiresPage extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		scrollPane.setColumnHeaderView(lblNewLabel);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 707, GroupLayout.PREFERRED_SIZE))
+		);
+		contentPane.setLayout(gl_contentPane);
 		
 		setVisible(true);
 	}

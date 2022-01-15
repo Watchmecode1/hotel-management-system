@@ -35,6 +35,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.JSeparator;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class newCustomer extends JFrame {
 	
@@ -58,6 +60,22 @@ public class newCustomer extends JFrame {
 	private JDateChooser idReleaseDateChooser;
 	private JDateChooser idExpirationDateChooser;
 	private Customer customer;
+	private JLabel nameLabel;
+	private JLabel idTypeLabel;
+	private JLabel surnameLabel;
+	private JLabel idNumberLabel;
+	private JLabel genderLabel;
+	private JLabel idReleaseSource;
+	private JLabel citizenship;
+	private JLabel idReleasePlaceLabel;
+	private JLabel stateOfBirthLabel;
+	private JLabel placeOfBirthLabel;
+	private JLabel idReleaseDateLabel;
+	private JLabel countyOfBirthLabel;
+	private JLabel expirationDateLabel;
+	private JLabel dateOfBirthLabel;
+	private JLabel idHierarchyLabel;
+	private JSeparator separator;
 	
 	public newCustomer(Customer customer, Reservation reservation, ReservationService reservationService, CustomerService customerService, DocumentService documentService, DefaultListModel<Customer> customerList) {
 		setResizable(false);
@@ -73,14 +91,10 @@ public class newCustomer extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		newCustomerPanel = new JPanel();
 		newCustomerPanel.setBorder(new LineBorder(new Color(224, 255, 255), 5, true));
 		newCustomerPanel.setBackground(new Color(0, 128, 128));
-		newCustomerPanel.setBounds(33, 10, 1480, 763);
-		contentPane.add(newCustomerPanel);
-		newCustomerPanel.setLayout(null);
 		
 		setLabels();
 		
@@ -88,8 +102,6 @@ public class newCustomer extends JFrame {
 		surnameTextField.setBackground(new Color(224, 255, 255));
 		surnameTextField.setForeground(new Color(0, 128, 128));
 		surnameTextField.setFont(new Font("Tahoma", Font.BOLD, 17));
-		surnameTextField.setBounds(314, 145, 416, 36);
-		newCustomerPanel.add(surnameTextField);
 		surnameTextField.setColumns(10);
 		
 		nameTextField = new JTextField();
@@ -97,8 +109,6 @@ public class newCustomer extends JFrame {
 		nameTextField.setForeground(new Color(0, 128, 128));
 		nameTextField.setFont(new Font("Tahoma", Font.BOLD, 17));
 		nameTextField.setColumns(10);
-		nameTextField.setBounds(314, 100, 416, 36);
-		newCustomerPanel.add(nameTextField);
 		
 		genderComboBox = new JComboBox<>();
 		genderComboBox.setModel(new DefaultComboBoxModel<>(new Gender[]{Gender.MALE, Gender.FEMALE}));
@@ -106,16 +116,12 @@ public class newCustomer extends JFrame {
 		genderComboBox.setForeground(new Color(0, 128, 128));
 		genderComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
 		genderComboBox.setBackground(new Color(224, 255, 255));
-		genderComboBox.setBounds(314, 190, 416, 36);
-		newCustomerPanel.add(genderComboBox);
 		
 		dateOfBirthChooser = new JDateChooser();
 		((JTextFieldDateEditor) dateOfBirthChooser.getDateEditor()).setEditable(false);
 		dateOfBirthChooser.setBackground(new Color(224, 255, 255));
 		dateOfBirthChooser.setForeground(new Color(0, 128, 128));
 		dateOfBirthChooser.setFont(new Font("Tahoma", Font.BOLD, 17));
-		dateOfBirthChooser.setBounds(314, 415, 417, 36);
-		newCustomerPanel.add(dateOfBirthChooser);
 		
 		gerarchyComboBox = new JComboBox<>();
 		gerarchyComboBox.setModel(new DefaultComboBoxModel<>(new Housed[]{Housed.SINGLE_GUEST, Housed.HOUSEHOLDER, Housed.GROUP_LEADER, Housed.RELATIVE, Housed.GROUP_MEMBER}));
@@ -123,8 +129,6 @@ public class newCustomer extends JFrame {
 		gerarchyComboBox.setForeground(new Color(0, 128, 128));
 		gerarchyComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
 		gerarchyComboBox.setBackground(new Color(224, 255, 255));
-		gerarchyComboBox.setBounds(314, 460, 416, 36);
-		newCustomerPanel.add(gerarchyComboBox);
 		
 		citizenshipComboBox = new JComboBox<>();
 		citizenshipComboBox.setModel(FileUtils.getStates());
@@ -132,10 +136,8 @@ public class newCustomer extends JFrame {
 		citizenshipComboBox.setForeground(new Color(0, 128, 128));
 		citizenshipComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
 		citizenshipComboBox.setBackground(new Color(224, 255, 255));
-		citizenshipComboBox.setBounds(314, 235, 416, 36);
 		@SuppressWarnings("unused")
 		ComboBoxSearchable stateSearch = new ComboBoxSearchable(citizenshipComboBox);
-		newCustomerPanel.add(citizenshipComboBox);
 		
 		birthplaceBox = new JComboBox<>();
 		birthplaceBox.setEditable(false);
@@ -145,10 +147,8 @@ public class newCustomer extends JFrame {
 		birthplaceBox.setForeground(new Color(0, 128, 128));
 		birthplaceBox.setFont(new Font("Tahoma", Font.BOLD, 17));
 		birthplaceBox.setBackground(new Color(224, 255, 255));
-		birthplaceBox.setBounds(314, 325, 416, 36);
 		@SuppressWarnings("unused")
 		ComboBoxSearchable searchPlacesOfBirth = new ComboBoxSearchable(birthplaceBox);
-		newCustomerPanel.add(birthplaceBox);
 		
 		countyOfBirthBox = new JComboBox<>();
 		countyOfBirthBox.setEditable(false);
@@ -158,10 +158,8 @@ public class newCustomer extends JFrame {
 		countyOfBirthBox.setForeground(new Color(0, 128, 128));
 		countyOfBirthBox.setFont(new Font("Tahoma", Font.BOLD, 17));
 		countyOfBirthBox.setBackground(new Color(224, 255, 255));
-		countyOfBirthBox.setBounds(314, 370, 416, 36);
 		@SuppressWarnings("unused")
 		ComboBoxSearchable searchResidence = new ComboBoxSearchable(countyOfBirthBox);
-		newCustomerPanel.add(countyOfBirthBox);
 		
 		idNumberTextField = new JTextField();
 		idNumberTextField.setEditable(false);
@@ -169,24 +167,18 @@ public class newCustomer extends JFrame {
 		idNumberTextField.setFont(new Font("Tahoma", Font.BOLD, 17));
 		idNumberTextField.setColumns(10);
 		idNumberTextField.setBackground(new Color(224, 255, 255));
-		idNumberTextField.setBounds(1047, 145, 416, 36);
-		newCustomerPanel.add(idNumberTextField);
 		
 		idReleaseDateChooser = new JDateChooser();
 		((JTextFieldDateEditor) idReleaseDateChooser.getDateEditor()).setEditable(false);
 		idReleaseDateChooser.setEnabled(false);
 		idReleaseDateChooser.setForeground(new Color(0, 128, 128));
 		idReleaseDateChooser.setFont(new Font("Tahoma", Font.BOLD, 17));
-		idReleaseDateChooser.setBounds(1047, 325, 417, 36);
-		newCustomerPanel.add(idReleaseDateChooser);
 		
 		idExpirationDateChooser = new JDateChooser();
 		((JTextFieldDateEditor) idExpirationDateChooser.getDateEditor()).setEditable(false);
 		idExpirationDateChooser.setEnabled(false);
 		idExpirationDateChooser.setForeground(new Color(0, 128, 128));
 		idExpirationDateChooser.setFont(new Font("Tahoma", Font.BOLD, 17));
-		idExpirationDateChooser.setBounds(1047, 370, 417, 36);
-		newCustomerPanel.add(idExpirationDateChooser);
 		
 		idSourceBox = new JComboBox<>();
 		idSourceBox.setEditable(false);
@@ -196,8 +188,6 @@ public class newCustomer extends JFrame {
 		idSourceBox.setForeground(new Color(0, 128, 128));
 		idSourceBox.setFont(new Font("Tahoma", Font.BOLD, 17));
 		idSourceBox.setBackground(new Color(224, 255, 255));
-		idSourceBox.setBounds(1047, 190, 416, 36);
-		newCustomerPanel.add(idSourceBox);
 		
 		idCountyOfBirthComboBox = new JComboBox<>();
 		idCountyOfBirthComboBox.setBackground(new Color(224, 255, 255));
@@ -207,10 +197,8 @@ public class newCustomer extends JFrame {
 		idCountyOfBirthComboBox.setEnabled(false);
 		idCountyOfBirthComboBox.setEditable(false);
 		idCountyOfBirthComboBox.setSelectedIndex(-1);
-		idCountyOfBirthComboBox.setBounds(1047, 280, 416, 36);
 		@SuppressWarnings("unused")
 		ComboBoxSearchable searchProvinceOfIssue = new ComboBoxSearchable(idCountyOfBirthComboBox);
-		newCustomerPanel.add(idCountyOfBirthComboBox);
 		
 		idReleasePlaceBox = new JComboBox<>();
 		idReleasePlaceBox.setEditable(false);
@@ -220,10 +208,8 @@ public class newCustomer extends JFrame {
 		idReleasePlaceBox.setForeground(new Color(0, 128, 128));
 		idReleasePlaceBox.setFont(new Font("Tahoma", Font.BOLD, 17));
 		idReleasePlaceBox.setBackground(new Color(224, 255, 255));
-		idReleasePlaceBox.setBounds(1047, 235, 416, 36);
 		@SuppressWarnings("unused")
 		ComboBoxSearchable searchRelease = new ComboBoxSearchable(idReleasePlaceBox);
-		newCustomerPanel.add(idReleasePlaceBox);
 		idReleasePlaceBox.addActionListener(e -> {
 			String releasePlace = (String) idReleasePlaceBox.getSelectedItem();
 			idCountyOfBirthComboBox.setEnabled(releasePlace != null && !FileUtils.STATE_CODES.containsKey(releasePlace));
@@ -251,8 +237,6 @@ public class newCustomer extends JFrame {
 		idTypeComboBox.setForeground(new Color(0, 128, 128));
 		idTypeComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
 		idTypeComboBox.setBackground(new Color(224, 255, 255));
-		idTypeComboBox.setBounds(1047, 100, 416, 36);
-		newCustomerPanel.add(idTypeComboBox);
 		
 		stateOfBirthComboBox = new JComboBox<>();
 		stateOfBirthComboBox.setModel(FileUtils.getStates());
@@ -260,7 +244,6 @@ public class newCustomer extends JFrame {
 		stateOfBirthComboBox.setForeground(new Color(0, 128, 128));
 		stateOfBirthComboBox.setFont(new Font("Tahoma", Font.BOLD, 17));
 		stateOfBirthComboBox.setBackground(new Color(224, 255, 255));
-		stateOfBirthComboBox.setBounds(314, 280, 416, 36);
 		stateOfBirthComboBox.addActionListener(e -> {
 			String state = (String) stateOfBirthComboBox.getSelectedItem();
 			if(state != null && state.equals("ITALIA")) {
@@ -272,7 +255,6 @@ public class newCustomer extends JFrame {
 				countyOfBirthBox.setEnabled(false);
 			}
 		});
-		newCustomerPanel.add(stateOfBirthComboBox);
 		
 		JButton addNewCustomerButton = new JButton("Add");
 		addNewCustomerButton.addActionListener(e -> {
@@ -337,21 +319,14 @@ public class newCustomer extends JFrame {
 				}
 			}
 		});
-		addNewCustomerButton.setBounds(878, 600, 303, 51);
-		newCustomerPanel.add(addNewCustomerButton);
 		addNewCustomerButton.setForeground(new Color(0, 128, 128));
 		addNewCustomerButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		addNewCustomerButton.setBackground(new Color(224, 255, 255));
 		
 		JPanel upPanel = new JPanel();
 		upPanel.setBackground(new Color(224, 255, 255));
-		upPanel.setBounds(-22, 0, 1496, 86);
-		newCustomerPanel.add(upPanel);
-		upPanel.setLayout(null);
 		
 		JLabel addCustomerLabel = new JLabel("New customer");
-		addCustomerLabel.setBounds(0, 0, 1496, 86);
-		upPanel.add(addCustomerLabel);
 		addCustomerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		addCustomerLabel.setForeground(new Color(0, 128, 128));
 		addCustomerLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 40));
@@ -361,21 +336,187 @@ public class newCustomer extends JFrame {
 		refreshButton.setForeground(new Color(0, 128, 128));
 		refreshButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
 		refreshButton.setBackground(new Color(224, 255, 255));
-		refreshButton.setBounds(180, 600, 303, 51);
-		newCustomerPanel.add(refreshButton);
 		
 		JLabel provinceOfIssueLabel = new JLabel("Province of issue");
 		provinceOfIssueLabel.setLabelFor(idCountyOfBirthComboBox);
 		provinceOfIssueLabel.setForeground(new Color(224, 255, 255));
 		provinceOfIssueLabel.setFont(new Font("Dialog", Font.PLAIN, 33));
 		provinceOfIssueLabel.setBackground(new Color(0, 128, 128));
-		provinceOfIssueLabel.setBounds(754, 281, 281, 36);
-		newCustomerPanel.add(provinceOfIssueLabel);
-		
-		JPanel leftPanel = new JPanel();
-		leftPanel.setBackground(new Color(224, 255, 255));
-		leftPanel.setBounds(10, 10, 24, 763);
-		contentPane.add(leftPanel);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(newCustomerPanel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1522, Short.MAX_VALUE)
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addComponent(newCustomerPanel, GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+					.addGap(5))
+		);
+		GroupLayout gl_newCustomerPanel = new GroupLayout(newCustomerPanel);
+		gl_newCustomerPanel.setHorizontalGroup(
+			gl_newCustomerPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_newCustomerPanel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(nameLabel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+					.addGap(54)
+					.addComponent(nameTextField, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE)
+					.addGap(24)
+					.addComponent(idTypeLabel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+					.addGap(43)
+					.addComponent(idTypeComboBox, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_newCustomerPanel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(surnameLabel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+					.addGap(54)
+					.addComponent(surnameTextField, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE)
+					.addGap(24)
+					.addGroup(gl_newCustomerPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_newCustomerPanel.createSequentialGroup()
+							.addGap(293)
+							.addComponent(idNumberTextField, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE))
+						.addComponent(idNumberLabel, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE)))
+				.addGroup(gl_newCustomerPanel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(genderLabel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+					.addGap(54)
+					.addComponent(genderComboBox, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE)
+					.addGap(24)
+					.addComponent(idReleaseSource, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+					.addGap(43)
+					.addComponent(idSourceBox, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_newCustomerPanel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(citizenship, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+					.addGap(54)
+					.addComponent(citizenshipComboBox, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE)
+					.addGap(24)
+					.addComponent(idReleasePlaceLabel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+					.addGap(43)
+					.addComponent(idReleasePlaceBox, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_newCustomerPanel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(stateOfBirthLabel, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(stateOfBirthComboBox, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE)
+					.addGap(24)
+					.addComponent(provinceOfIssueLabel, GroupLayout.PREFERRED_SIZE, 281, GroupLayout.PREFERRED_SIZE)
+					.addGap(12)
+					.addComponent(idCountyOfBirthComboBox, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_newCustomerPanel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(placeOfBirthLabel, GroupLayout.PREFERRED_SIZE, 281, GroupLayout.PREFERRED_SIZE)
+					.addGap(23)
+					.addComponent(birthplaceBox, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE)
+					.addGap(24)
+					.addComponent(idReleaseDateLabel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+					.addGap(43)
+					.addComponent(idReleaseDateChooser, GroupLayout.PREFERRED_SIZE, 417, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_newCustomerPanel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(countyOfBirthLabel, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(countyOfBirthBox, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE)
+					.addGap(24)
+					.addComponent(expirationDateLabel, GroupLayout.PREFERRED_SIZE, 281, GroupLayout.PREFERRED_SIZE)
+					.addGap(12)
+					.addComponent(idExpirationDateChooser, GroupLayout.PREFERRED_SIZE, 417, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_newCustomerPanel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(dateOfBirthLabel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+					.addGap(54)
+					.addComponent(dateOfBirthChooser, GroupLayout.PREFERRED_SIZE, 417, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_newCustomerPanel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(idHierarchyLabel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+					.addGap(54)
+					.addComponent(gerarchyComboBox, GroupLayout.PREFERRED_SIZE, 416, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_newCustomerPanel.createSequentialGroup()
+					.addGap(202)
+					.addComponent(refreshButton, GroupLayout.PREFERRED_SIZE, 303, GroupLayout.PREFERRED_SIZE)
+					.addGap(395)
+					.addComponent(addNewCustomerButton, GroupLayout.PREFERRED_SIZE, 303, GroupLayout.PREFERRED_SIZE))
+				.addComponent(upPanel, GroupLayout.DEFAULT_SIZE, 1503, Short.MAX_VALUE)
+				.addGroup(Alignment.TRAILING, gl_newCustomerPanel.createSequentialGroup()
+					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 1502, Short.MAX_VALUE)
+					.addGap(1))
+		);
+		gl_newCustomerPanel.setVerticalGroup(
+			gl_newCustomerPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_newCustomerPanel.createSequentialGroup()
+					.addComponent(upPanel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+					.addGap(14)
+					.addGroup(gl_newCustomerPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(nameLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(nameTextField, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(idTypeLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(idTypeComboBox, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+					.addGap(9)
+					.addGroup(gl_newCustomerPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(surnameLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(surnameTextField, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(idNumberTextField, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(idNumberLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+					.addGap(9)
+					.addGroup(gl_newCustomerPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(genderLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(genderComboBox, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(idReleaseSource, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(idSourceBox, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+					.addGap(9)
+					.addGroup(gl_newCustomerPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(citizenship, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(citizenshipComboBox, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(idReleasePlaceLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(idReleasePlaceBox, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+					.addGap(9)
+					.addGroup(gl_newCustomerPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(stateOfBirthLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(stateOfBirthComboBox, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_newCustomerPanel.createSequentialGroup()
+							.addGap(1)
+							.addComponent(provinceOfIssueLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+						.addComponent(idCountyOfBirthComboBox, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+					.addGap(8)
+					.addGroup(gl_newCustomerPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(placeOfBirthLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(birthplaceBox, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(idReleaseDateLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(idReleaseDateChooser, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+					.addGap(9)
+					.addGroup(gl_newCustomerPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(countyOfBirthLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(countyOfBirthBox, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(expirationDateLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addComponent(idExpirationDateChooser, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+					.addGap(9)
+					.addGroup(gl_newCustomerPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(dateOfBirthLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(dateOfBirthChooser, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+					.addGap(9)
+					.addGroup(gl_newCustomerPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(idHierarchyLabel, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+						.addComponent(gerarchyComboBox, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+					.addGap(3)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)
+					.addGap(88)
+					.addGroup(gl_newCustomerPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(refreshButton)
+						.addComponent(addNewCustomerButton)))
+		);
+		GroupLayout gl_upPanel = new GroupLayout(upPanel);
+		gl_upPanel.setHorizontalGroup(
+			gl_upPanel.createParallelGroup(Alignment.LEADING)
+				.addComponent(addCustomerLabel, GroupLayout.DEFAULT_SIZE, 1503, Short.MAX_VALUE)
+		);
+		gl_upPanel.setVerticalGroup(
+			gl_upPanel.createParallelGroup(Alignment.LEADING)
+				.addComponent(addCustomerLabel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+		);
+		upPanel.setLayout(gl_upPanel);
+		newCustomerPanel.setLayout(gl_newCustomerPanel);
+		contentPane.setLayout(gl_contentPane);
 
 		refreshAttributes();
 		setVisible(true);
@@ -389,101 +530,69 @@ public class newCustomer extends JFrame {
 	}
 	
 	private void setLabels() {
-		JLabel surnameLabel = new JLabel("Surname");
+		surnameLabel = new JLabel("Surname");
 		surnameLabel.setForeground(new Color(224, 255, 255));
 		surnameLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		surnameLabel.setBounds(10, 145, 250, 36);
-		newCustomerPanel.add(surnameLabel);
 		
-		JLabel nameLabel = new JLabel("Name");
+		nameLabel = new JLabel("Name");
 		nameLabel.setForeground(new Color(224, 255, 255));
 		nameLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		nameLabel.setBounds(10, 100, 250, 36);
-		newCustomerPanel.add(nameLabel);
 		
-		JLabel dateOfBirthLabel = new JLabel("Date of birth");
+		dateOfBirthLabel = new JLabel("Date of birth");
 		dateOfBirthLabel.setForeground(new Color(224, 255, 255));
 		dateOfBirthLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		dateOfBirthLabel.setBounds(10, 415, 250, 36);
-		newCustomerPanel.add(dateOfBirthLabel);
 		
-		JLabel placeOfBirthLabel = new JLabel("Birthplace");
+		placeOfBirthLabel = new JLabel("Birthplace");
 		placeOfBirthLabel.setForeground(new Color(224, 255, 255));
 		placeOfBirthLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		placeOfBirthLabel.setBounds(10, 325, 281, 36);
-		newCustomerPanel.add(placeOfBirthLabel);
 		
-		JLabel countyOfBirthLabel = new JLabel("County of birth");
+		countyOfBirthLabel = new JLabel("County of birth");
 		countyOfBirthLabel.setForeground(new Color(224, 255, 255));
 		countyOfBirthLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		countyOfBirthLabel.setBounds(10, 370, 294, 36);
-		newCustomerPanel.add(countyOfBirthLabel);
 		
-		JLabel genderLabel = new JLabel("Gender");
+		genderLabel = new JLabel("Gender");
 		genderLabel.setForeground(new Color(224, 255, 255));
 		genderLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		genderLabel.setBounds(10, 190, 250, 36);
-		newCustomerPanel.add(genderLabel);
 		
-		JLabel idTypeLabel = new JLabel("Document type");
+		idTypeLabel = new JLabel("Document type");
 		idTypeLabel.setForeground(new Color(224, 255, 255));
 		idTypeLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		idTypeLabel.setBounds(754, 100, 250, 36);
-		newCustomerPanel.add(idTypeLabel);
 		
-		JLabel idNumberLabel = new JLabel("Document number");
+		idNumberLabel = new JLabel("Document number");
 		idNumberLabel.setForeground(new Color(224, 255, 255));
 		idNumberLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		idNumberLabel.setBounds(754, 145, 294, 36);
-		newCustomerPanel.add(idNumberLabel);
 		
-		JLabel idReleaseDateLabel = new JLabel("Release date");
+		idReleaseDateLabel = new JLabel("Release date");
 		idReleaseDateLabel.setForeground(new Color(224, 255, 255));
 		idReleaseDateLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		idReleaseDateLabel.setBounds(754, 325, 250, 36);
-		newCustomerPanel.add(idReleaseDateLabel);
 		
-		JLabel idReleasePlaceLabel = new JLabel("Place of issue");
+		idReleasePlaceLabel = new JLabel("Place of issue");
 		idReleasePlaceLabel.setForeground(new Color(224, 255, 255));
 		idReleasePlaceLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		idReleasePlaceLabel.setBounds(754, 235, 250, 36);
-		newCustomerPanel.add(idReleasePlaceLabel);
 		
-		JLabel idReleaseSource = new JLabel("Released by");
+		idReleaseSource = new JLabel("Released by");
 		idReleaseSource.setForeground(new Color(224, 255, 255));
 		idReleaseSource.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		idReleaseSource.setBounds(754, 190, 250, 36);
-		newCustomerPanel.add(idReleaseSource);
 		
-		JLabel idHierarchyLabel = new JLabel("Hierarchy");
+		idHierarchyLabel = new JLabel("Hierarchy");
 		idHierarchyLabel.setForeground(new Color(224, 255, 255));
 		idHierarchyLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		idHierarchyLabel.setBounds(10, 460, 250, 36);
-		newCustomerPanel.add(idHierarchyLabel);
 		
-		JLabel stateOfBirthLabel = new JLabel("State of birth");
+		stateOfBirthLabel = new JLabel("State of birth");
 		stateOfBirthLabel.setFont(new Font("Dialog", Font.PLAIN, 33));
 		stateOfBirthLabel.setForeground(new Color(224, 255, 255));
-		stateOfBirthLabel.setBounds(10, 280, 294, 36);
-		newCustomerPanel.add(stateOfBirthLabel);
 		
-		JLabel citizenship = new JLabel("Citizenship");
+		citizenship = new JLabel("Citizenship");
 		citizenship.setForeground(new Color(224, 255, 255));
 		citizenship.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 33));
-		citizenship.setBounds(10, 235, 250, 36);
-		newCustomerPanel.add(citizenship);
 		
-		JSeparator separator = new JSeparator();
+		separator = new JSeparator();
 		separator.setForeground(new Color(255, 255, 255));
-		separator.setBounds(0, 499, 1480, 13);
-		newCustomerPanel.add(separator);
 		
-		JLabel expirationDateLabel = new JLabel("Expiration date");
+		expirationDateLabel = new JLabel("Expiration date");
 		expirationDateLabel.setForeground(new Color(224, 255, 255));
 		expirationDateLabel.setFont(new Font("Dialog", Font.PLAIN, 33));
 		expirationDateLabel.setBackground(new Color(0, 128, 128));
-		expirationDateLabel.setBounds(754, 370, 281, 34);
-		newCustomerPanel.add(expirationDateLabel);
 	}
 
 	private boolean checkClientFields() {
