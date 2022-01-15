@@ -26,6 +26,8 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import java.io.Serial;
 import java.math.BigDecimal;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class Storage extends JFrame {
 
@@ -54,167 +56,112 @@ public class Storage extends JFrame {
 		contentPane.setBackground(new Color(0, 139, 139));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 128, 128));
 		panel.setBorder(new LineBorder(new Color(224, 255, 255), 5, true));
-		panel.setBounds(21, 104, 446, 669);
-		contentPane.add(panel);
-		panel.setLayout(null);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(224, 255, 255));
-		panel_2.setBounds(0, 0, 446, 80);
-		panel.add(panel_2);
-		panel_2.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Register Orders");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(new Color(0, 128, 128));
 		lblNewLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
-		lblNewLabel.setBounds(10, 10, 426, 60);
-		panel_2.add(lblNewLabel);
 		
 		JLabel batchNumberLabel = new JLabel("Batch Number");
 		batchNumberLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		batchNumberLabel.setForeground(new Color(224, 255, 255));
 		batchNumberLabel.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		batchNumberLabel.setBounds(11, 96, 161, 30);
-		panel.add(batchNumberLabel);
 		
 		batchId = new JTextField();
 		batchId.setFont(new Font("Tahoma", Font.BOLD, 17));
 		batchId.setColumns(10);
-		batchId.setBounds(262, 96, 174, 30);
-		panel.add(batchId);
 		
 		JLabel lblSupplier = new JLabel("Supplier");
 		lblSupplier.setHorizontalAlignment(SwingConstants.LEFT);
 		lblSupplier.setForeground(new Color(224, 255, 255));
 		lblSupplier.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblSupplier.setBounds(10, 136, 140, 30);
-		panel.add(lblSupplier);
 		
 		supplier = new JTextField();
 		supplier.setFont(new Font("Tahoma", Font.BOLD, 17));
 		supplier.setColumns(10);
-		supplier.setBounds(262, 136, 174, 30);
-		panel.add(supplier);
 		
 		deliveryDate = new JDateChooser();
 		((JTextFieldDateEditor) deliveryDate.getDateEditor()).setEditable(false);
 		deliveryDate.setFont(new Font("Tahoma", Font.BOLD, 17));
-		deliveryDate.setBounds(262, 179, 174, 30);
-		panel.add(deliveryDate);
 		
 		JLabel lblDelivery = new JLabel("Delivery date");
 		lblDelivery.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDelivery.setForeground(new Color(224, 255, 255));
 		lblDelivery.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblDelivery.setBounds(11, 179, 180, 30);
-		panel.add(lblDelivery);
 		
 		JLabel lblProduct = new JLabel("Product");
 		lblProduct.setHorizontalAlignment(SwingConstants.LEFT);
 		lblProduct.setForeground(new Color(224, 255, 255));
 		lblProduct.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblProduct.setBounds(12, 217, 132, 30);
-		panel.add(lblProduct);
 		
 		productName = new JTextField();
 		productName.setFont(new Font("Tahoma", Font.BOLD, 17));
 		productName.setColumns(10);
-		productName.setBounds(262, 220, 174, 30);
-		panel.add(productName);
 		
 		amount = new JTextField();
 		amount.setDocument(SwingComponentUtil.numberPlainDocument());
 		amount.setFont(new Font("Tahoma", Font.BOLD, 17));
 		amount.setColumns(10);
-		amount.setBounds(262, 260, 174, 30);
-		panel.add(amount);
 		
 		JLabel lblQuantity = new JLabel("Quantity");
 		lblQuantity.setHorizontalAlignment(SwingConstants.LEFT);
 		lblQuantity.setForeground(new Color(224, 255, 255));
 		lblQuantity.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblQuantity.setBounds(10, 257, 117, 30);
-		panel.add(lblQuantity);
 		
 		JLabel lblExpiration = new JLabel("Expiration date");
 		lblExpiration.setHorizontalAlignment(SwingConstants.LEFT);
 		lblExpiration.setForeground(new Color(224, 255, 255));
 		lblExpiration.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblExpiration.setBounds(10, 299, 181, 30);
-		panel.add(lblExpiration);
 		
 		expireDate = new JDateChooser();
 		((JTextFieldDateEditor) expireDate.getDateEditor()).setEditable(false);
 		expireDate.setFont(new Font("Tahoma", Font.BOLD, 17));
-		expireDate.setBounds(262, 299, 174, 30);
-		panel.add(expireDate);
 		
-		JLabel lblPrice = new JLabel("Total price              \u20AC");
+		JLabel lblPrice = new JLabel("Total price");
 		lblPrice.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPrice.setForeground(new Color(224, 255, 255));
 		lblPrice.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 25));
-		lblPrice.setBounds(10, 339, 248, 30);
-		panel.add(lblPrice);
 		
 		price = new JTextField();
 		price.setDocument(SwingComponentUtil.financesPlainDocument());
 		price.setFont(new Font("Tahoma", Font.BOLD, 17));
 		price.setColumns(10);
-		price.setBounds(262, 339, 174, 30);
-		panel.add(price);
 		
 		JButton addOrdersButton = new JButton("Add Order");
 		addOrdersButton.addActionListener(e -> addOrder(orderService, productService));
 		addOrdersButton.setBackground(new Color(224, 255, 255));
 		addOrdersButton.setForeground(new Color(0, 128, 128));
 		addOrdersButton.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
-		addOrdersButton.setBounds(58, 422, 319, 57);
-		panel.add(addOrdersButton);
 		
 		JButton btnEditOrder = new JButton("Edit order");
 		btnEditOrder.addActionListener(e -> modifyOrder());
 		btnEditOrder.setForeground(new Color(0, 128, 128));
 		btnEditOrder.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnEditOrder.setBackground(new Color(224, 255, 255));
-		btnEditOrder.setBounds(58, 496, 319, 57);
-		panel.add(btnEditOrder);
 		
 		JButton btnDeleteOrder = new JButton("Delete order");
 		btnDeleteOrder.addActionListener(e -> deleteOrder(orderService));
 		btnDeleteOrder.setForeground(new Color(0, 128, 128));
 		btnDeleteOrder.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnDeleteOrder.setBackground(new Color(224, 255, 255));
-		btnDeleteOrder.setBounds(58, 570, 319, 57);
-		panel.add(btnDeleteOrder);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(224, 255, 255));
-		panel_1.setBounds(10, 104, 10, 669);
-		contentPane.add(panel_1);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(224, 255, 255));
-		panel_3.setBounds(0, 0, 1523, 94);
-		contentPane.add(panel_3);
-		panel_3.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Inventory section");
 		lblNewLabel_1.setForeground(new Color(0, 128, 128));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 40));
-		lblNewLabel_1.setBounds(10, 10, 1503, 74);
-		panel_3.add(lblNewLabel_1);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(477, 104, 1036, 585);
-		contentPane.add(scrollPane);
 		
 		orders.addAll(orderService.getAll());
 		ordersJList = new JList<>(orders);
@@ -236,8 +183,148 @@ public class Storage extends JFrame {
 		btnShowProductsIn.setForeground(new Color(0, 128, 128));
 		btnShowProductsIn.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 30));
 		btnShowProductsIn.setBackground(new Color(224, 255, 255));
-		btnShowProductsIn.setBounds(803, 708, 456, 57);
-		contentPane.add(btnShowProductsIn);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 1523, Short.MAX_VALUE)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+					.addGap(10)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 1036, Short.MAX_VALUE)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(326)
+							.addComponent(btnShowProductsIn, GroupLayout.PREFERRED_SIZE, 456, GroupLayout.PREFERRED_SIZE))))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+							.addGap(19)
+							.addComponent(btnShowProductsIn, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
+							.addGap(8))
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE))
+					.addGap(0))
+		);
+		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
+		gl_panel_3.setHorizontalGroup(
+			gl_panel_3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_3.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, 1503, Short.MAX_VALUE))
+		);
+		gl_panel_3.setVerticalGroup(
+			gl_panel_3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_3.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(10, Short.MAX_VALUE))
+		);
+		panel_3.setLayout(gl_panel_3);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblSupplier, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
+						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+							.addGap(11)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblPrice, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+								.addComponent(lblExpiration, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+								.addComponent(batchNumberLabel, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+								.addComponent(lblDelivery, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+								.addComponent(lblProduct, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+								.addComponent(lblQuantity, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))))
+					.addGap(63)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+									.addComponent(expireDate, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(deliveryDate, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+										.addComponent(batchId, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+										.addComponent(supplier, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)))
+								.addComponent(productName, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))
+							.addComponent(amount, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))
+						.addComponent(price, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))
+					.addGap(21))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap(75, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(btnDeleteOrder, GroupLayout.PREFERRED_SIZE, 319, GroupLayout.PREFERRED_SIZE)
+						.addComponent(addOrdersButton, GroupLayout.PREFERRED_SIZE, 319, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnEditOrder, GroupLayout.PREFERRED_SIZE, 319, GroupLayout.PREFERRED_SIZE))
+					.addGap(63))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+					.addGap(16)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(batchId, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(batchNumberLabel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(supplier, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblSupplier, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addGap(13)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(deliveryDate, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDelivery, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(11)
+							.addComponent(productName, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(8)
+							.addComponent(lblProduct, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(10)
+							.addComponent(amount, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(7)
+							.addComponent(lblQuantity, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
+					.addGap(9)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(expireDate, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblExpiration, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(price, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblPrice, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addGap(51)
+					.addComponent(addOrdersButton, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(btnEditOrder, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(btnDeleteOrder, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
+					.addGap(32))
+		);
+		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
+		gl_panel_2.setHorizontalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+		);
+		gl_panel_2.setVerticalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+		);
+		panel_2.setLayout(gl_panel_2);
+		panel.setLayout(gl_panel);
+		contentPane.setLayout(gl_contentPane);
 		
 		setVisible(true);
 	}

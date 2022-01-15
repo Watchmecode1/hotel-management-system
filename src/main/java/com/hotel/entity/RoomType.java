@@ -27,6 +27,16 @@ public class RoomType {
         }
 
         public int getPeople() { return people; }
+
+        @Override
+        public String toString() {
+            return switch(this) {
+                case DOUBLE -> "Double";
+                case TRIPLE -> "Triple";
+                case QUADRUPLE -> "Quadruple";
+                case QUINTUPLE -> "Quintuple";
+            };
+        }
     }
     
     public RoomType() {}
